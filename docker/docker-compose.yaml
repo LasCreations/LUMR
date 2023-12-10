@@ -1,0 +1,22 @@
+version: '3'
+services:
+  webserver:
+    image: trivpalserver
+    ports: 
+      - "8080:8080"
+    networks:
+      trivpalnetwork:
+        ipv4_address: 192.168.92.20
+  page-serving-service:
+    image: pageserving
+    ports:
+      - "8089:8089"
+    networks:
+      trivpalnetwork:
+        ipv4_address: 192.168.92.21
+networks:
+  trivpalnetwork:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.92.0/24"
