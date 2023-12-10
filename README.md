@@ -1,13 +1,13 @@
-<h1 align="center"><b>Trivᕋal</b></h1>
+<h1 align="center"><b>LUMR</b></h1>
 <br/>
 <i>~ Link for live website will be available soon. ~</i>
 <br/>
 
-## What is Trivᕋal?
-The underlying concept of TrivPal is to create a social environment that combines both the use of direct messaging and blog posting to help users connect with each other. 
+## What is LUMR?
+The underlying concept of LUMR is to create a social environment that combines both the use of direct messaging and blog posting to help users connect with each other. 
 
 ## Direct Messaging & Blog Post
-TrivPal facilitates communication among users through the use of real-time direct messaging and blogs. Both these features allow persons to both share thoughts, knowledge and experiences through the form of text, audio and images. 
+LUMR facilitates communication among users through the use of real-time direct messaging and blogs. Both these features allow persons to both share thoughts, knowledge and experiences through the form of text, audio and images. 
 Users will be able to send and accept friend requests. 
 
 ## Web Architecture

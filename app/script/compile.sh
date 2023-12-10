@@ -7,17 +7,17 @@ mkdir build
 cd build
 cmake -B. ..
 make
-mv TrivPalServer ..
+mv LUMR ..
 
 
 #build pageserver file
-cd ../services/page-serving
+cd ../services/web
 sudo rm -r build
 mkdir build
 cd build
 cmake -B. ..
 make
-mv pageserving ..
+mv webpages ..
 
 #build authentication file
 cd ../../authentication
