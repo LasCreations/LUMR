@@ -141,14 +141,15 @@ int Server::sendToService(const char *request, const char *src ,int Port) {
     serverAddress.sin_port = htons(Port);
     
     //this is for the my laptop
-    // inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
+    inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
 
-       // Convert targetIP to network address
-    if (inet_pton(AF_INET, src, &serverAddress.sin_addr) <= 0) {
-        perror("Invalid target IP address");
-        close(serviceSocket);
-        return -1;
-    }
+    //On RASPBERRY PI
+    // Convert targetIP to network address
+    // if (inet_pton(AF_INET, src, &serverAddress.sin_addr) <= 0) {
+    //     perror("Invalid target IP address");
+    //     close(serviceSocket);
+    //     return -1;
+    // }
 
 
     // connect to the target server
