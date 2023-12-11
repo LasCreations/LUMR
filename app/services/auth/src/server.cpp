@@ -65,8 +65,6 @@ int Server::StartHttpServer(){
 
         ssize_t bytesRead = read(clientSocket, request, SIZE);
         
-
-    
         if (bytesRead < 0) {
             perror("Error reading from client socket");
             close(clientSocket);
@@ -84,9 +82,10 @@ int Server::StartHttpServer(){
         sscanf(request, "%s %s", method, data);
         printf("%s %s", method, data);
 
+        printf("\n%s\n", body);
+
         // only support GET method
         if (strcmp(method, "GET") == 0){
-            
             //handleGetRequests(route,clientSocket);
         }else if (strcmp(method, "/submit") == 0){
             handlePostRequests(method, data, clientSocket, *this);

@@ -140,10 +140,10 @@ int Server::StartHttpServer(){
 
                 // std::cout << body << std::endl;
                 //Convert string to const char *
-                sendToService(newRequest.c_str(), "192.168.92.22", 8081);
+                //sendToService(newRequest.c_str(), "192.168.92.22", 8081);
 
 
-                //sendToService(request, "192.168.92.22", 8081);
+                sendToService(request, "192.168.92.22", 8081);
             }
         }else{
             const char response[] = "HTTP/1.1 400 Bad Request\r\n\n";

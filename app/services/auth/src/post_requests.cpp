@@ -21,6 +21,7 @@ void handleJSONRequests(char *method, const char *data, int clientSocket, Server
     // Check method
     if (strcmp(method, "/json") == 0)
     {
+        cout << "HERE" << endl;
         cout << data << endl;
     }
 }
