@@ -69,7 +69,7 @@ int Server::StartHttpServer(){
             close(clientSocket);
             return 1;  // or return 1; depending on your application logic
         }
-
+  
         char *body = strstr(request, "\r\n\r\n");
         if (body != NULL) {
             // Null-terminate the headers part
