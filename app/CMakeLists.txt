@@ -21,5 +21,7 @@ add_executable(LUMR ${SOURCES})
 # Set C++ standard
 set_property(TARGET LUMR PROPERTY CXX_STANDARD 11)  # adjust to your preferred C++ standard
 
+find_package(jsoncpp REQUIRED)
+
 # Link against MySQL libraries
-target_link_libraries(LUMR -lmysqlcppconn)
+target_link_libraries(LUMR -lmysqlcppconn jsoncpp_lib)

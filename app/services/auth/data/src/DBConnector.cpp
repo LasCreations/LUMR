@@ -9,9 +9,7 @@ bool DBConnector::createConnection()
 		if ((this->driver = get_driver_instance()))
 		{
 		}
-		// if((this->con = driver->connect("localhost", "lascelle", "password"))){
-		if ((this->con = driver->connect("localhost:3306", "root", "")))
-		{
+		if((this->con = driver->connect("localhost", "lascelle", "password"))){
 			/*Connect to the MySQL test database */
 			con->setSchema("test");
 		}

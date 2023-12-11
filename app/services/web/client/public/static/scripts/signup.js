@@ -1,6 +1,36 @@
 //When you enter the page
 window.onload = function() {
-    getSessionID()
+
+    getSessionID();
+
+    const jsonData = {
+        name: "John Doe",
+        age: 25,
+        city: "Example City",
+        isStudent: true,
+        grades: [95, 89, 78]
+    };
+    
+    fetch("/json", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        //return response.json(); // if the server sends JSON response
+      })
+      .then(data => {
+        console.log("Server response:", data);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+      
 };
 
 document.getElementById("myForm").addEventListener("submit", function (event) {

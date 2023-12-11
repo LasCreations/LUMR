@@ -64,6 +64,9 @@ int Server::StartHttpServer(){
         clientSocket = accept(serverSocket, NULL, NULL);
 
         ssize_t bytesRead = read(clientSocket, request, SIZE);
+        
+
+    
         if (bytesRead < 0) {
             perror("Error reading from client socket");
             close(clientSocket);
@@ -81,22 +84,19 @@ int Server::StartHttpServer(){
         sscanf(request, "%s %s", method, data);
         printf("%s %s", method, data);
 
-        // Store the headers separately before freeing the request buffer
-        char *headers = strdup(request);
-
-        free(request);
-
         // only support GET method
         if (strcmp(method, "GET") == 0){
             
             //handleGetRequests(route,clientSocket);
         }else if (strcmp(method, "/submit") == 0){
             handlePostRequests(method, data, clientSocket, *this);
+        }else if (strcmp(method, "/json") == 0){
+                handleJSONRequests(method, request, clientSocket, *this);
         }else{
             const char response[] = "HTTP/1.1 400 Bad Request\r\n\n";
             send(clientSocket, response, sizeof(response), 0);
         }
-        free(headers);
+        free(request);
         close(clientSocket);
         printf("\n");
     }

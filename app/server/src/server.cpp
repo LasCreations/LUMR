@@ -107,14 +107,44 @@ int Server::StartHttpServer(){
         }else if (strcmp(method, "POST") == 0){
             if(strcmp(route, "/submit") == 0){
                 char Requeststream[100]; 
+
                 strcpy(Requeststream, route);
                 // Use strncat to concatenate with a size check
                 strncat(Requeststream, " ", sizeof(Requeststream) - strlen(Requeststream) - 1);
                 strncat(Requeststream, body, sizeof(Requeststream) - strlen(Requeststream) - 1);
                 
+                //How it would look
+                //   /submit then_the_data_in_string_format
+
                 sendToService(Requeststream, "192.168.92.22", 8081);
             }
-            //handlePostRequests(headers, body, route, clientSocket, *this);
+            else if(strcmp(route, "/json") == 0){
+                // Define a regex pattern to match JSON
+                //const std::regex jsonRegex(R"(\{(?:[^{}]|(?R))*\})");
+
+                const std::regex jsonRegex(R"(\{[^{}]*\})");
+                // Convert C-style string to std::string
+                std::string dataStr(body);
+
+                // Search for the first match in the response
+                std::smatch match;
+                if (std::regex_search(dataStr, match, jsonRegex)) {
+                    // Extract and print the matched JSON part
+                    std::cout << "Matched JSON data: " << match.str() << std::endl;
+                } else {
+                    std::cout << "No JSON data found in the response." << std::endl;
+                }
+
+                std::string routeStr(route);
+                std::string newRequest = routeStr + " " + match.str();
+
+                // std::cout << body << std::endl;
+                //Convert string to const char *
+                sendToService(newRequest.c_str(), "192.168.92.22", 8081);
+
+
+                //sendToService(request, "192.168.92.22", 8081);
+            }
         }else{
             const char response[] = "HTTP/1.1 400 Bad Request\r\n\n";
             send(clientSocket, response, sizeof(response), 0);
@@ -143,7 +173,7 @@ int Server::sendToService(const char *request, const char *src ,int Port) {
     //this is for the my laptop
     inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
 
-    //On RASPBERRY PI
+    //On DOCKER
     // Convert targetIP to network address
     // if (inet_pton(AF_INET, src, &serverAddress.sin_addr) <= 0) {
     //     perror("Invalid target IP address");

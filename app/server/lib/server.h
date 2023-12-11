@@ -16,6 +16,10 @@
 
 #include<string>
 #include<iostream>
+#include<regex>
+
+#include <jsoncpp/json/value.h>
+#include <jsoncpp/json/json.h>
 
 #define SIZE 1024  // buffer size
 #define PORT 8080  // port number

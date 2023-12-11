@@ -15,6 +15,16 @@ std::string generateRandomCookieCode(int length) {
     return cookieCode;
 }
 
+void handleJSONRequests(char *method, const char *data, int clientSocket, Server &serverInstance)
+{
+
+    // Check method
+    if (strcmp(method, "/json") == 0)
+    {
+        cout << data << endl;
+    }
+}
+
 void handlePostRequests(char *method, char *data, int clientSocket, Server &serverInstance)
 {
 

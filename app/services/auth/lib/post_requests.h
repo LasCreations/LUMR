@@ -9,6 +9,8 @@ class Server;
 
 void handlePostRequests(char *method, char *data, int clientSocket, Server& serverInstance);
 
+void handleJSONRequests(char *method, const char *data, int clientSocket, Server& serverInstance);
+
 void ParseData(std::string &username,std::string  &email,std::string  &password, char *postData);
 
 #endif
