@@ -4,10 +4,10 @@ FROM gcc:latest
 RUN apt-get update && apt-get install -y libmysqlcppconn-dev cmake make build-essential
 
 # Copy the current directory contents into the container at /app
-COPY . /usr/src/PageServing
+COPY . /usr/src/auth
 
 # Set the working directory to /app
-WORKDIR /usr/src/PageServing
+WORKDIR /usr/src/auth
 
 # Compile the C++ code using CMake
 RUN cmake .
@@ -16,4 +16,4 @@ RUN cmake .
 RUN make
 
 # Specify the command to run on container start
-CMD ["./pager-serving-service"]
+CMD ["./authentication"]

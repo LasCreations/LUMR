@@ -35,7 +35,7 @@ class Server{
 
         int StartHttpServer();
 
-        int sendToService(const char *request, int Port);
+        int sendToService(const char *request, const char *src ,int Port);
 
         static void handleSignal(int signal);
 

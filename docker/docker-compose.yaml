@@ -1,19 +1,26 @@
 version: '3'
 services:
   webserver:
-    image: trivpalserver
+    image: server
     ports: 
       - "8080:8080"
     networks:
       trivpalnetwork:
         ipv4_address: 192.168.92.20
-  page-serving-service:
-    image: pageserving
+  webpages:
+    image: web
     ports:
       - "8089:8089"
     networks:
       trivpalnetwork:
         ipv4_address: 192.168.92.21
+  auth:
+    image: authentication
+    port:
+      - 8081:8081
+    networks:
+      trivpalnetwork:
+        ipv4_address: 192.168.92.22
 networks:
   trivpalnetwork:
     ipam:
