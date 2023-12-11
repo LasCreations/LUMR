@@ -20,7 +20,7 @@ make
 mv webpages ..
 
 #build authentication file
-cd ../../authentication
+cd ../../auth
 sudo rm -r build
 mkdir build
 cd build

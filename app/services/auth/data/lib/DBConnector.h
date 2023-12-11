@@ -1,9 +1,9 @@
 #pragma once
 
-#include<stdlib.h>
-#include<string>
-#include<iostream>
-#include<vector>
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <vector>
 
 #include "mysql_connection.h"
 #include <cppconn/driver.h>
@@ -15,28 +15,28 @@
 using namespace std;
 using namespace sql;
 
-class DBConnector{
+class DBConnector
+{
 
-	private:
-        	Driver *driver;
-        	Connection *con;
-        	Statement *stmt;
-        	PreparedStatement *prep_stmt;
-        	ResultSet *res;
+private:
+	Driver *driver;
+	Connection *con;
+	Statement *stmt;
+	PreparedStatement *prep_stmt;
+	ResultSet *res;
 
-    	public:
+public:
+	DBConnector();
 
-            DBConnector(); 
-            
-            bool createConnection();
-        
-            Connection* getConnection();
+	bool createConnection();
 
-			void setConnection(Connection *con);
+	Connection *getConnection();
 
-			void deleteConnections();
+	void setConnection(Connection *con);
 
-			bool addUser(User *user);
+	void deleteConnections();
 
-            bool destroyDatabase(string);
+	bool addUser(User *user);
+
+	bool destroyDatabase(string);
 };

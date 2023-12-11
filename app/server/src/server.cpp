@@ -81,12 +81,6 @@ int Server::StartHttpServer(){
         sscanf(request, "%s %s", method, route);
         printf("%s %s", method, route);
 
-        // Store the headers separately before freeing the request buffer
-        
-        printf("\n\n%s\n\n", request);
-
-        
-
         // only support GET method
         if (strcmp(method, "GET") == 0){
             //Restricted area for unauthenticated users

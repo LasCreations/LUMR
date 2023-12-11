@@ -2,54 +2,65 @@
 
 DBConnector::DBConnector() : driver(nullptr), con(nullptr), stmt(nullptr), prep_stmt(nullptr), res(nullptr) {}
 
-bool DBConnector::createConnection(){
-	try{
-        	if((this->driver = get_driver_instance())){
-
-		    }
-			// if((this->con = driver->connect("localhost", "lascelle", "password"))){
-        	if((this->con = driver->connect("localhost:3306", "root", ""))){
-					/*Connect to the MySQL test database */
-            		con->setSchema("test");
-        	}
-    	}catch(sql::SQLException &e){
-            e.getErrorCode();
-        	return false;
-    	}
+bool DBConnector::createConnection()
+{
+	try
+	{
+		if ((this->driver = get_driver_instance()))
+		{
+		}
+		// if((this->con = driver->connect("localhost", "lascelle", "password"))){
+		if ((this->con = driver->connect("localhost:3306", "root", "")))
+		{
+			/*Connect to the MySQL test database */
+			con->setSchema("test");
+		}
+	}
+	catch (sql::SQLException &e)
+	{
+		e.getErrorCode();
+		return false;
+	}
 	return true;
 }
 
-
-void DBConnector::deleteConnections(){
+void DBConnector::deleteConnections()
+{
 	delete res;
-  	delete stmt;
-  	delete con;
+	delete stmt;
+	delete con;
 	delete prep_stmt;
 }
 
-Connection* DBConnector::getConnection(){
-    return this->con;
+Connection *DBConnector::getConnection()
+{
+	return this->con;
 }
 
-void DBConnector::setConnection(Connection *con){
+void DBConnector::setConnection(Connection *con)
+{
 	this->con = con;
 }
 
-bool DBConnector::addUser(User *user){
-	try {
-        this->prep_stmt = this->con->prepareStatement("INSERT INTO User(username, email, password,sessionID) VALUES(?, ?, ?,?)");
-   		
-        this->prep_stmt->setString(1, user->getUsername());
-        this->prep_stmt->setString(2, user->getEmail());
-        this->prep_stmt->setString(3, user->getPassword());
+bool DBConnector::addUser(User *user)
+{
+	try
+	{
+		this->prep_stmt = this->con->prepareStatement("INSERT INTO User(username, email, password,sessionID) VALUES(?, ?, ?,?)");
+
+		this->prep_stmt->setString(1, user->getUsername());
+		this->prep_stmt->setString(2, user->getEmail());
 		this->prep_stmt->setString(3, user->getPassword());
-   		this->prep_stmt->setString(4, "3jnirui3h");
-        this->prep_stmt->execute();
+		this->prep_stmt->setString(3, user->getPassword());
+		this->prep_stmt->setString(4, "3jnirui3h");
+		this->prep_stmt->execute();
 		delete this->stmt;
-        return true;  // Successful execution
-    } catch (const std::exception& e) {
-        std::cerr << "Error adding user: " << e.what() << std::endl;
+		return true; // Successful execution
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << "Error adding user: " << e.what() << std::endl;
 		delete this->stmt;
-        return false;  // Error occurred
-    }
+		return false; // Error occurred
+	}
 }

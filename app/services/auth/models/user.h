@@ -6,51 +6,75 @@
 
 using namespace std;
 
-class User{
-    private:
-        string username, email, password;
-    public:
-        User(){
-            this->email = "";
-            this->username = "";
-            this->password = "";
-        }
+class User
+{
+private:
+    string username, email, password, cookie;
 
-        User(string username, string email, string password){
-            this->email = email;
-            this->username = username;
-            this->password = password;
-        }
+public:
+    User()
+    {
+        this->email = "";
+        this->username = "";
+        this->password = "";
+        this->cookie = "";
+    }
 
-        User(User *user){
-            this->email = user->email;
-            this->username = user->username;
-            this->password = user->password;
-        }
+    User(string username, string email, string password, string cookie)
+    {
+        this->email = email;
+        this->username = username;
+        this->password = password;
+        this->cookie = cookie;
+    }
 
-        void setUsername(string username){
-            this->username = username;
-        }
+    User(User *user)
+    {
+        this->email = user->email;
+        this->username = user->username;
+        this->password = user->password;
+        this->cookie = user->cookie;
+    }
 
-        void setEmail(string email){
-            this->email = email;
-        }
+    void setUsername(string username)
+    {
+        this->username = username;
+    }
 
-        void setPassword(string password){
-            this->password = password;
-        }
+    void setEmail(string email)
+    {
+        this->email = email;
+    }
 
-        string getUsername(){
-            return this->username;
-        }
+    void setPassword(string password)
+    {
+        this->password = password;
+    }
 
-        string getPassword(){
-            return this->password;
-        }
+    void setCookie(string cookie)
+    {
+        this->cookie = cookie;
+    }
 
-        string getEmail(){
-            return this->email;
-        }
+    string getUsername()
+    {
+        return this->username;
+    }
+
+    string getPassword()
+    {
+        return this->password;
+    }
+
+    string getEmail()
+    {
+        return this->email;
+    }
+
+    string getCookie()
+    {
+        return this->cookie;
+    }
 };
 
 #endif

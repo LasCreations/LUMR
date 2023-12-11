@@ -1,16 +1,20 @@
 #include "../lib/get_requests.h"
 
-void handleGetRequests(char *route, int clientSocket){
+void handleGetRequests(char *route, int clientSocket)
+{
     char fileURL[100];
     // generate file URL
     getFileURL(route, fileURL);
- 
+
     // read file
     FILE *file = fopen(fileURL, "r");
-    if (!file){
+    if (!file)
+    {
         const char response[] = "HTTP/1.1 404 Not Found\r\n\n";
         send(clientSocket, response, sizeof(response), 0);
-    }else{
+    }
+    else
+    {
         // generate HTTP response header
         char resHeader[SIZE];
 
@@ -38,8 +42,9 @@ void handleGetRequests(char *route, int clientSocket){
 
         // Starting position of file contents in response buffer
         char *fileBuffer = resBuffer + headerSize;
-        if(fread(fileBuffer, fsize, 1, file) != static_cast<size_t>(fsize)){
-            //To avoid memory leak and unused variables
+        if (fread(fileBuffer, fsize, 1, file) != static_cast<size_t>(fsize))
+        {
+            // To avoid memory leak and unused variables
         }
 
         send(clientSocket, resBuffer, fsize + headerSize, 0);
@@ -55,14 +60,16 @@ void getTimeString(char *buf)
     strftime(buf, sizeof buf, "%a, %d %b %Y %H:%M:%S %Z", &tm);
 }
 
-void getFileURL(char *route, char *fileURL){
+void getFileURL(char *route, char *fileURL)
+{
     // if route has parameters, remove them
     char *question = strrchr(route, '?');
     if (question)
         *question = '\0';
 
     // if route is empty, set it to index.html
-    if (route[strlen(route) - 1] == '/'){
+    if (route[strlen(route) - 1] == '/')
+    {
         strcat(route, "index.html");
     }
 
@@ -72,12 +79,14 @@ void getFileURL(char *route, char *fileURL){
 
     // if filename does not have an extension, set it to .html
     const char *dot = strrchr(fileURL, '.');
-    if (!dot || dot == fileURL){
+    if (!dot || dot == fileURL)
+    {
         strcat(fileURL, ".html");
     }
 }
 
-void getMimeType(char *file, char *mime){
+void getMimeType(char *file, char *mime)
+{
     // position in string with period character
     const char *dot = strrchr(file, '.');
 

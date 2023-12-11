@@ -6,51 +6,62 @@
 
 using namespace std;
 
-class User{
-    private:
-        string username, email, password;
-    public:
-        User(){
-            this->email = "";
-            this->username = "";
-            this->password = "";
-        }
+class User
+{
+private:
+    string username, email, password;
 
-        User(string username, string email, string password){
-            this->email = email;
-            this->username = username;
-            this->password = password;
-        }
+public:
+    User()
+    {
+        this->email = "";
+        this->username = "";
+        this->password = "";
+    }
 
-        User(User *user){
-            this->email = user->email;
-            this->username = user->username;
-            this->password = user->password;
-        }
+    User(string username, string email, string password)
+    {
+        this->email = email;
+        this->username = username;
+        this->password = password;
+    }
 
-        void setUsername(string username){
-            this->username = username;
-        }
+    User(User *user)
+    {
+        this->email = user->email;
+        this->username = user->username;
+        this->password = user->password;
+    }
 
-        void setEmail(string email){
-            this->email = email;
-        }
+    void setUsername(string username)
+    {
+        this->username = username;
+    }
 
-        void setPassword(string password){
-            this->password = password;
-        }
+    void setEmail(string email)
+    {
+        this->email = email;
+    }
 
-        string getUsername(){
-            return this->username;
-        }
+    void setPassword(string password)
+    {
+        this->password = password;
+    }
 
-        string getPassword(){
-            return this->password;
-        }
+    string getUsername()
+    {
+        return this->username;
+    }
 
-        string getEmail(){
-            return this->email;
-        }
+    string getPassword()
+    {
+        return this->password;
+    }
+
+    string getEmail()
+    {
+        return this->email;
+    }
 };
 
 #endif
