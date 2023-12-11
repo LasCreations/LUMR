@@ -7,6 +7,7 @@
 #include "../models/user.h"
 #include "../data/lib/DBConnector.h"
 
+
 #include <stdio.h>  // console input/output, perror
 #include <stdlib.h> // exit
 #include <string.h> // string manipulation
@@ -20,33 +21,35 @@
 #include <signal.h> // signal handling
 #include <time.h>   // time
 
-#include <string>
-#include <iostream>
+#include<string>
+#include<iostream>
 
 #define SIZE 1024  // buffer size
 #define PORT 8081  // port number
 #define BACKLOG 10 // number of pending connections queue will hold
 
-class Server
-{
-private:
-    int serverSocket;
-    int clientSocket;
-    char *request;
-    DBConnector dbConn;
-    // std::string dbRequest;
 
-public:
-    // Default Constructor
-    Server();
 
-    int StartHttpServer();
+class Server{
+    private:
+        int serverSocket;
+        int clientSocket;
+        char *request;
+        DBConnector dbConn;
+        // std::string dbRequest;
 
-    static void handleSignal(int signal);
+    public: 
+        //Default Constructor
+        Server();
 
-    // Static method to get the instance of the singleton
-    static Server &getInstance();
+        int StartHttpServer();
 
-    DBConnector getConnection();
+        static void handleSignal(int signal);
+
+        // Static method to get the instance of the singleton
+        static Server& getInstance();
+
+        DBConnector getConnection();
+
 };
 #endif

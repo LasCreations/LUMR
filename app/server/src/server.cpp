@@ -69,7 +69,7 @@ int Server::StartHttpServer(){
             close(clientSocket);
             return 1;  // or return 1; depending on your application logic
         }
-  
+
         char *body = strstr(request, "\r\n\r\n");
         if (body != NULL) {
             // Null-terminate the headers part
@@ -87,7 +87,7 @@ int Server::StartHttpServer(){
             if(strcmp(route, "/dashboard.html") == 0 || strcmp(route, "/static/styles/dashboard.css") == 0 ){
                 //if user doesnt have a cookie for this website
                 if(strstr(request, "Cookie:") != nullptr){
-                    sendToService(request, 8089);
+                    sendToService(request,"192.168.92.20",8089);
                 }else{
                     const char response[] = "HTTP/1.1 401 Unauthorized\r\n"
                                         "Content-Type: text/html\r\n"
@@ -102,7 +102,7 @@ int Server::StartHttpServer(){
                     send(clientSocket, response, sizeof(response), 0);
                 }
             }else{
-                sendToService(request, 8089);
+                sendToService(request,"192.168.92.20",8089);
             }
         }else if (strcmp(method, "POST") == 0){
             if(strcmp(route, "/submit") == 0){
@@ -112,7 +112,7 @@ int Server::StartHttpServer(){
                 strncat(Requeststream, " ", sizeof(Requeststream) - strlen(Requeststream) - 1);
                 strncat(Requeststream, body, sizeof(Requeststream) - strlen(Requeststream) - 1);
                 
-                sendToService(Requeststream, 8081);
+                sendToService(Requeststream, "192.168.92.22", 8081);
             }
             //handlePostRequests(headers, body, route, clientSocket, *this);
         }else{
@@ -125,7 +125,7 @@ int Server::StartHttpServer(){
     }
 }
 
-int Server::sendToService(const char *request, int Port) {
+int Server::sendToService(const char *request, const char *src ,int Port) {
     struct sockaddr_in serverAddress;
     
     int serviceSocket;
@@ -139,7 +139,12 @@ int Server::sendToService(const char *request, int Port) {
     // set server details
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(Port);
-    inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
+    
+    //this is for the my laptop
+    // inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr);
+
+    inet_pton(AF_INET, src, &serverAddress.sin_addr);
+
 
     // connect to the target server
     if (connect(serviceSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) < 0) {
