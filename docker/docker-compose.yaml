@@ -5,24 +5,24 @@ services:
     ports: 
       - "8080:8080"
     networks:
-      trivpalnetwork:
+      LUMRNetwork:
         ipv4_address: 192.168.92.20
   webpages:
     image: web
     ports:
       - "8089:8089"
     networks:
-      trivpalnetwork:
+      LUMRNetwork:
         ipv4_address: 192.168.92.21
   auth:
     image: authentication
-    port:
+    ports:
       - 8081:8081
     networks:
-      trivpalnetwork:
+      LUMRNetwork:
         ipv4_address: 192.168.92.22
 networks:
-  trivpalnetwork:
+  LUMRNetwork:
     ipam:
       driver: default
       config:
