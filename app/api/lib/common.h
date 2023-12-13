@@ -1,5 +1,5 @@
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef COMMON_H
+#define COMMON_H
 
 #include <stdio.h>  // console input/output, perror
 #include <stdlib.h> // exit
@@ -13,20 +13,22 @@
 
 #include <signal.h> // signal handling
 #include <time.h>   // time
-#include <errno.h>
 
+#include<string>
+#include<iostream>
+#include<regex>
+
+#include <jsoncpp/json/value.h>
+#include <jsoncpp/json/json.h>
+
+#include <fstream>
+#include <cstring>
 
 #define SIZE 1024  // buffer size
 #define PORT 8080  // port number
 #define BACKLOG 10 // number of pending connections queue will hold
 
 
-#include "../../api/lib/pageserving.h"
 
-
-int runServer();
-
-
-static void handleSignal(int signal);
 
 #endif

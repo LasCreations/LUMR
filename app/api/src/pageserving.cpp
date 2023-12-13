@@ -1,6 +1,8 @@
-#include "../lib/get_requests.h"
+#include "../lib/pageserving.h"
+#include "../lib/common.h"
 
-void handleGetRequests(char *route, int clientSocket){
+
+bool handlePageRequest(char *route, int clientSocket){
     char fileURL[100];
     // generate file URL
     getFileURL(route, fileURL);
@@ -10,6 +12,7 @@ void handleGetRequests(char *route, int clientSocket){
     if (!file){
         const char response[] = "HTTP/1.1 404 Not Found\r\n\n";
         send(clientSocket, response, sizeof(response), 0);
+        return false;
     }else{
         // generate HTTP response header
         char resHeader[SIZE];
@@ -44,6 +47,7 @@ void handleGetRequests(char *route, int clientSocket){
         send(clientSocket, resBuffer, fsize + headerSize, 0);
         free(resBuffer);
         fclose(file);
+        return true;
     }
     
 }

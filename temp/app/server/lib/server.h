@@ -1,11 +1,6 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "get_requests.h"
-
-#include "../models/user.h"
-
-
 #include <stdio.h>  // console input/output, perror
 #include <stdlib.h> // exit
 #include <string.h> // string manipulation
@@ -21,9 +16,13 @@
 
 #include<string>
 #include<iostream>
+#include<regex>
+
+#include <jsoncpp/json/value.h>
+#include <jsoncpp/json/json.h>
 
 #define SIZE 1024  // buffer size
-#define PORT 8089  // port number
+#define PORT 8080  // port number
 #define BACKLOG 10 // number of pending connections queue will hold
 
 
@@ -33,7 +32,6 @@ class Server{
         int serverSocket;
         int clientSocket;
         char *request;
-        // std::string dbRequest;
 
     public: 
         //Default Constructor
@@ -41,12 +39,12 @@ class Server{
 
         int StartHttpServer();
 
+        int sendToService(const char *request, const char *src ,int Port);
+
         static void handleSignal(int signal);
 
         // Static method to get the instance of the singleton
         static Server& getInstance();
-
-        
 
 };
 #endif
