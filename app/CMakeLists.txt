@@ -7,6 +7,7 @@ project(LURM C CXX)
 file(GLOB SOURCES 
         "api/src/*.cpp"
         "server/src/*.c"
+        "database/src/*cpp"
         "main.c"
     )
 
@@ -14,6 +15,7 @@ file(GLOB SOURCES
 include_directories(
     server/lib
     api/lib
+    database/lib
 )
 
 # Create an executable for C++ sources

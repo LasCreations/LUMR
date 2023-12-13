@@ -1,7 +1,5 @@
 #include "../lib/server.h"
 
-
-
 int serverSocket;
 int clientSocket;
 char *request;
@@ -73,6 +71,13 @@ int runServer()
             return 1; // or return 1; depending on your application logic
         }
 
+        char *body = strstr(request, "\r\n\r\n");
+        if (body != NULL) {
+            // Null-terminate the headers part
+            *body = '\0';
+            body += 4; // Move to the start of the body
+        }
+
         // parse HTTP request
         sscanf(request, "%s %s", method, route);
         printf("%s %s", method, route);
@@ -86,22 +91,12 @@ int runServer()
         }
         else if (strcmp(method, "POST") == 0)
         {
-            if(strcmp(route, "/api/php/img") == 0){
-              const char response[] = "HTTP/1.1 200 OK\r\n\n";
-                send(clientSocket, response, sizeof(response), 0);
-
-                // Open a pipe to the PHP interpreter
-                FILE* pipe = popen("php-cgi api/php/img.php", "r");
-                if (!pipe) {
-                    perror("Error opening pipe to PHP interpreter");
-                    // Handle the error and return an appropriate response
-                    return;
-                }
-
-                // Close the pipe
-                pclose(pipe);
+            if(strcmp(route, "/submit") == 0){
+                handlePostRequests( request, body, route, clientSocket);
             }
-
+            if(strcmp(route, "/json") == 0){
+                handlePostRequests( request, body, route, clientSocket);
+            }    
         }
         else
         {

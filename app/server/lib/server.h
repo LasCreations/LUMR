@@ -22,7 +22,7 @@
 
 
 #include "../../api/lib/pageserving.h"
-
+#include "../../api/lib/authenticate.h"
 
 int runServer();
 
