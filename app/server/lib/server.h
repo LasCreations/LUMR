@@ -22,10 +22,10 @@
 
 
 #include "../../api/lib/pageserving.h"
-#include "../../api/lib/authenticate.h"
+#include "../../api/lib/UserApiHandler.h"
+
 
 int runServer();
-
 
 static void handleSignal(int signal);
 

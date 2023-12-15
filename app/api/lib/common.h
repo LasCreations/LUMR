@@ -24,6 +24,7 @@
 #include <fstream>
 #include <cstring>
 
+
 using namespace std;
 
 #define SIZE 1024  // buffer size

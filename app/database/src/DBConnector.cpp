@@ -49,8 +49,7 @@ bool DBConnector::addUser(User *user)
 		this->prep_stmt->setString(1, user->getUsername());
 		this->prep_stmt->setString(2, user->getEmail());
 		this->prep_stmt->setString(3, user->getPassword());
-		this->prep_stmt->setString(3, user->getPassword());
-		this->prep_stmt->setString(4, "3jnirui3h");
+		this->prep_stmt->setString(4, user->getCookie());
 		this->prep_stmt->execute();
 		delete this->stmt;
 		return true; // Successful execution
