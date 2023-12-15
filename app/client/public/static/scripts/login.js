@@ -1,27 +1,40 @@
 window.onload = function () {
+    //Authenticated user
     if (getSessionID() !== null) {
-        // Value is not null, so do something with it
-        // console.log("Session ID : ", getSessionID());
-
-        fetch("/auth/user", {
+        fetch("/user/auth", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": getSessionID(), // Add the session ID to the Authorization header
             },
-        })
-        .then(res => {
-            if(res.ok){
+        }).then(res => {
+                if (res.ok) {
+                    return res.json(); // Parse the JSON from the response
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .then(data => {
+                // Handle the JSON data
+                console.log(data);
+                
+                // Access the elements where you want to display the specific fields
+                const emailContainer = document.getElementById('EmailContainer');
+                const passwordContainer = document.getElementById('PasswordContainer');
+                const usernameContainer = document.getElementById('UsernameContainer');
 
-            }else{
+                // Update the content of the elements with the specific fields
+                emailContainer.textContent = `Email: ${data.email}`;
+                passwordContainer.textContent = `Password: ${data.password}`;
+                usernameContainer.textContent = `Username: ${data.username}`;
 
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error.message);
-        });
+              })
+            .catch(error => {
+                console.error("Error:", error.message);
+            });
 
-    } else {
+    }
+    //Not authenticated user
+    else {
         // Value is null, handle accordingly
         console.log("No session ID available.");
     }

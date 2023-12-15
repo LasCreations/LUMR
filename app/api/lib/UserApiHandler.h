@@ -8,6 +8,9 @@
 #include "../../database/lib/DBConnector.h"
 #include "../../database/models/user.h"
 
+//Create a connection
+DBConnector *dbConn = new DBConnector();
+
 /*!
  * @function    parseHttpRequest
  * @abstract    Remove Json from body
@@ -57,6 +60,47 @@ string generateRandomCookieCode(int length);
  * @result      Return true if successfully added
 */
 bool addUserToDatabase(string username, string email, string password, string cookie);
+
+
+/*!
+ * @function    parseCookie
+ * @abstract    
+ * @discussion  
+ * @param       request
+ * @result      
+*/
+string parseCookie(char *request);
+
+
+/*!
+ * @function    getUserData
+ * @abstract    
+ * @discussion  
+ * @param       username
+ * @param       password
+ * @result      
+*/
+User getUserData(string username, string password);
+
+
+/*!
+ * @function    getUserData
+ * @abstract    
+ * @discussion  
+ * @param       cookie
+ * @result      
+*/
+User *getUserData(string cookie);
+
+
+/*!
+ * @function    getUserData
+ * @abstract    
+ * @discussion  
+ * @param       cookie
+ * @result      
+*/
+string ParseUserDataToJSON(string username, string password, string email);
 
 #endif
 

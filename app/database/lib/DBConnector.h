@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DB_CONNECTOR_H
+#define DB_CONNECTOR_H
 
 #include <stdlib.h>
 #include <string>
@@ -39,4 +40,10 @@ public:
 	bool addUser(User *user);
 
 	bool destroyDatabase(string);
+
+	User *getUserData(string cookie);
+
+	User getUserData(string username, string password);
 };
+
+#endif
