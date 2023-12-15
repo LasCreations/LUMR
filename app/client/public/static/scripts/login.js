@@ -1,46 +1,37 @@
-//When you enter the page
-window.onload = function() {
-    getSessionID()
+window.onload = function () {
+    if (getSessionID() !== null) {
+        // Value is not null, so do something with it
+        // console.log("Session ID : ", getSessionID());
+
+        fetch("/auth/user", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": getSessionID(), // Add the session ID to the Authorization header
+            },
+        })
+        .then(res => {
+            if(res.ok){
+
+            }else{
+
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error.message);
+        });
+
+    } else {
+        // Value is null, handle accordingly
+        console.log("No session ID available.");
+    }
 };
 
-document.getElementById("myForm").addEventListener("submit", function (event) {
-    event.preventDefault();
 
-    const formData = new FormData(event.target);
-
-    fetch("/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams(formData).toString(),
-    })
-    .then(res => {
-        if(res.ok){
-            console.log("Successful");
-            window.location.href = "/dashboard.html";
-        }else{
-            alert("User couldnt be added");
-            console.log("Not Successful");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error.message);
-    });
-});
-
-
-function getSessionID(){
-    let cookie = document.cookie;
-
-    // Use a regular expression to check if the cookie contains non-whitespace characters
-    if (/\S/.test(cookie)) {
-        console.log("Cookie is not empty. Value:", cookie);
-        // You can perform additional actions here if the cookie is not empty
-        
+function getSessionID() {
+    if (/\S/.test(document.cookie)) {
+        return document.cookie;
     } else {
-        console.log("Cookie is empty.");
-        // You can perform additional actions here if the cookie is empty
-        return null; // or return an empty string or any other value indicating no cookie
+        return null;
     }
 }

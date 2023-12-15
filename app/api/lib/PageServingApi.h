@@ -1,5 +1,5 @@
-#ifndef PAGE_SERVING_H
-#define PAGE_SERVING_H
+#ifndef PAGE_SERVING_API
+#define PAGE_SERVING_API
 
 #include <stdbool.h>
 
