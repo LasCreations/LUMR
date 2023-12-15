@@ -28,6 +28,10 @@ void handleUserRequests(char *request, char *method, const char *route, int clie
             send(clientSocket, response, sizeof(response) - 1, 0);
         }
     }
+
+    if (strcmp(route, "/user/auth") == 0){
+
+    }
 }
 
 string parseHttpRequest(char *body)

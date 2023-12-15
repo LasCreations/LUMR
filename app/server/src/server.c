@@ -71,16 +71,9 @@ int runServer()
             return 1; // or return 1; depending on your application logic
         }
 
-        char *body = strstr(request, "\r\n\r\n");
-        if (body != NULL) {
-            // Null-terminate the headers part
-            *body = '\0';
-            body += 4; // Move to the start of the body
-        }
-
         // parse HTTP request
         sscanf(request, "%s %s", method, route);
-        printf("%s %s", method, route);
+        printf("%s %s\n", method, route);
 
         // only support GET method
         if (strcmp(method, "GET") == 0)
@@ -91,12 +84,13 @@ int runServer()
         }
         else if (strcmp(method, "POST") == 0)
         {
-            if(strcmp(route, "/submit") == 0){
-                handlePostRequests( request, body, route, clientSocket);
+            if(strcmp(route, "/user/register") == 0){
+                handleUserRequests(request, method, route, clientSocket);
             }
-            if(strcmp(route, "/json") == 0){
-                handlePostRequests( request, body, route, clientSocket);
-            }    
+            if(strcmp(route, "/user/auth") == 0){
+                handleUserRequests(request, method, route, clientSocket);
+            }
+             
         }
         else
         {
