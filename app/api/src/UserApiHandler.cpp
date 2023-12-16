@@ -5,7 +5,6 @@ void handleUserRequests(char *request, char *method, const char *route, int clie
     string username, email, password, cookie;
     char *body = strstr(request, "\r\n\r\n");
 
-
     if (body != NULL)
     {
         // Null-terminate the headers part
@@ -37,12 +36,13 @@ void handleUserRequests(char *request, char *method, const char *route, int clie
     {
         if (getUserData(parseCookie(request)) != nullptr)
         {
-            std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + 
-                                        ParseUserDataToJSON(getUserData(parseCookie(request))->getUsername(),
-                                        getUserData(parseCookie(request))->getPassword(),
-                                        getUserData(parseCookie(request))->getEmail());
-                // Send the HTTP response
-                send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
+
+            User *userData = new User(getUserData(parseCookie(request)));
+
+            std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
+                                       ParseUserDataToJSON(userData->getUsername(), userData->getPassword(),
+                                                           userData->getEmail());
+            send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
         }
     }
 }
@@ -134,42 +134,15 @@ bool addUserToDatabase(string username, string email, string password, string co
 
 string parseCookie(char *request)
 {
-
-
-
-    // std::istringstream iss(request);
-    // std::string line;
-    // std::string cookieValue;
-    // // Find the line starting with "Cookie: "
-    // while (std::getline(iss, line))
-    // {
-    //     size_t pos = line.find("Cookie: ");
-    //     if (pos != std::string::npos)
-    //     {
-    //         // Extract the value after "Cookie: "
-    //         cookieValue = line.substr(pos + strlen("Cookie: "));
-
-    //         // Remove "sessionID="
-    //         size_t sessionIdPos = cookieValue.find("sessionID=");
-    //         if (sessionIdPos != std::string::npos)
-    //         {
-    //             cookieValue.erase(sessionIdPos, strlen("sessionID="));
-    //         }
-
-    //         // Print the extracted and modified cookie value
-    //         // std::cout << "Cookie: " << cookieValue << std::endl;
-    //     }
-    // }
-    // cout << "Cookie: " << cookieValue << endl;
-    // return cookieValue;
-
     std::istringstream iss(request);
     std::string line;
     std::string sessionID;
 
     // Find the line starting with "Cookie: "
-    while (std::getline(iss, line)) {
-        if (line.find("Cookie: ") != std::string::npos) {
+    while (std::getline(iss, line))
+    {
+        if (line.find("Cookie: ") != std::string::npos)
+        {
             // Extract the value after "Cookie: "
             std::string cookieValue = line.substr(line.find("Cookie: ") + strlen("Cookie: "));
 
@@ -177,23 +150,28 @@ string parseCookie(char *request)
             size_t sessionIDPos = cookieValue.find("sessionID=");
 
             // Check if "sessionID=" is found and extract the sessionID
-            if (sessionIDPos != std::string::npos) {
-                
+            if (sessionIDPos != std::string::npos)
+            {
 
                 // Find the end of the sessionID value
                 size_t sessionIDEnd = cookieValue.find(';', sessionIDPos);
 
                 // If the sessionID is the last cookie, take the substring until the end of the line
-                if (sessionIDEnd == std::string::npos) {
+                if (sessionIDEnd == std::string::npos)
+                {
                     sessionID = cookieValue.substr(sessionIDPos + strlen("sessionID="));
-                } else {
+                }
+                else
+                {
                     // Otherwise, take the substring until the next semicolon
                     sessionID = cookieValue.substr(sessionIDPos + strlen("sessionID="), sessionIDEnd - (sessionIDPos + strlen("sessionID=")));
                 }
 
                 // Print the extracted sessionID
-                std::cout << "sessionID: " << sessionID << std::endl;
-            } else {
+                // std::cout << "sessionID: " << sessionID << std::endl;
+            }
+            else
+            {
                 std::cerr << "sessionID not found in Cookie" << std::endl;
             }
         }
@@ -225,7 +203,6 @@ string ParseUserDataToJSON(string username, string password, string email)
     std::string jsonString = jsonValue.toStyledString();
 
     // Print the resulting JSON string
-    std::cout << "\n\n"
-              << jsonString << std::endl;
+    std::cout << "\n\n" << jsonString << std::endl;
     return jsonString;
 }

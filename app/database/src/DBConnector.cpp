@@ -80,6 +80,7 @@ User *DBConnector::getUserData(string cookie)
 			email = this->res->getString("email");
 			password = this->res->getString("password");
 		}
+
 		data = new User(username, email, password, cookie);
 	}
 	catch (const sql::SQLException &e)

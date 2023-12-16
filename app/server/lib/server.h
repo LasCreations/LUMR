@@ -17,7 +17,7 @@
 
 
 #define SIZE 1024  // buffer size
-#define PORT 8080  // port number
+#define PORT 8081  // port number
 #define BACKLOG 10 // number of pending connections queue will hold
 
 

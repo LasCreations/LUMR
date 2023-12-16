@@ -16,6 +16,17 @@ window.onload = function () {
             .then(data => {
                 // Handle the JSON data
                 console.log(data);
+                
+                // Access the elements where you want to display the specific fields
+                const emailContainer = document.getElementById('EmailContainer');
+                const passwordContainer = document.getElementById('PasswordContainer');
+                const usernameContainer = document.getElementById('UsernameContainer');
+
+                // Update the content of the elements with the specific fields
+                emailContainer.textContent = `Email: ${data.email}`;
+                passwordContainer.textContent = `Password: ${data.password}`;
+                usernameContainer.textContent = `Username: ${data.username}`;
+
               })
             .catch(error => {
                 console.error("Error:", error.message);

@@ -8,16 +8,11 @@ window.onload = function () {
             },
         }).then(res => {
                 if (res.ok) {
-                    return res.json(); // Parse the JSON from the response
+                    window.location.href = "/dashboard.html"; // Redirect User to the dashboard
                 } else {
                     throw new Error('Network response was not ok');
                 }
-            })
-            .then(data => {
-                // Handle the JSON data
-                console.log(data);
-              })
-            .catch(error => {
+            }).catch(error => {
                 console.error("Error:", error.message);
             });
 
