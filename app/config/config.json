@@ -2,5 +2,6 @@
     "API_KEY": "",
     "DATABASE_URL": "localhost",
     "DATABASE_USER": "lascelle",
-    "DATABASE_PASSWORD": "password"
+    "DATABASE_PASSWORD": "password",
+    "DATABASE_NAME" : "LURM"
 }

@@ -11,6 +11,10 @@
 #include <cppconn/exception.h>
 #include <cppconn/prepared_statement.h>
 
+#include <fstream>
+#include <jsoncpp/json/value.h>
+#include <jsoncpp/json/json.h>
+
 #include "../models/user.h"
 
 using namespace std;
@@ -25,6 +29,7 @@ private:
 	Statement *stmt;
 	PreparedStatement *prep_stmt;
 	ResultSet *res;
+	string DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME;
 
 public:
 	DBConnector();
@@ -41,9 +46,12 @@ public:
 
 	bool destroyDatabase(string);
 
+	int getEnvConfig(string path);
+
 	User *getUserData(string cookie);
 
 	User getUserData(string username, string password);
+
 };
 
 #endif

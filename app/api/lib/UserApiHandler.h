@@ -32,7 +32,7 @@ string parseHttpRequest(char *body);
  * @param       jsonData
  * @result      null
 */
-void parseJSONTokens(string &username, string &email, string &password, string JsonString);
+void parseJSONTokens(string &username, string &email, string &password, string &avatarurl, string JsonString);
 
 
 /*!
@@ -59,7 +59,7 @@ string generateRandomCookieCode(int length);
  * @param       cookie
  * @result      Return true if successfully added
 */
-bool addUserToDatabase(string username, string email, string password, string cookie);
+bool addUserToDatabase(string username, string email, string password, string avatarurl, string cookie);
 
 
 /*!
@@ -100,7 +100,7 @@ User *getUserData(string cookie);
  * @param       cookie
  * @result      
 */
-string ParseUserDataToJSON(string username, string password, string email);
+string ParseUserDataToJSON(string username, string password, string email, string avatarurl);
 
 #endif
 

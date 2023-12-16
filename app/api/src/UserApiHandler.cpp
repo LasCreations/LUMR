@@ -2,7 +2,7 @@
 
 void handleUserRequests(char *request, char *method, const char *route, int clientSocket)
 {
-    string username, email, password, cookie;
+    string username, email, password, cookie, avatarurl;
     char *body = strstr(request, "\r\n\r\n");
 
     if (body != NULL)
@@ -15,8 +15,9 @@ void handleUserRequests(char *request, char *method, const char *route, int clie
     if (strcmp(route, "/user/register") == 0)
     {
         cookie = generateRandomCookieCode(15);
-        parseJSONTokens(username, email, password, parseHttpRequest(body));
-        if (addUserToDatabase(username, email, password, cookie))
+        parseJSONTokens(username, email, password, avatarurl, parseHttpRequest(body));
+
+        if (addUserToDatabase(username, email, password, avatarurl, cookie))
         {
             char response[256]; // Adjust the size accordingly
             std::snprintf(response, sizeof(response), "HTTP/1.1 200 OK\r\nSet-Cookie: sessionID=%s; Path=/; Max-Age=3153600000\r\n\r\n",
@@ -41,7 +42,7 @@ void handleUserRequests(char *request, char *method, const char *route, int clie
 
             std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
                                        ParseUserDataToJSON(userData->getUsername(), userData->getPassword(),
-                                                           userData->getEmail());
+                                                           userData->getEmail(), userData->getAvatarURL());
             send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
         }
     }
@@ -70,7 +71,7 @@ string parseHttpRequest(char *body)
     return match.str();
 }
 
-void parseJSONTokens(string &username, string &email, string &password, string JsonString)
+void parseJSONTokens(string &username, string &email, string &password, string &avatarurl, string JsonString)
 {
     // Your JSON string
     Json::Value jsonData;
@@ -86,6 +87,7 @@ void parseJSONTokens(string &username, string &email, string &password, string J
         username = jsonData["username"].asString();
         email = jsonData["email"].asString();
         password = jsonData["password"].asString();
+        avatarurl = jsonData["avatarurl"].asString();
     }
     catch (const Json::Exception &e)
     {
@@ -110,9 +112,9 @@ string generateRandomCookieCode(int length)
     return cookieCode;
 }
 
-bool addUserToDatabase(string username, string email, string password, string cookie)
+bool addUserToDatabase(string username, string email, string password, string avatarurl, string cookie)
 {
-    User *user = new User(username, email, password, cookie);
+    User *user = new User(username, email, password, cookie, avatarurl);
     if (dbConn->createConnection())
     {
         std::cout << "Connected to database" << std::endl;
@@ -189,7 +191,7 @@ User *getUserData(string cookie)
     return data;
 }
 
-string ParseUserDataToJSON(string username, string password, string email)
+string ParseUserDataToJSON(string username, string password, string email, string avatarurl)
 {
     // Create a JSON object
     Json::Value jsonValue;
@@ -198,6 +200,7 @@ string ParseUserDataToJSON(string username, string password, string email)
     jsonValue["username"] = username;
     jsonValue["email"] = email;
     jsonValue["password"] = password;
+    jsonValue["avatarurl"] = avatarurl;
 
     // Convert the JSON object to a JSON string
     std::string jsonString = jsonValue.toStyledString();

@@ -9,7 +9,7 @@ using namespace std;
 class User
 {
 private:
-    string username, email, password, cookie;
+    string username, email, password, cookie, avatarURL;
 
 public:
     User()
@@ -18,14 +18,16 @@ public:
         this->username = "";
         this->password = "";
         this->cookie = "";
+        this->avatarURL = "";
     }
 
-    User(string username, string email, string password, string cookie)
+    User(string username, string email, string password, string cookie, string avatarURL)
     {
         this->email = email;
         this->username = username;
         this->password = password;
         this->cookie = cookie;
+        this->avatarURL = avatarURL;
     }
 
     User(User *user)
@@ -34,6 +36,7 @@ public:
         this->username = user->username;
         this->password = user->password;
         this->cookie = user->cookie;
+        this->avatarURL = user->avatarURL;
     }
 
     void setUsername(string username)
@@ -56,9 +59,19 @@ public:
         this->cookie = cookie;
     }
 
+    void setAvatarURL(string avatarURL)
+    {
+        this->avatarURL = avatarURL;
+    }
+
     string getUsername()
     {
         return this->username;
+    }
+
+    string getAvatarURL()
+    {
+        return this->avatarURL;
     }
 
     string getPassword()

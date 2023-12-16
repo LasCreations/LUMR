@@ -5,7 +5,8 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     var formData = {
         username: document.getElementById("username").value,
         email: document.getElementById("email").value,
-        password: document.getElementById("password").value
+        password: document.getElementById("password").value,
+        avatarurl: "irutu"
     };
     
     fetch("/user/register", {
@@ -17,10 +18,10 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     })
     .then(res => {
         if(res.ok){
-            alert("User added");
+            console.log("User added");
             window.location.href = "/dashboard.html";
         }else{
-            alert("User couldnt be added");
+            console.log("User couldnt be added");
         }
     })
     .catch(error => {
