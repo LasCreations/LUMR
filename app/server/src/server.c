@@ -1,5 +1,6 @@
 #include "../lib/server.h"
 
+
 int serverSocket;
 int clientSocket;
 char *request;
