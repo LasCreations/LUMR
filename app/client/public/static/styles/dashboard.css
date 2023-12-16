@@ -46,7 +46,7 @@ h1 {
     margin: 10px 0;
 }
 
-#avatar1, #avatar2,#avatar3    {
+#profileImage {
     width: 120px;
     height: 120px;
     object-fit: cover;
@@ -58,6 +58,7 @@ h1 {
     color: red; /* Change this to your desired color */
 }
 
-.tick{
+
+#avatarContainer .tick {
     display: none;
 }

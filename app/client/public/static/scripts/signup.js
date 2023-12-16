@@ -1,3 +1,60 @@
+var avatar = "default";
+
+
+window.onload = function (){
+    fetchAndSetImage('/avatars/avatar1.jpg', 'avatar1');
+    fetchAndSetImage('/avatars/avatar2.jpg', 'avatar2');
+    fetchAndSetImage('/avatars/avatar3.jpg', 'avatar3');
+    fetchAndSetImage('/avatars/avatar4.jpg', 'avatar4');
+    fetchAndSetImage('/avatars/avatar5.jpg', 'avatar5');
+    fetchAndSetImage('/avatars/avatar6.jpg', 'avatar6');
+}
+
+function fetchAndSetImage(url, elementId) {
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.blob(); // Convert the response to a Blob
+        })
+        .then(blob => {
+            // Create a data URL from the Blob
+            const imageUrl = URL.createObjectURL(blob);
+
+            // Set the image source
+            const imgElement = document.getElementById(elementId);
+            imgElement.src = imageUrl;
+
+            // Optional: Revoke the object URL to free up resources
+            // URL.revokeObjectURL(imageUrl);
+        })
+        .catch(error => console.error(`Error fetching image for ${elementId}:`, error));
+}
+
+function selectAvatar(avatarId) {
+    // Show the tick for the selected avatar
+    const selectedTick = document.getElementById(`tick${avatarId.charAt(avatarId.length - 1)}`);
+
+    if (selectedTick.style.display === 'block') {
+        // If the selected tick is already visible, hide it (toggle off)
+        selectedTick.style.display = 'none';
+        // Optionally, you may want to reset or clear the selected avatar ID here
+        console.log(`Deselected Avatar: ${avatarId}`);
+    } else {
+        // Reset all ticks
+        const allTicks = document.querySelectorAll('.tick');
+        allTicks.forEach(tick => tick.style.display = 'none');
+
+        // Show the tick for the selected avatar
+        selectedTick.style.display = 'block';
+
+        avatar = avatarId;
+        // Store the selected avatar ID or perform any other necessary actions
+        console.log(`Selected Avatar: ${avatarId}`);
+    }
+}
+
 document.getElementById("myForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -6,7 +63,7 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
         username: document.getElementById("username").value,
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
-        avatarurl: "irutu"
+        avatarurl: avatar
     };
     
     fetch("/user/register", {

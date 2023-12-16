@@ -10,42 +10,25 @@
 <body>
     <div class="container">
         
+
+
+
         <h1>Welcome to Your Dashboard</h1>
         <br>
+        
+        <div id="avatarContainer">
+            <div id="profileContainer">
+                <img id="profileImage">
+            </div>
+        </div>
+
         <div id="UsernameContainer"></div>
-        <br>
-        <div id="EmailContainer"></div>
-        <br>
-        <div id="PasswordContainer"></div>
         <br>
 
         <p>Congratulations! You have successfully logged in or signed up.</p>
         <p>This is your landing page after login or signing up.</p>
         <a href="/login.html">Logout</a>
     </div>
-
-    <div id="avatarContainer">
-        
-        <div id="profileContainer"  onclick="selectAvatar('avatar1')">
-            <i class="fa fa-check custom-icon tick" aria-hidden="true"></i>
-            <img id="avatar1">
-        </div>
-    
-        
-        <div id="profileContainer"  onclick="selectAvatar('avatar2')">
-            <i class="fa fa-check custom-icon tick" aria-hidden="true"></i>
-            <img id="avatar2" >
-        </div>
-    
-        
-        <div id="profileContainer"  onclick="selectAvatar('avatar3')">
-            <i class="fa fa-check custom-icon tick" aria-hidden="true"></i>
-            <img id="avatar3"  >
-        </div>
-    </div>
-
-    
-
     <script src="/static/scripts/dashboard.js"></script>
 </body>
 </html>

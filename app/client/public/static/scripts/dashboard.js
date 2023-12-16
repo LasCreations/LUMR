@@ -7,10 +7,6 @@ function getSessionID() {
 }
 
 window.onload = function () {
-    fetchAndSetImage('/avatars/test.jpg', 'avatar1');
-    fetchAndSetImage('/avatars/dog.jpg', 'avatar2');
-    fetchAndSetImage('/avatars/cat.png', 'avatar3');
-
     //Authenticated user
     if (getSessionID() !== null) {
         fetch("/user/auth", {
@@ -30,15 +26,13 @@ window.onload = function () {
                 console.log(data);
 
                 // Access the elements where you want to display the specific fields
-                const emailContainer = document.getElementById('EmailContainer');
-                const passwordContainer = document.getElementById('PasswordContainer');
                 const usernameContainer = document.getElementById('UsernameContainer');
 
                 // Update the content of the elements with the specific fields
-                emailContainer.textContent = `Email: ${data.email}`;
-                passwordContainer.textContent = `Password: ${data.password}`;
                 usernameContainer.textContent = `Username: ${data.username}`;
-
+                var avatar = data.avatarurl;
+                var url = "/avatars/" + avatar + ".jpg";
+                fetchAndSetImage(url);
             })
             .catch(error => {
                 console.error("Error:", error.message);
@@ -47,12 +41,15 @@ window.onload = function () {
     }
     //Not authenticated user
     else {
+        window.location.href = "/login.html";
         // Value is null, handle accordingly
-        console.log("No session ID available.");
+        alert("User Not Authenticated. Please Login OR SignUp");
+        
     }
 };
 
-function fetchAndSetImage(url, elementId) {
+
+function fetchAndSetImage(url) {
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -65,24 +62,11 @@ function fetchAndSetImage(url, elementId) {
             const imageUrl = URL.createObjectURL(blob);
 
             // Set the image source
-            const imgElement = document.getElementById(elementId);
+            const imgElement = document.getElementById("profileImage");
             imgElement.src = imageUrl;
 
             // Optional: Revoke the object URL to free up resources
             // URL.revokeObjectURL(imageUrl);
         })
         .catch(error => console.error(`Error fetching image for ${elementId}:`, error));
-}
-
-function selectAvatar(avatarId) {
-    // Reset all ticks
-    const allTicks = document.querySelectorAll('.tick');
-    // allTicks.forEach(tick => tick.style.display = 'none');
-
-    // Show the tick for the selected avatar
-    // const selectedTick = document.getElementById(`tick${avatarId.charAt(avatarId.length - 1)}`);
-    // selectedTick.style.display = 'block';
-
-    // Store the selected avatar ID or perform any other necessary actions
-    console.log(`Selected Avatar: ${avatarId}`);
 }
