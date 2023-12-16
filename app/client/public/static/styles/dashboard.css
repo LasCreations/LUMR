@@ -46,7 +46,7 @@ h1 {
     margin: 10px 0;
 }
 
-#avatar1 {
+#avatar1, #avatar2,#avatar3    {
     width: 120px;
     height: 120px;
     object-fit: cover;
@@ -54,18 +54,10 @@ h1 {
     border: 2px solid #fff; /* Add a white border for better visibility */
 }
 
-#avatar2 {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #fff; /* Add a white border for better visibility */
+.custom-icon {
+    color: red; /* Change this to your desired color */
 }
 
-#avatar3 {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #fff; /* Add a white border for better visibility */
+.tick{
+    display: none;
 }
