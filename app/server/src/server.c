@@ -90,7 +90,6 @@ int runServer()
             if(strcmp(route, "/user/auth") == 0){
                 handleUserRequests(request, method, route, clientSocket);
             }
-             
         }
         else
         {

@@ -40,7 +40,6 @@ window.onload = function () {
     }
 };
 
-
 function getSessionID() {
     if (/\S/.test(document.cookie)) {
         return document.cookie;
@@ -48,3 +47,19 @@ function getSessionID() {
         return null;
     }
 }
+
+// function sendContinuousRequest() {
+//     // Your asynchronous code here, for example, using fetch
+//     fetch('your_server_endpoint')
+//         .then(response => response.json())
+//         .then(data => {
+//             // Process the data from the server
+//             console.log(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// }
+
+// // Set up a function to send requests every 2 seconds (adjust as needed)
+// setInterval(sendContinuousRequest, 2000);
