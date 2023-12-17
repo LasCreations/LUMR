@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,28 +8,54 @@
     <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
     <title>Dashboard</title>
 </head>
+
 <body>
-    <div class="container">
-        
 
-
-
-        <h1>Welcome to Your Dashboard</h1>
-        <br>
-        
-        <div id="avatarContainer">
-            <div id="profileContainer">
-                <img id="profileImage">
+    <div class="main-container">
+        <div class="top-panel">
+            <div class="top-panel-left">
+                <a href="#">LURM</a>
+            </div>
+            <div class="top-panel-middle">
+                <div class="top-panel-middle-search-form">
+                    <form id="myForm" action="/submit" method="POST">
+                        <input type="text" id="name" name="name" placeholder="Search for friends" required>
+                    </form>
+                </div>
+                <div class="top-panel-middle-search-icon">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="top-panel-right">
+                <div class="top-panel-right-first">
+                    <div class="top-panel-right-first-left">
+                        <div id="UsernameContainer"></div>
+                    </div>
+                    <div class="top-panel-right-first-right">
+                        <div id="avatarContainer">
+                            <div id="profileContainer">
+                                <img id="profileImage">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="top-panel-right-second">
+                    <i class="fa fa-inbox fa-lg" aria-hidden="true"></i>
+                </div>
+                <div class="top-panel-right-third">
+                    <i class="fa fa-bell-o fa-lg" aria-hidden="true"></i>
+                </div>
+                <div class="top-panel-right-fourth" onclick="Logout()">
+                    <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+                </div>
             </div>
         </div>
+        <div class="bottom-panel">
 
-        <div id="UsernameContainer"></div>
-        <br>
-
-        <p>Congratulations! You have successfully logged in or signed up.</p>
-        <p>This is your landing page after login or signing up.</p>
-        <a href="/login.html">Logout</a>
+        </div>
     </div>
+
     <script src="/static/scripts/dashboard.js"></script>
 </body>
+
 </html>

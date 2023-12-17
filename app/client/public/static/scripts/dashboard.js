@@ -29,7 +29,7 @@ window.onload = function () {
                 const usernameContainer = document.getElementById('UsernameContainer');
 
                 // Update the content of the elements with the specific fields
-                usernameContainer.textContent = `Username: ${data.username}`;
+                usernameContainer.textContent = `${data.username}`;
                 var avatar = data.avatarurl;
                 var url = "/avatars/" + avatar + ".jpg";
                 fetchAndSetImage(url);
@@ -69,4 +69,8 @@ function fetchAndSetImage(url) {
             // URL.revokeObjectURL(imageUrl);
         })
         .catch(error => console.error(`Error fetching image for ${elementId}:`, error));
+}
+
+function Logout() {
+    window.location.href = "/login.html";
 }
