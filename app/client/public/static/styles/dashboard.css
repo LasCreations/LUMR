@@ -123,6 +123,10 @@ body {
     width: 10%;
 }
 
+.top-panel-middle-search-icon:hover {
+    cursor: pointer;
+}
+
 .top-panel-middle-search-form form {
     display: flex;
     flex-direction: column;

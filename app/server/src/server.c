@@ -1,6 +1,5 @@
 #include "../lib/server.h"
 
-
 int serverSocket;
 int clientSocket;
 char *request;
@@ -79,17 +78,39 @@ int runServer()
         // only support GET method
         if (strcmp(method, "GET") == 0)
         {
-            if(handlePageRequest(route, clientSocket)){
-
+            // Check for different page requests
+            if (strcmp(route, "/dashboard.html") != 0)
+            {
+                if (handlePageRequest(route, clientSocket))
+                {
+                }
+            }
+            else
+            {
+                if (isAuth(request, method, route, clientSocket))
+                {
+                    if (handlePageRequest(route, clientSocket))
+                    {
+                    }
+                }else{
+                    const char response[] = "HTTP/1.1 401 Unauthorized\r\n\n";
+                    send(clientSocket, response, sizeof(response), 0);
+                }
             }
         }
         else if (strcmp(method, "POST") == 0)
         {
-            if(strcmp(route, "/user/register") == 0){
+            if (strcmp(route, "/user/register") == 0)
+            {
                 handleUserRequests(request, method, route, clientSocket);
             }
-            if(strcmp(route, "/user/auth") == 0){
+            if (strcmp(route, "/user/auth") == 0)
+            {
                 handleUserRequests(request, method, route, clientSocket);
+            }
+            if (strcmp(route, "/friend/search") == 0)
+            {
+                // handleUserRequests(request, method, route, clientSocket);
             }
         }
         else

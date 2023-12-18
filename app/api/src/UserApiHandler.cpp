@@ -48,6 +48,13 @@ void handleUserRequests(char *request, char *method, const char *route, int clie
     }
 }
 
+bool isAuth(char *request, char *method, const char *route, int clientSocket){
+    if(!parseCookie(request).empty())
+        return true;
+    else 
+        return false;
+}
+
 string parseHttpRequest(char *body)
 {
     // Define a regex pattern to match JSON

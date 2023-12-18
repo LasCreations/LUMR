@@ -49,6 +49,30 @@ window.onload = function () {
 };
 
 
+function searchUser(){
+    var formData = {
+        username: document.getElementById("username").value
+    };
+
+    fetch("/friend/search", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(res => {
+        if(res.ok){
+            console.log("User found");
+        }else{
+            console.log("User not found");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error.message);
+    });
+}
+
 function fetchAndSetImage(url) {
     fetch(url)
         .then(response => {

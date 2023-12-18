@@ -111,6 +111,8 @@ extern "C" {
 #endif
 // C specific code goes here
 
+#include <stdbool.h>
+
 /*!
  * @function    handleUserRequests
  * @abstract    Accepts the user request 
@@ -120,6 +122,9 @@ extern "C" {
  * @result      null
 */
 void handleUserRequests(char *request, char *method, const char *route, int clientSocket);
+
+
+bool isAuth(char *request, char *method, const char *route, int clientSocket);
 
 #ifdef __cplusplus
 }
