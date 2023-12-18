@@ -21,8 +21,9 @@
 #define BACKLOG 10 // number of pending connections queue will hold
 
 
-#include "../../api/lib/PageServingApi.h"
-#include "../../api/lib/UserApiHandler.h"
+#include "../../api/lib/page.h"
+#include "../../api/lib/auth.h"
+#include "../../api/lib/user.h"
 
 
 int runServer();

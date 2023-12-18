@@ -66,7 +66,7 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
         avatarurl: avatar
     };
     
-    fetch("/user/register", {
+    fetch("/api/auth/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -78,6 +78,12 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
             console.log("User added");
             window.location.href = "/dashboard.html";
         }else{
+            const errorDiv = document.getElementById('error');
+            errorDiv.style.display = 'block';
+            errorDiv.style.textAlign = 'center';
+            errorDiv.style.alignItems = 'center';
+            errorDiv.style.justifyContent = 'center';
+            errorDiv.style.display = 'flex';
             console.log("User couldnt be added");
         }
     })

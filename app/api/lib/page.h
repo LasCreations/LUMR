@@ -1,5 +1,5 @@
-#ifndef PAGE_SERVING_API
-#define PAGE_SERVING_API
+#ifndef PAGE_SERVING_API_H
+#define PAGE_SERVING_API_H
 
 #include <stdbool.h>
 
@@ -7,7 +7,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 bool handlePageRequest(char *route, int clientSocket);
 

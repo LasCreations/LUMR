@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 // C specific code goes here
-#include <stdbool.h>
+
 
 
 #ifdef __cplusplus

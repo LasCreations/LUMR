@@ -78,40 +78,15 @@ int runServer()
         // only support GET method
         if (strcmp(method, "GET") == 0)
         {
-            // Check for different page requests
-            if (strcmp(route, "/dashboard.html") != 0)
-            {
-                if (handlePageRequest(route, clientSocket))
-                {
-                }
-            }
-            else
-            {
-                if (isAuth(request, method, route, clientSocket))
-                {
-                    if (handlePageRequest(route, clientSocket))
-                    {
-                    }
-                }else{
-                    const char response[] = "HTTP/1.1 401 Unauthorized\r\n\n";
-                    send(clientSocket, response, sizeof(response), 0);
-                }
-            }
+            handlePageRequest(route, clientSocket);
         }
         else if (strcmp(method, "POST") == 0)
         {
-            if (strcmp(route, "/user/register") == 0)
-            {
-                handleUserRequests(request, method, route, clientSocket);
-            }
-            if (strcmp(route, "/user/auth") == 0)
-            {
-                handleUserRequests(request, method, route, clientSocket);
-            }
-            if (strcmp(route, "/friend/search") == 0)
-            {
-                // handleUserRequests(request, method, route, clientSocket);
-            }
+            if(strcmp(route, "/api/auth/register") == 0)
+                registerUser(request, clientSocket);
+                
+            if(strcmp(route, "/api/users/me") == 0)
+                findUser(request, clientSocket);
         }
         else
         {

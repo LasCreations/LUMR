@@ -1,55 +1,55 @@
 function getSessionID() {
     if (/\S/.test(document.cookie)) {
-        return document.cookie;
-    } else {
-        return null;
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("sessionID=")) {
+                var sessionId = cookie.substring("sessionID=".length);
+                console.log(sessionId);
+                return sessionId;
+            }
+        }
     }
+    return null;
 }
 
 window.onload = function () {
-    //Authenticated user
-    if (getSessionID() !== null) {
-        fetch("/user/auth", {
+
+    var sessionID = {
+        cookie: getSessionID()
+    }
+
+    if (sessionID != null) {
+        fetch("/api/users/me", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify(sessionID),
         }).then(res => {
             if (res.ok) {
+                console.log("User found");
                 return res.json(); // Parse the JSON from the response
             } else {
+                console.log("User not found");
                 throw new Error('Network response was not ok');
             }
-        })
-            .then(data => {
-                // Handle the JSON data
-                console.log(data);
-
-                // Access the elements where you want to display the specific fields
-                const usernameContainer = document.getElementById('UsernameContainer');
-
-                // Update the content of the elements with the specific fields
-                usernameContainer.textContent = `${data.username}`;
-                var avatar = data.avatarurl;
-                var url = "/avatars/" + avatar + ".jpg";
-                fetchAndSetImage(url);
-            })
-            .catch(error => {
-                console.error("Error:", error.message);
-            });
-
-    }
-    //Not authenticated user
-    else {
+        }).then(data => {
+            console.log(data);
+            const usernameContainer = document.getElementById('UsernameContainer');
+            usernameContainer.textContent = `${data.username}`;
+            var avatar = data.avatarurl;
+            var url = "/avatars/" + avatar + ".jpg";
+            fetchAndSetImage(url);
+        }).catch(error => {
+            console.error("Error:", error.message);
+        });
+    } else {
         window.location.href = "/login.html";
-        // Value is null, handle accordingly
-        alert("User Not Authenticated. Please Login OR SignUp");
-        
     }
 };
 
-
-function searchUser(){
+function searchUser() {
     var formData = {
         username: document.getElementById("username").value
     };
@@ -61,16 +61,16 @@ function searchUser(){
         },
         body: JSON.stringify(formData),
     })
-    .then(res => {
-        if(res.ok){
-            console.log("User found");
-        }else{
-            console.log("User not found");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error.message);
-    });
+        .then(res => {
+            if (res.ok) {
+                console.log("User found");
+            } else {
+                console.log("User not found");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error.message);
+        });
 }
 
 function fetchAndSetImage(url) {

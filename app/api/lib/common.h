@@ -24,7 +24,7 @@
 #include <fstream>
 #include <cstring>
 
-
+#include <stdbool.h>
 
 using namespace std;
 
@@ -35,8 +35,17 @@ using namespace std;
 #include "../../database/lib/DBConnector.h"
 #include "../../database/models/user.h"
 
-// extern DBConnector *dbConn = new DBConnector();
 
 extern DBConnector *dbConn; 
+extern std::string username, email, password, avatarurl, cookie; 
+
+// /*!
+//  * @function    getUserData
+//  * @abstract    
+//  * @discussion  
+//  * @param       cookie
+//  * @result      
+// */
+string parseHttpRequest(char *request);
 
 #endif

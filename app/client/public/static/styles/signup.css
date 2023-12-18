@@ -111,3 +111,18 @@ h1 {
 #avatarContainer .tick {
     display: none;
 }
+
+.error {
+    display: none;
+}
+
+.error .text, .error .icon {
+    padding: 5px;
+    margin: 2px;
+}
+
+.error p {
+    color: #ff0000;
+}
+
+
