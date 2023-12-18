@@ -1,34 +1,42 @@
+function getSessionID() {
+    if (/\S/.test(document.cookie)) {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("sessionID=")) {
+                var sessionId = cookie.substring("sessionID=".length);
+                console.log(sessionId);
+                return sessionId;
+            }
+        }
+    }
+    return null;
+}
+
 window.onload = function () {
-    //Authenticated user
-    if (getSessionID() !== null) {
-        fetch("/user/auth", {
+
+    var sessionID = {
+        cookie: getSessionID()
+    }
+
+    if (sessionID != null) {
+        fetch("/api/users/me", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify(sessionID),
         }).then(res => {
-                if (res.ok) {
-                    window.location.href = "/dashboard.html"; // Redirect User to the dashboard
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            }).catch(error => {
-                console.error("Error:", error.message);
-            });
-
-    }
-    //Not authenticated user
-    else {
-        // Value is null, handle accordingly
-        console.log("No session ID available.");
+            if (res.ok) {
+                console.log("User found");
+                window.location.href = "/dashboard.html";
+            } else {
+                console.log("User not found");
+            }
+        }).catch(error => {
+            console.error("Error:", error.message);
+        });
+    } else {
+        
     }
 };
-
-
-function getSessionID() {
-    if (/\S/.test(document.cookie)) {
-        return document.cookie;
-    } else {
-        return null;
-    }
-}

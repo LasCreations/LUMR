@@ -20,6 +20,7 @@
 using namespace std;
 using namespace sql;
 
+
 class DBConnector
 {
 
@@ -30,6 +31,7 @@ private:
 	PreparedStatement *prep_stmt;
 	ResultSet *res;
 	string DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME;
+	
 
 public:
 	DBConnector();
@@ -50,7 +52,10 @@ public:
 
 	User *getUserData(string cookie);
 
-	User getUserData(string username, string password);
+	User *searchUsername(string username);
+	
+	bool loginUser(string username, string password);
+	// User getUserData(string username, string password);
 
 };
 

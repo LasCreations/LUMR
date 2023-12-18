@@ -6,6 +6,11 @@
 
 #include "common.h"
 
+string parseUsernameToken(string JsonString);
+
+User *searchUsername(string target);
+
+string ParseSearchDataToJSON(string username, string avatarurl);
 
 
 #endif
@@ -17,8 +22,7 @@ extern "C" {
 #endif
 
 // C specific code goes here
-#include <stdbool.h>
-
+void searchUser(char *request, int clientSocket);
 
 #ifdef __cplusplus
 }

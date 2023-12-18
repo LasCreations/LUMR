@@ -1,5 +1,7 @@
 #include "../lib/DBConnector.h"
 
+
+
 DBConnector::DBConnector() : driver(nullptr), con(nullptr), stmt(nullptr), prep_stmt(nullptr), res(nullptr) {
 	
 }
@@ -97,22 +99,45 @@ bool DBConnector::addUser(User *user)
 
 User *DBConnector::getUserData(string cookie)
 {
-	string username, email, password, avatarurl;
 	User *data = nullptr;
-	
 	try
 	{
 		this->stmt = con->createStatement();
 		this->res = this->stmt->executeQuery("SELECT Passport, Username, Email, Password, AvatarURL FROM USER WHERE Passport = '" + cookie + "'");
 		while (this->res->next())
 		{
-			username = this->res->getString("Username");
-			email = this->res->getString("Email");
-			password = this->res->getString("Password");
-			avatarurl = this->res->getString("AvatarURL");
+			data = new User(this->res->getString("Username"),
+			 				this->res->getString("Email"),
+							this->res->getString("Password"),
+							cookie,
+							this->res->getString("AvatarURL"));
 		}
 
-		data = new User(username, email, password, cookie, avatarurl);
+		
+	}
+	catch (const sql::SQLException &e)
+	{
+		// Handle the exception, e.g., print error message
+		std::cerr << "SQLException: " << e.what() << std::endl;
+	}
+	delete this->stmt;
+	delete this->res;
+	return data;
+}
+
+User *DBConnector::searchUsername(string username){
+	User *data = nullptr;
+	
+	try
+	{
+		this->stmt = con->createStatement();
+		this->res = this->stmt->executeQuery("SELECT  Username, AvatarURL FROM USER WHERE Username = '" + username + "'");
+		while (this->res->next())
+		{
+			data = new User(this->res->getString("Username"), "", "", "", this->res->getString("AvatarURL"));
+		}
+
+		
 	}
 	catch (const sql::SQLException &e)
 	{

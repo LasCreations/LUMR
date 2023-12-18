@@ -24,6 +24,7 @@
 #include "../../api/lib/page.h"
 #include "../../api/lib/auth.h"
 #include "../../api/lib/user.h"
+#include "../../api/lib/search.h"
 
 
 int runServer();
