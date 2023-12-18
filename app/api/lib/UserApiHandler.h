@@ -5,11 +5,10 @@
 // C++ specific code goes here
 
 #include "common.h"
-#include "../../database/lib/DBConnector.h"
-#include "../../database/models/user.h"
 
 //Create a connection
-DBConnector *dbConn = new DBConnector();
+// DBConnector *dbConn = new DBConnector();
+
 
 /*!
  * @function    parseHttpRequest

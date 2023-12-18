@@ -29,10 +29,14 @@
 using namespace std;
 
 #define SIZE 1024  // buffer size
-#define PORT 8080  // port number
-#define BACKLOG 10 // number of pending connections queue will hold
+// #define PORT 8080  // port number
+// #define BACKLOG 10 // number of pending connections queue will hold
 
+#include "../../database/lib/DBConnector.h"
+#include "../../database/models/user.h"
 
+// extern DBConnector *dbConn = new DBConnector();
 
+extern DBConnector *dbConn; 
 
 #endif
