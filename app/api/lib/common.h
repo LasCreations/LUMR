@@ -48,4 +48,6 @@ extern std::string username, email, password, avatarurl, cookie;
 // */
 string parseHttpRequest(char *request);
 
+string generateRandomCode(int length);
+
 #endif

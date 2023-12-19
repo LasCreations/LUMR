@@ -2,11 +2,8 @@
 
 void registerUser(char *request, int clientSocket)
 {
-    // char method[10], route[100];
-    // sscanf(request, "%s %s", method, route);
-    
-
-    cookie = generateRandomCookieCode(24);
+   
+    cookie = generateRandomCode(24);
     parseJSONTokens(parseHttpRequest(request));
     if(addUserToDatabase(username, email, password, avatarurl, cookie)){
         char response[256]; 
@@ -18,23 +15,6 @@ void registerUser(char *request, int clientSocket)
         const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
         send(clientSocket, response, sizeof(response) - 1, 0);
     }
-}
-
-string generateRandomCookieCode(int length)
-{
-    const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    string cookieCode;
-
-    // Seed the random number generator with the current time
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
-    for (int i = 0; i < length; ++i)
-    {
-        const int randomIndex = std::rand() % characters.length();
-        cookieCode += characters[randomIndex];
-    }
-
-    return cookieCode;
 }
 
 void parseJSONTokens(string JsonString)

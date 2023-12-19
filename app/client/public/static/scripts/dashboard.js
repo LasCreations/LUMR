@@ -115,6 +115,44 @@ function fetchAndSetImage(url, elementID) {
         .catch(error => console.error(`Error fetching image for ${elementId}:`, error));
 }
 
+function addUser(){
+    const requestIDContainer = document.getElementById('search-username');
+    const usernameContainer = document.getElementById('UsernameContainer');
+    var button = document.querySelector('.follow-btn');
+
+        
+        if (button.textContent === 'Follow') {
+            var searchData = {
+                userID: usernameContainer.textContent,
+                followerID: requestIDContainer.textContent
+            };
+        
+            fetch("/api/follow/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(searchData),
+            })
+                .then(res => {
+                    if (res.ok) {
+                        console.log("User added");
+                        button.textContent = 'Unfollow';
+                    } else {
+                        console.log("User not added");
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error.message);
+                });
+        } else {
+            button.textContent = 'Follow';
+        }
+
+    
+}
+
 function Logout() {
     window.location.href = "/login.html";
 }

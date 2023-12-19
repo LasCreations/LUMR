@@ -6,7 +6,11 @@
 
 #include "common.h"
 
+string userID, followerID;
 
+void parseFollowRequestTokens(string JsonString);
+
+bool addFriendshipToDatabase(); 
 
 #endif
 
@@ -17,7 +21,7 @@ extern "C" {
 #endif
 
 // C specific code goes here
-#include <stdbool.h>
+void followUser(char *request, int clientSocket);
 
 
 #ifdef __cplusplus

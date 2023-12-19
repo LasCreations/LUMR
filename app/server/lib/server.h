@@ -25,6 +25,7 @@
 #include "../../api/lib/auth.h"
 #include "../../api/lib/user.h"
 #include "../../api/lib/search.h"
+#include "../../api/lib/followers.h"
 
 
 int runServer();

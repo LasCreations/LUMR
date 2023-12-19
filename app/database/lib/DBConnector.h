@@ -55,7 +55,8 @@ public:
 	User *searchUsername(string username);
 	
 	bool loginUser(string username, string password);
-	// User getUserData(string username, string password);
+
+	bool addFriendshipToDatabase(string friendshipID_1, string friendshipID_2, string userID, string followerID);
 
 };
 

@@ -1,3 +1,7 @@
+https://www.freepik.com/premium-ai-image/painting-woman-with-long-hair-braid-her-hair_79089377.htm
+Aaliyah Ricketts11:38 PM
+https://www.freepik.com/premium-ai-image/mary-afro-hair-girl-wildstyle-cartoon-art_68260266.htm
+
 
 sudo docker build . -t trivpalserver
 

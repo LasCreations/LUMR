@@ -17,7 +17,7 @@ string parseHttpRequest(char *request)
 
     if (std::regex_search(dataStr, match, jsonRegex))
     {
-        std::cout << "Matched JSON data: " << match.str() << std::endl;
+        std::cout << "JSON data: " << match.str() << std::endl;
     }
     else
     {
@@ -25,4 +25,21 @@ string parseHttpRequest(char *request)
     }
 
     return match.str();
+}
+
+string generateRandomCode(int length)
+{
+    const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    string Code;
+
+    // Seed the random number generator with the current time
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+    for (int i = 0; i < length; ++i)
+    {
+        const int randomIndex = std::rand() % characters.length();
+        Code += characters[randomIndex];
+    }
+
+    return Code;
 }

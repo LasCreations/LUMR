@@ -18,8 +18,6 @@
 #include "common.h"
 
 
-string generateRandomCookieCode(int length);
-
 void parseJSONTokens(string JsonString);
 
 bool addUserToDatabase(string username, string email, string password, string avatarurl, string cookie);

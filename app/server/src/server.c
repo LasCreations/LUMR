@@ -90,6 +90,9 @@ int runServer()
                 
             if(strcmp(route, "/api/search/user") == 0)
                 searchUser(request, clientSocket);
+            
+            if(strcmp(route, "/api/follow/user") == 0)
+                followUser(request, clientSocket);
         }
         else
         {

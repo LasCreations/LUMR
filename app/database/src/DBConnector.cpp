@@ -148,3 +148,37 @@ User *DBConnector::searchUsername(string username){
 	delete this->res;
 	return data;
 }
+
+bool DBConnector::addFriendshipToDatabase(string friendshipID_1, string friendshipID_2, string userID, string followerID){
+try
+	{
+
+		cout << "ID 1: " << friendshipID_1 << endl;
+		cout << "ID 2: " << friendshipID_2 << endl;
+
+		this->prep_stmt = this->con->prepareStatement("INSERT INTO FRIENDS(FriendshipKey, UserID, FollowerID, Status) VALUES(?,?,?,?)");
+
+		//User who sent the request 
+		this->prep_stmt->setString(1, friendshipID_1);
+		this->prep_stmt->setString(2, userID);
+		this->prep_stmt->setString(3, followerID);
+		this->prep_stmt->setInt(4, 1);
+		this->prep_stmt->execute();
+
+		//User who recieved the request 
+		this->prep_stmt->setString(1, friendshipID_2);
+		this->prep_stmt->setString(2, followerID);
+		this->prep_stmt->setString(3, userID);
+		this->prep_stmt->setInt(4, 0);
+		this->prep_stmt->execute();
+
+		delete this->prep_stmt;
+		return true; 
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << "Error adding user: " << e.what() << std::endl;
+		delete this->prep_stmt;
+		return false; 
+	}
+}
