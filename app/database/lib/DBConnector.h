@@ -56,8 +56,9 @@ public:
 	
 	bool loginUser(string username, string password);
 
-	bool addFriendshipToDatabase(string friendshipID_1, string friendshipID_2, string userID, string followerID);
+	bool addFriendshipToDatabase( string key, string userID, string followerID, bool status);
 
+	bool checkFriendship(string userID_1, string userID_2);
 };
 
 #endif

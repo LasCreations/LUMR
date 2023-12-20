@@ -50,7 +50,9 @@ window.onload = function () {
 };
 
 function searchUser() {
+    const usernameContainer = document.getElementById('UsernameContainer');
     var formData = {
+        userID: usernameContainer.textContent,
         username: document.getElementById("username").value
     };
 

@@ -5,12 +5,15 @@
 #ifdef __cplusplus
 
 #include "common.h"
+#include "connections.h"
 
-string parseUsernameToken(string JsonString);
+
+
+string parseUsernameToken(string JsonString, string user_id);
 
 User *searchUsername(string target);
 
-string ParseSearchDataToJSON(string username, string avatarurl);
+string ParseSearchDataToJSON(string username, string avatarurl, bool status);
 
 
 #endif

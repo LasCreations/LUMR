@@ -2,7 +2,6 @@
 
 void registerUser(char *request, int clientSocket)
 {
-   
     cookie = generateRandomCode(24);
     parseJSONTokens(parseHttpRequest(request));
     if(addUserToDatabase(username, email, password, avatarurl, cookie)){

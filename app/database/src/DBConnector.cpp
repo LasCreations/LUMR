@@ -1,34 +1,37 @@
 #include "../lib/DBConnector.h"
 
-
-
-DBConnector::DBConnector() : driver(nullptr), con(nullptr), stmt(nullptr), prep_stmt(nullptr), res(nullptr) {
-	
+DBConnector::DBConnector() : driver(nullptr), con(nullptr), stmt(nullptr), prep_stmt(nullptr), res(nullptr)
+{
 }
 
-int DBConnector::getEnvConfig(string path){
-    // Read the JSON file
-    std::ifstream jsonFile(path);
-    if (!jsonFile.is_open()) {
-        std::cerr << "Error opening JSON file: " << path << "\n";
-        return 1;
-    }
+int DBConnector::getEnvConfig(string path)
+{
+	// Read the JSON file
+	std::ifstream jsonFile(path);
+	if (!jsonFile.is_open())
+	{
+		std::cerr << "Error opening JSON file: " << path << "\n";
+		return 1;
+	}
 
-    // Parse the JSON data from the file
-    Json::Value jsonData;
-    Json::CharReaderBuilder readerBuilder;
-    try {
-        Json::parseFromStream(readerBuilder, jsonFile, &jsonData, nullptr);
+	// Parse the JSON data from the file
+	Json::Value jsonData;
+	Json::CharReaderBuilder readerBuilder;
+	try
+	{
+		Json::parseFromStream(readerBuilder, jsonFile, &jsonData, nullptr);
 
-        // Access individual fields
+		// Access individual fields
 		this->DATABASE_URL = jsonData["DATABASE_URL"].asString();
 		this->DATABASE_PASSWORD = jsonData["DATABASE_PASSWORD"].asString();
 		this->DATABASE_USER = jsonData["DATABASE_USER"].asString();
 		this->DATABASE_NAME = jsonData["DATABASE_NAME"].asString();
-    } catch (const Json::Exception &e) {
-        std::cerr << "Error parsing JSON: " << e.what() << "\n";
-        return 1;
-    }
+	}
+	catch (const Json::Exception &e)
+	{
+		std::cerr << "Error parsing JSON: " << e.what() << "\n";
+		return 1;
+	}
 
 	return 1;
 }
@@ -77,23 +80,22 @@ bool DBConnector::addUser(User *user)
 {
 	try
 	{
-		this->prep_stmt = this->con->prepareStatement("INSERT INTO USER(Passport, Username, Email, Password, AvatarURL) VALUES(?,?,?,?,?)");
-
+		this->prep_stmt = this->con->prepareStatement("INSERT INTO users(passport, username, email, password, avatar_url) VALUES(?,?,?,?,?)");											
 		this->prep_stmt->setString(1, user->getCookie());
 		this->prep_stmt->setString(2, user->getUsername());
 		this->prep_stmt->setString(3, user->getEmail());
 		this->prep_stmt->setString(4, user->getPassword());
 		this->prep_stmt->setString(5, user->getAvatarURL());
-		
+
 		this->prep_stmt->execute();
 		delete this->prep_stmt;
-		return true; 
+		return true;
 	}
 	catch (const std::exception &e)
 	{
 		std::cerr << "Error adding user: " << e.what() << std::endl;
 		delete this->prep_stmt;
-		return false; 
+		return false;
 	}
 }
 
@@ -103,17 +105,15 @@ User *DBConnector::getUserData(string cookie)
 	try
 	{
 		this->stmt = con->createStatement();
-		this->res = this->stmt->executeQuery("SELECT Passport, Username, Email, Password, AvatarURL FROM USER WHERE Passport = '" + cookie + "'");
+		this->res = this->stmt->executeQuery("SELECT passport, username, email, password, avatar_url FROM users WHERE passport = '" + cookie + "'");
 		while (this->res->next())
 		{
-			data = new User(this->res->getString("Username"),
-			 				this->res->getString("Email"),
-							this->res->getString("Password"),
+			data = new User(this->res->getString("username"),
+							this->res->getString("email"),
+							this->res->getString("password"),
 							cookie,
-							this->res->getString("AvatarURL"));
+							this->res->getString("avatar_url"));
 		}
-
-		
 	}
 	catch (const sql::SQLException &e)
 	{
@@ -125,19 +125,18 @@ User *DBConnector::getUserData(string cookie)
 	return data;
 }
 
-User *DBConnector::searchUsername(string username){
+User *DBConnector::searchUsername(string username)
+{
 	User *data = nullptr;
-	
+
 	try
 	{
 		this->stmt = con->createStatement();
-		this->res = this->stmt->executeQuery("SELECT  Username, AvatarURL FROM USER WHERE Username = '" + username + "'");
+		this->res = this->stmt->executeQuery("SELECT  username, avatar_url FROM users WHERE username = '" + username + "'");
 		while (this->res->next())
 		{
-			data = new User(this->res->getString("Username"), "", "", "", this->res->getString("AvatarURL"));
+			data = new User(this->res->getString("username"), "", "", "", this->res->getString("avatar_url"));
 		}
-
-		
 	}
 	catch (const sql::SQLException &e)
 	{
@@ -149,36 +148,56 @@ User *DBConnector::searchUsername(string username){
 	return data;
 }
 
-bool DBConnector::addFriendshipToDatabase(string friendshipID_1, string friendshipID_2, string userID, string followerID){
-try
+bool DBConnector::checkFriendship(string userID_1, string userID_2){
+	try
 	{
+		this->stmt = con->createStatement();
+		this->res = this->stmt->executeQuery("SELECT status FROM user_connections WHERE user_id = '" + userID_1 + "' AND  following_id= '" + userID_2 + "'");
+		bool check = false;
+		bool isFriend = false;
+		while (this->res->next())
+		{
+			check = true; //if found
+			isFriend = this->res->getBoolean("status");
+		}
+		
+		if(check && isFriend){
+			return true;
+		}else{
+			return false;
+		}
 
-		cout << "ID 1: " << friendshipID_1 << endl;
-		cout << "ID 2: " << friendshipID_2 << endl;
+	}
+	catch (const sql::SQLException &e)
+	{
+		// Handle the exception, e.g., print error message
+		std::cerr << "SQLException: " << e.what() << std::endl;
+	}
+	delete this->stmt;
+	delete this->res;
+	return false;
+}
 
-		this->prep_stmt = this->con->prepareStatement("INSERT INTO FRIENDS(FriendshipKey, UserID, FollowerID, Status) VALUES(?,?,?,?)");
+bool DBConnector::addFriendshipToDatabase(string key, string userID, string followerID, bool status)
+{
+	try
+	{
+		this->prep_stmt = this->con->prepareStatement("INSERT INTO user_connections(connection_key, user_id, following_id, status) VALUES(?,?,?,?)");
 
-		//User who sent the request 
-		this->prep_stmt->setString(1, friendshipID_1);
+		// User who sent the request
+		this->prep_stmt->setString(1, key);
 		this->prep_stmt->setString(2, userID);
 		this->prep_stmt->setString(3, followerID);
-		this->prep_stmt->setInt(4, 1);
-		this->prep_stmt->execute();
-
-		//User who recieved the request 
-		this->prep_stmt->setString(1, friendshipID_2);
-		this->prep_stmt->setString(2, followerID);
-		this->prep_stmt->setString(3, userID);
-		this->prep_stmt->setInt(4, 0);
+		this->prep_stmt->setBoolean(4, status);
 		this->prep_stmt->execute();
 
 		delete this->prep_stmt;
-		return true; 
+		return true;
 	}
 	catch (const std::exception &e)
 	{
 		std::cerr << "Error adding user: " << e.what() << std::endl;
 		delete this->prep_stmt;
-		return false; 
+		return false;
 	}
 }

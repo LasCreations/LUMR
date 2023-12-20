@@ -17,6 +17,11 @@
 #include<string>
 #include<iostream>
 #include<regex>
+#include <ctime>
+#include <cstdlib>
+#include <thread>
+#include <chrono>
+
 
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/json.h>
@@ -38,6 +43,8 @@ using namespace std;
 
 extern DBConnector *dbConn; 
 extern std::string username, email, password, avatarurl, cookie; 
+
+
 
 // /*!
 //  * @function    getUserData

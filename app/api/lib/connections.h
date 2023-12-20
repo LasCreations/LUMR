@@ -6,11 +6,13 @@
 
 #include "common.h"
 
-string userID, followerID;
+
 
 void parseFollowRequestTokens(string JsonString);
 
 bool addFriendshipToDatabase(); 
+
+bool checkFriendship(string userID_1, string userID_2);
 
 #endif
 
