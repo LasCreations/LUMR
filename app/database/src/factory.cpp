@@ -1,4 +1,4 @@
-#include "../lib/DBConnector.h"
+#include "../lib/factory.h"
 
 DBConnector::DBConnector() : driver(nullptr), con(nullptr), stmt(nullptr), prep_stmt(nullptr), res(nullptr)
 {

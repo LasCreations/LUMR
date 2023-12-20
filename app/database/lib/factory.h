@@ -15,7 +15,7 @@
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/json.h>
 
-#include "../models/user.h"
+#include "../../models/user.h"
 
 using namespace std;
 using namespace sql;

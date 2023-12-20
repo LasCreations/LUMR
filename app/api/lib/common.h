@@ -37,8 +37,8 @@ using namespace std;
 // #define PORT 8080  // port number
 // #define BACKLOG 10 // number of pending connections queue will hold
 
-#include "../../database/lib/DBConnector.h"
-#include "../../database/models/user.h"
+#include "../../database/lib/factory.h"
+#include "../../models/user.h"
 
 
 extern DBConnector *dbConn; 
