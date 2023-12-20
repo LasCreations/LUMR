@@ -18,9 +18,9 @@
 #include "common.h"
 
 
-void parseJSONTokens(string JsonString);
+User *parseJSONTokens(string JsonString);
 
-bool addUserToDatabase(string username, string email, string password, string avatarurl, string cookie);
+bool addUserToDatabase(User *data);
 
 #endif
 

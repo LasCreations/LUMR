@@ -2,13 +2,12 @@
 
 void registerUser(char *request, int clientSocket)
 {
-    cookie = generateRandomCode(24);
-    parseJSONTokens(parseHttpRequest(request));
-    if(addUserToDatabase(username, email, password, avatarurl, cookie)){
+    User *data = parseJSONTokens(parseHttpRequest(request));
+    if(addUserToDatabase(data)){
         char response[256]; 
         std::snprintf(response, sizeof(response),
                          "HTTP/1.1 200 OK\r\nSet-Cookie: sessionID=%s; Path=/; Max-Age=3153600000\r\n\r\n",
-                          cookie.c_str());
+                          data->getCookie().c_str());
         send(clientSocket, response, sizeof(response) - 1, 0);
     }else{
         const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
@@ -16,37 +15,35 @@ void registerUser(char *request, int clientSocket)
     }
 }
 
-void parseJSONTokens(string JsonString)
+User *parseJSONTokens(string JsonString)
 {
     // Your JSON string
     Json::Value jsonData;
     Json::CharReaderBuilder readerBuilder;
     std::istringstream jsonStream(JsonString);
-
+    User* user = nullptr;
     try
     {
         // Parse the JSON string
         Json::parseFromStream(readerBuilder, jsonStream, &jsonData, nullptr);
-
-        // Access individual fields
-        username = jsonData["username"].asString();
-        email = jsonData["email"].asString();
-        password = jsonData["password"].asString();
-        avatarurl = jsonData["avatarurl"].asString();
+        user = new User(jsonData["username"].asString(), jsonData["email"].asString(),
+                        jsonData["password"].asString(), generateRandomCode(24),
+                        jsonData["avatarurl"].asString());
+        return user;
     }
     catch (const Json::Exception &e)
     {
         std::cerr << "Error parsing JSON: " << e.what() << "\n";
     }
+    return user;
 }
 
-bool addUserToDatabase(string username, string email, string password, string avatarurl, string cookie)
+bool addUserToDatabase(User *data)
 {
-    User *user = new User(username, email, password, cookie, avatarurl);
     if (dbConn->createConnection())
     {
         std::cout << "Connected to database" << std::endl;
-        if (dbConn->addUser(user))
+        if (dbConn->addUser(data))
         {
             return true;
         }

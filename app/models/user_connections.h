@@ -28,7 +28,7 @@ class Connections{
             this->user1 = user1;
         }
 
-        void setUser1(User* user2){
+        void setUser2(User* user2){
             this->user2 = user2;
         }
 
@@ -49,7 +49,11 @@ class Connections{
         }
 
         bool getUser1_Status(){
-            this->user1_status;
+            return this->user1_status;
+        }
+
+        bool getUser2_Status(){
+            return this->user2_status;
         }
 };
 

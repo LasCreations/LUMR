@@ -15,7 +15,7 @@ void parseCookieToken(string JsonString);
 
 User *getUserData(string cookie);
 
-string ParseUserDataToJSON(string username, string password, string email, string avatarurl);
+string ParseUserDataToJSON(User *user);
 
 #endif
 

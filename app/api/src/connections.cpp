@@ -1,7 +1,5 @@
 #include "../lib/connections.h"
 
-string userID, followerID;
-
 void followUser(char *request, int clientSocket)
 {
     parseFollowRequestTokens(parseHttpRequest(request));
@@ -27,7 +25,7 @@ void parseFollowRequestTokens(string JsonString)
 
         // Access individual fields
         userID = jsonData["userID"].asString();
-        followerID = jsonData["followerID"].asString();
+        searchID = jsonData["searchID"].asString();
     }
     catch (const Json::Exception &e)
     {
@@ -35,23 +33,7 @@ void parseFollowRequestTokens(string JsonString)
     }
 }
 
-bool checkFriendship(string userID_1, string userID_2){
-    if (dbConn->createConnection())
-    {   
 
-        std::cout << "Connected to database" << std::endl;
-        if(dbConn->checkFriendship(userID_1, userID_2))
-            return true;
-        else
-            return false;
-
-    }
-    else
-    {
-        std::cout << "Failed to connect to database" << std::endl;
-        return false;
-    }
-}
 
 bool addFriendshipToDatabase()
 {
@@ -59,9 +41,9 @@ bool addFriendshipToDatabase()
     {
         std::cout << "Connected to database" << std::endl;
         
-        if (dbConn->addFriendshipToDatabase(generateRandomCode(10),userID, followerID, true))
+        if (dbConn->addFriendshipToDatabase(generateRandomCode(10),userID, searchID, true))
         {
-            dbConn->addFriendshipToDatabase(generateRandomCode(11),followerID,userID, false);
+            dbConn->addFriendshipToDatabase(generateRandomCode(11),searchID,userID, false);
             return true;
         }
         else

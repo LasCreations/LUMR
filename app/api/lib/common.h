@@ -39,10 +39,13 @@ using namespace std;
 
 #include "../../database/lib/factory.h"
 #include "../../models/user.h"
+#include "../../models/user_connections.h"
+#include "../../models/request.h"
 
 
 extern DBConnector *dbConn; 
-extern std::string username, email, password, avatarurl, cookie; 
+extern string cookie; 
+extern string userID, searchID;
 
 
 
@@ -57,4 +60,5 @@ string parseHttpRequest(char *request);
 
 string generateRandomCode(int length);
 
+bool checkFriendship(string userID_1, string userID_2);
 #endif

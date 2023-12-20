@@ -2,12 +2,10 @@
 
 DBConnector *dbConn = new DBConnector(); // Initialization
 
-std::string username = "";
-std::string email = "";
-std::string password = "";
-std::string avatarurl = "";
-std::string cookie = "";
 
+string cookie = "";
+string userID = "";
+string searchID = "";
 
 string parseHttpRequest(char *request)
 {
@@ -42,4 +40,22 @@ string generateRandomCode(int length)
     }
 
     return Code;
+}
+
+bool checkFriendship(string userID_1, string userID_2){
+    if (dbConn->createConnection())
+    {   
+
+        std::cout << "Connected to database" << std::endl;
+        if(dbConn->checkFriendship(userID_1, userID_2))
+            return true;
+        else
+            return false;
+
+    }
+    else
+    {
+        std::cout << "Failed to connect to database" << std::endl;
+        return false;
+    }
 }

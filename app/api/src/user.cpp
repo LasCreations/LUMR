@@ -1,19 +1,13 @@
 #include "../lib/user.h"
 
-//first parse to get the cookie
-//send the cookie to the database 
-//return the data to client
 
 void findUser(char *request, int clientSocket){
     parseCookieToken(parseHttpRequest(request));
     if (getUserData(cookie) != nullptr)
         {
-
             User *userData = new User(getUserData(cookie));
-
             std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
-                                       ParseUserDataToJSON(userData->getUsername(), userData->getPassword(),
-                                                           userData->getEmail(), userData->getAvatarURL());
+                                       ParseUserDataToJSON(userData);
             send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
         }else{
             const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
@@ -52,16 +46,16 @@ User *getUserData(string cookie)
     return data;
 }
 
-string ParseUserDataToJSON(string username, string password, string email, string avatarurl)
+string ParseUserDataToJSON(User *user)
 {
     // Create a JSON object
     Json::Value jsonValue;
 
     // Add key-value pairs to the JSON object
-    jsonValue["username"] = username;
-    jsonValue["email"] = email;
-    jsonValue["password"] = password;
-    jsonValue["avatarurl"] = avatarurl;
+    jsonValue["username"] = user->getUsername();
+    jsonValue["email"] = user->getEmail();
+    jsonValue["password"] = user->getPassword();
+    jsonValue["avatarurl"] = user->getAvatarURL();
 
     // Convert the JSON object to a JSON string
     std::string jsonString = jsonValue.toStyledString();

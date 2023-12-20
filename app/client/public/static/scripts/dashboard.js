@@ -13,6 +13,33 @@ function getSessionID() {
     return null;
 }
 
+function getProfileData(){
+    fetch("/api/users/me", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sessionID),
+    }).then(res => {
+        if (res.ok) {
+            console.log("User found");
+            return res.json(); // Parse the JSON from the response
+        } else {
+            console.log("User not found");
+            throw new Error('Network response was not ok');
+        }
+    }).then(data => {
+        console.log(data);
+        const usernameContainer = document.getElementById('UsernameContainer');
+        usernameContainer.textContent = `${data.username}`;
+        var avatar = data.avatarurl;
+        var url = "/avatars/" + avatar + ".jpg";
+        fetchAndSetImage(url, "profileImage");
+    }).catch(error => {
+        console.error("Error:", error.message);
+    });
+}
+
 window.onload = function () {
 
     var sessionID = {
@@ -20,30 +47,7 @@ window.onload = function () {
     }
 
     if (sessionID != null) {
-        fetch("/api/users/me", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(sessionID),
-        }).then(res => {
-            if (res.ok) {
-                console.log("User found");
-                return res.json(); // Parse the JSON from the response
-            } else {
-                console.log("User not found");
-                throw new Error('Network response was not ok');
-            }
-        }).then(data => {
-            console.log(data);
-            const usernameContainer = document.getElementById('UsernameContainer');
-            usernameContainer.textContent = `${data.username}`;
-            var avatar = data.avatarurl;
-            var url = "/avatars/" + avatar + ".jpg";
-            fetchAndSetImage(url, "profileImage");
-        }).catch(error => {
-            console.error("Error:", error.message);
-        });
+        getProfileData();
     } else {
         window.location.href = "/login.html";
     }
@@ -70,25 +74,38 @@ function searchUser() {
             } else {
                 console.log("User not found");
                 const UserCardContainer = document.getElementById('user-search');
-                UserCardContainer.style.display= 'none';
+                UserCardContainer.style.display = 'none';
                 throw new Error('Network response was not ok');
             }
         }).then(data => {
             console.log(data);
 
             const usernameContainer = document.getElementById('search-username');
+            var button = document.querySelector('.follow-btn');
+
             usernameContainer.textContent = `${data.username}`;
+            var isFriend = data.status;
             var avatar = data.avatarurl;
+
+            if (isFriend) {
+                button.textContent = 'Following';
+            } else {
+                button.textContent = 'Follow';
+            }
+
+
             var url = "/avatars/" + avatar + ".jpg";
             fetchAndSetImage(url, "searchImage");
+
+
 
             const UserCardContainer = document.getElementById('user-search');
             UserCardContainer.style.padding = '20px';
             UserCardContainer.style.textAlign = 'center';
             UserCardContainer.style.justifyContent = 'center';
-            UserCardContainer.style.display= 'flex';
-            UserCardContainer.style.flexDirection= 'column';
-            UserCardContainer.style.display= 'block';
+            UserCardContainer.style.display = 'flex';
+            UserCardContainer.style.flexDirection = 'column';
+            UserCardContainer.style.display = 'block';
         })
         .catch(error => {
             console.error("Error:", error.message);
@@ -117,42 +134,42 @@ function fetchAndSetImage(url, elementID) {
         .catch(error => console.error(`Error fetching image for ${elementId}:`, error));
 }
 
-function addUser(){
+function addUser() {
     const requestIDContainer = document.getElementById('search-username');
     const usernameContainer = document.getElementById('UsernameContainer');
     var button = document.querySelector('.follow-btn');
 
-        
-        if (button.textContent === 'Follow') {
-            var searchData = {
-                userID: usernameContainer.textContent,
-                followerID: requestIDContainer.textContent
-            };
-        
-            fetch("/api/follow/user", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(searchData),
-            })
-                .then(res => {
-                    if (res.ok) {
-                        console.log("User added");
-                        button.textContent = 'Unfollow';
-                    } else {
-                        console.log("User not added");
-                        throw new Error('Network response was not ok');
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error.message);
-                });
-        } else {
-            button.textContent = 'Follow';
-        }
 
-    
+    if (button.textContent === 'Follow') {
+        var searchData = {
+            userID: usernameContainer.textContent,
+            searchID: requestIDContainer.textContent
+        };
+
+        fetch("/api/follow/user", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(searchData),
+        })
+            .then(res => {
+                if (res.ok) {
+                    console.log("User added");
+                    button.textContent = 'Following';
+                } else {
+                    console.log("User not added");
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error.message);
+            });
+    } else {
+        button.textContent = 'Following';
+    }
+
+
 }
 
 function Logout() {
