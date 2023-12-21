@@ -50,9 +50,11 @@ int runServer()
 
     printf("\nServer is listening on http://%s:%s/\n\n", hostBuffer, serviceBuffer);
 
-    UserDataCache *testcache = new UserDataCache();
-    testcache->preloadUserData();
-    testcache->scan();
+    //{Preloading user data into a map to be cache on server}
+    UserDataCache *user_data_cache = new UserDataCache();
+    user_data_cache->preloadUserData();
+
+    
 
     while (1)
     {
@@ -86,7 +88,7 @@ int runServer()
                 registerUser(request, clientSocket);
 
             if (strcmp(route, "/api/users/me") == 0)
-                findUser(request, clientSocket);
+                findUser(request, clientSocket, user_data_cache);
 
             if (strcmp(route, "/api/search/user") == 0)
                 searchUser(request, clientSocket);

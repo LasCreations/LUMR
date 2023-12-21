@@ -217,7 +217,7 @@ std::unordered_map<string, User*> *DBConnector::getUsersCacheData(){
 							this->res->getString("password"),
 							this->res->getString("passport"),
 							this->res->getString("avatar_url"));
-			(*cachemap)[this->res->getString("username")] = data;
+			(*cachemap)[this->res->getString("passport")] = data;
 		}
 	}
 	catch (const sql::SQLException &e)

@@ -16,6 +16,7 @@ class UserDataCache{
         void updateUserData();
         void scan();
 
+        bool isEmpty();
         User* getUserFromCache(string key);
         string getTest();
 };

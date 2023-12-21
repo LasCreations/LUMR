@@ -1,18 +1,29 @@
 #include "../lib/user.h"
 
-
-void findUser(char *request, int clientSocket){
+void findUser(char *request, int clientSocket, UserDataCache *cacheData)
+{
     parseCookieToken(parseHttpRequest(request));
-    if (getUserData(cookie) != nullptr)
+
+    if (!cacheData->isEmpty())
+    {
+        User *data = cacheData->getUserFromCache(cookie);
+        if (data != nullptr)
         {
-            User *userData = new User(getUserData(cookie));
             std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
-                                       ParseUserDataToJSON(userData);
+                                   ParseUserDataToJSON(data);
             send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
-        }else{
+        }
+        else
+        {   
             const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
             send(clientSocket, response, sizeof(response) - 1, 0);
+            // cout << "User not found " << std::endl;
         }
+    }
+    else
+    {
+        cout << "Map empty -> database empty" << std::endl;
+    }
 }
 
 void parseCookieToken(string JsonString)
@@ -36,16 +47,6 @@ void parseCookieToken(string JsonString)
     }
 }
 
-User *getUserData(string cookie)
-{
-    User *data = nullptr;
-    if (dbConn->createConnection())
-    {
-        data = dbConn->getUserData(cookie);
-    }
-    return data;
-}
-
 string ParseUserDataToJSON(User *user)
 {
     // Create a JSON object
@@ -61,6 +62,7 @@ string ParseUserDataToJSON(User *user)
     std::string jsonString = jsonValue.toStyledString();
 
     // Print the resulting JSON string
-    std::cout << "\n\n" << jsonString << std::endl;
+    std::cout << "\n\n"
+              << jsonString << std::endl;
     return jsonString;
 }

@@ -18,9 +18,15 @@ void UserDataCache::updateUserData(){
         
 User* UserDataCache::getUserFromCache(string key){
 
-    User *data = nullptr;
+    auto data = this->cacheData.find(key);
 
-    return data;
+    if (data != cacheData.end()) {
+        // Key found, return the associated user object
+        return data->second;
+    } else {
+        // Key not found, return nullptr or handle as needed
+        return nullptr;
+    }
 
 }
 
@@ -34,4 +40,11 @@ void UserDataCache::scan(){
         cout << "Passport: " << pair.second->getCookie() << std::endl;
         cout << "\n\n" << std::endl;
     }
+}
+
+bool UserDataCache::isEmpty(){
+    if(this->cacheData.empty())
+        return true;
+    else
+        return false;
 }

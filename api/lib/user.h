@@ -10,10 +10,11 @@
 #ifdef __cplusplus
 
 #include "../../include/common.h"
+#include "../../cache/lib/user_data.h"
+
+
 
 void parseCookieToken(string JsonString);
-
-User *getUserData(string cookie);
 
 string ParseUserDataToJSON(User *user);
 
@@ -27,7 +28,7 @@ extern "C" {
 
 // C specific code goes here
 
-void findUser(char *request, int clientSocket);
+void findUser(char *request, int clientSocket, UserDataCache *cacheData);
 
 
 
