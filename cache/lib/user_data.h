@@ -8,7 +8,6 @@ class UserDataCache{
 
     private:
         std::unordered_map<string, User*> cacheData;
-        string test;
     public:
 
         UserDataCache();
@@ -18,7 +17,6 @@ class UserDataCache{
 
         bool isEmpty();
         User* getUserFromCache(string key);
-        string getTest();
 };
 
 #endif
