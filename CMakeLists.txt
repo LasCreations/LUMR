@@ -8,11 +8,13 @@ file(GLOB SOURCES
         "api/src/*.cpp"
         "server/src/*.c"
         "database/src/*cpp"
+        "cache/src/*cpp"
         "main.c"
     )
 
 # Include directories
 include_directories(
+    cache/lib
     server/lib
     api/lib
     database/lib
