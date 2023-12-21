@@ -5,11 +5,11 @@ void searchUser(char *request, int clientSocket)
 {
     string user_id;
     parseUsernameToken(parseHttpRequest(request));
-    User *userData = new User(searchUsername(searchID));
     cout << "user: " << userID << endl;
     cout << "search: " << searchID << endl;
 
-    if (userData != nullptr){
+    if (searchUsername(searchID) != nullptr){
+        User *userData = new User(searchUsername(searchID));
         std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
                                    ParseSearchDataToJSON(userData->getUsername(), userData->getAvatarURL(),
                                                          checkFriendship(userID, searchID));

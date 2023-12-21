@@ -1,39 +1,34 @@
-// window.onload = function () {
-//     //Authenticated user
-//     if (getSessionID() !== null) {
-//         fetch("/user/auth", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//         }).then(res => {
-//                 if (res.ok) {
-//                     return res.json(); // Parse the JSON from the response
-//                 } else {
-//                     throw new Error('Network response was not ok');
-//                 }
-//             })
-//             .then(data => {
-//                 // Handle the JSON data
-//                 console.log(data);
-//               })
-//             .catch(error => {
-//                 console.error("Error:", error.message);
-//             });
+document.getElementById("myForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-//     }
-//     //Not authenticated user
-//     else {
-//         // Value is null, handle accordingly
-//         console.log("No session ID available.");
-//     }
-// };
-
-
-// function getSessionID() {
-//     if (/\S/.test(document.cookie)) {
-//         return document.cookie;
-//     } else {
-//         return null;
-//     }
-// }
+    // Get form data
+    var formData = {
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value,
+    };
+    
+    fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(res => {
+        if(res.ok){
+            // console.log("User added");
+            window.location.href = "/dashboard.html";
+        }else{
+            const errorDiv = document.getElementById('error');
+            errorDiv.style.display = 'block';
+            errorDiv.style.textAlign = 'center';
+            errorDiv.style.alignItems = 'center';
+            errorDiv.style.justifyContent = 'center';
+            errorDiv.style.display = 'flex';
+            console.log("User couldnt be added");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error.message);
+    });
+});

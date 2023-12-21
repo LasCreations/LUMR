@@ -14,7 +14,7 @@ body {
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 300px;
+    width: 500px;
     text-align: center;
     /* max-height: 100vh;  */
     
@@ -91,11 +91,12 @@ h1 {
 
 #avatarContainer{
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Two columns with equal width */
+    grid-template-columns: repeat(5, 1fr); /* Two columns with equal width */
     grid-gap: 3px; /* Optional gap between items */
 }
 
-#avatar1, #avatar2,#avatar3, #avatar4, #avatar5,#avatar6  {
+#avatar1, #avatar2,#avatar3, #avatar4, #avatar5,#avatar6, #avatar7, #avatar8,
+#avatar9, #avatar10  {
     width: 80px;
     height: 80px;
     object-fit: cover;

@@ -1,6 +1,5 @@
 var avatar = "default";
 
-
 window.onload = function (){
     fetchAndSetImage('/avatars/avatar1.jpg', 'avatar1');
     fetchAndSetImage('/avatars/avatar2.jpg', 'avatar2');
@@ -8,6 +7,10 @@ window.onload = function (){
     fetchAndSetImage('/avatars/avatar4.jpg', 'avatar4');
     fetchAndSetImage('/avatars/avatar5.jpg', 'avatar5');
     fetchAndSetImage('/avatars/avatar6.jpg', 'avatar6');
+    fetchAndSetImage('/avatars/avatar7.jpg', 'avatar7');
+    fetchAndSetImage('/avatars/avatar8.jpg', 'avatar8');
+    fetchAndSetImage('/avatars/avatar9.jpg', 'avatar9');
+    fetchAndSetImage('/avatars/avatar10.jpg', 'avatar10');
 }
 
 function fetchAndSetImage(url, elementId) {
