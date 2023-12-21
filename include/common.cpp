@@ -1,4 +1,4 @@
-#include "../lib/common.h"
+#include "common.h"
 
 DBConnector *dbConn = new DBConnector(); // Initialization
 

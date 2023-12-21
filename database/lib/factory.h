@@ -15,6 +15,8 @@
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/json.h>
 
+#include <unordered_map>
+
 #include "../../models/user.h"
 
 using namespace std;
@@ -59,6 +61,8 @@ public:
 	bool addFriendshipToDatabase( string key, string userID, string followerID, bool status);
 
 	bool checkFriendship(string userID_1, string userID_2);
+
+	std::unordered_map<string, User*> *getUsersCacheData();
 };
 
 #endif

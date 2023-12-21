@@ -1,20 +1,23 @@
 #ifndef USER_DATA_CACHE_H
 #define USER_DATA_CACHE_H
 
-#include "../../api/lib/common.h"
+#include "../../include/common.h"
 
-
-#include <unordered_map>
 
 class UserDataCache{
 
     private:
-        unordered_map<string,User*> cacheData;
+        std::unordered_map<string, User*> cacheData;
+        string test;
     public:
 
+        UserDataCache();
         void preloadUserData();
         void updateUserData();
+        void scan();
+
         User* getUserFromCache(string key);
+        string getTest();
 };
 
 #endif

@@ -1,9 +1,5 @@
 #include "../lib/server.h"
 
-int serverSocket;
-int clientSocket;
-char *request;
-
 int runServer()
 {
     // register signal handler
@@ -54,6 +50,10 @@ int runServer()
 
     printf("\nServer is listening on http://%s:%s/\n\n", hostBuffer, serviceBuffer);
 
+    UserDataCache *testcache = new UserDataCache();
+    testcache->preloadUserData();
+    testcache->scan();
+
     while (1)
     {
         // buffer to store data (request)
@@ -82,16 +82,16 @@ int runServer()
         }
         else if (strcmp(method, "POST") == 0)
         {
-            if(strcmp(route, "/api/auth/register") == 0)
+            if (strcmp(route, "/api/auth/register") == 0)
                 registerUser(request, clientSocket);
-                
-            if(strcmp(route, "/api/users/me") == 0)
+
+            if (strcmp(route, "/api/users/me") == 0)
                 findUser(request, clientSocket);
-                
-            if(strcmp(route, "/api/search/user") == 0)
+
+            if (strcmp(route, "/api/search/user") == 0)
                 searchUser(request, clientSocket);
-            
-            if(strcmp(route, "/api/follow/user") == 0)
+
+            if (strcmp(route, "/api/follow/user") == 0)
                 followUser(request, clientSocket);
         }
         else
@@ -119,4 +119,10 @@ static void handleSignal(int signal)
 
         exit(0);
     }
+}
+
+int main()
+{
+    runServer();
+    return EXIT_SUCCESS;
 }

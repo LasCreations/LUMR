@@ -6,14 +6,16 @@ project(LURM C CXX)
 # C++ source files
 file(GLOB SOURCES 
         "api/src/*.cpp"
-        "server/src/*.c"
+        "server/src/*.cpp"
         "database/src/*cpp"
         "cache/src/*cpp"
-        "main.c"
+        "include/*cpp"
+        "tests/*cpp"
     )
 
 # Include directories
 include_directories(
+    include/
     cache/lib
     server/lib
     api/lib

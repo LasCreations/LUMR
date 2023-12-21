@@ -201,3 +201,31 @@ bool DBConnector::addFriendshipToDatabase(string key, string userID, string foll
 		return false;
 	}
 }
+
+std::unordered_map<string, User*> *DBConnector::getUsersCacheData(){
+	User *data = nullptr;
+	unordered_map<string, User*> *cachemap = nullptr;
+	try
+	{
+		cachemap = new std::unordered_map<std::string, User*>;
+		this->stmt = con->createStatement();
+		this->res = this->stmt->executeQuery("SELECT passport, username, email, password, avatar_url FROM users");
+		while (this->res->next())
+		{
+			data = new User(this->res->getString("username"),
+							this->res->getString("email"),
+							this->res->getString("password"),
+							this->res->getString("passport"),
+							this->res->getString("avatar_url"));
+			(*cachemap)[this->res->getString("username")] = data;
+		}
+	}
+	catch (const sql::SQLException &e)
+	{
+		// Handle the exception, e.g., print error message
+		std::cerr << "SQLException: " << e.what() << std::endl;
+	}
+	delete this->stmt;
+	delete this->res;
+	return cachemap;
+}

@@ -9,7 +9,7 @@
 // C++ specific code goes here
 #ifdef __cplusplus
 
-#include "common.h"
+#include "../../include/common.h"
 
 void parseCookieToken(string JsonString);
 

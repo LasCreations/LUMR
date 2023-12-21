@@ -1,5 +1,5 @@
 #include "../lib/page.h"
-#include "../lib/common.h"
+#include "../../include/common.h"
 
 
 bool handlePageRequest(char *route, int clientSocket){

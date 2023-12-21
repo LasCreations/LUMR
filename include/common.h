@@ -31,16 +31,18 @@
 
 #include <stdbool.h>
 
+#include <unordered_map>
+
 using namespace std;
 
 #define SIZE 1024  // buffer size
 // #define PORT 8080  // port number
 // #define BACKLOG 10 // number of pending connections queue will hold
 
-#include "../../database/lib/factory.h"
-#include "../../models/user.h"
-#include "../../models/user_connections.h"
-#include "../../models/request.h"
+#include "../database/lib/factory.h"
+#include "../models/user.h"
+#include "../models/user_connections.h"
+#include "../models/request.h"
 
 
 extern DBConnector *dbConn; 
