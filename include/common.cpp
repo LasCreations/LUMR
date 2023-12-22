@@ -6,6 +6,8 @@ DBConnector *dbConn = new DBConnector(); // Initialization
 string cookie = "";
 string userID = "";
 string searchID = "";
+string username = "";
+string password = "";
 
 string parseHttpRequest(char *request)
 {

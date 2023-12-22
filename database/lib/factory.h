@@ -62,6 +62,8 @@ public:
 
 	bool checkFriendship(string userID_1, string userID_2);
 
+	bool updatePassport(string newCookie, User *data);
+
 	std::unordered_map<string, User*> *getUsersCacheData();
 };
 

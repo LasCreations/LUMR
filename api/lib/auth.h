@@ -16,11 +16,17 @@
 #ifdef __cplusplus
 
 #include "../../include/common.h"
+#include "../../cache/lib/user_data.h"
 
 
 User *parseJSONTokens(string JsonString);
 
 bool addUserToDatabase(User *data);
+
+void parseLoginTokens(string JsonString);
+
+
+bool updateUserCookieDB(User *data);
 
 #endif
 
@@ -31,7 +37,9 @@ extern "C" {
 #endif
 
 // C specific code goes here
-void registerUser(char *request, int clientSocket);
+void registerUser(char *request, int clientSocket, UserDataCache *cacheData);
+
+void loginUser(char *request, int clientSocket, UserDataCache *cacheData);
 
 bool isAuth(char *request, int clientSocket);
 

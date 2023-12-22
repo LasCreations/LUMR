@@ -15,8 +15,11 @@ class UserDataCache{
         void updateUserData();
         void scan();
 
+        void addUserToMap(User *data);
         bool isEmpty();
+        bool userExists(string username, string email);
         User* getUserFromCache(string key);
+        User* getUserFromCache(string username, string password);
 };
 
 #endif

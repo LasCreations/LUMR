@@ -80,7 +80,7 @@ bool DBConnector::addUser(User *user)
 {
 	try
 	{
-		this->prep_stmt = this->con->prepareStatement("INSERT INTO users(passport, username, email, password, avatar_url) VALUES(?,?,?,?,?)");											
+		this->prep_stmt = this->con->prepareStatement("INSERT INTO users(passport, username, email, password, avatar_url) VALUES(?,?,?,?,?)");
 		this->prep_stmt->setString(1, user->getCookie());
 		this->prep_stmt->setString(2, user->getUsername());
 		this->prep_stmt->setString(3, user->getEmail());
@@ -148,7 +148,8 @@ User *DBConnector::searchUsername(string username)
 	return data;
 }
 
-bool DBConnector::checkFriendship(string userID_1, string userID_2){
+bool DBConnector::checkFriendship(string userID_1, string userID_2)
+{
 	try
 	{
 		this->stmt = con->createStatement();
@@ -157,16 +158,18 @@ bool DBConnector::checkFriendship(string userID_1, string userID_2){
 		bool isFriend = false;
 		while (this->res->next())
 		{
-			check = true; //if found
+			check = true; // if found
 			isFriend = this->res->getBoolean("status");
 		}
-		
-		if(check && isFriend){
+
+		if (check && isFriend)
+		{
 			return true;
-		}else{
+		}
+		else
+		{
 			return false;
 		}
-
 	}
 	catch (const sql::SQLException &e)
 	{
@@ -202,12 +205,13 @@ bool DBConnector::addFriendshipToDatabase(string key, string userID, string foll
 	}
 }
 
-std::unordered_map<string, User*> *DBConnector::getUsersCacheData(){
+std::unordered_map<string, User *> *DBConnector::getUsersCacheData()
+{
 	User *data = nullptr;
-	unordered_map<string, User*> *cachemap = nullptr;
+	unordered_map<string, User *> *cachemap = nullptr;
 	try
 	{
-		cachemap = new std::unordered_map<std::string, User*>;
+		cachemap = new std::unordered_map<std::string, User *>;
 		this->stmt = con->createStatement();
 		this->res = this->stmt->executeQuery("SELECT passport, username, email, password, avatar_url FROM users");
 		while (this->res->next())
@@ -228,4 +232,24 @@ std::unordered_map<string, User*> *DBConnector::getUsersCacheData(){
 	delete this->stmt;
 	delete this->res;
 	return cachemap;
+}
+
+bool DBConnector::updatePassport(string newCookie, User *data)
+{
+	try
+	{
+		this->prep_stmt = this->con->prepareStatement("UPDATE users SET passport = ? WHERE passport=?");
+		this->prep_stmt->setString(1, newCookie);
+		this->prep_stmt->setString(2, data->getCookie());
+
+		this->prep_stmt->execute();
+		delete this->prep_stmt;
+		return true;
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << "Error adding user: " << e.what() << std::endl;
+		delete this->prep_stmt;
+		return false;
+	}
 }

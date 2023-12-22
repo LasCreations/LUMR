@@ -47,6 +47,7 @@ using namespace std;
 
 extern DBConnector *dbConn; 
 extern string cookie; 
+extern string username, password;
 extern string userID, searchID;
 
 

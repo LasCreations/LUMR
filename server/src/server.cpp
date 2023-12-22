@@ -85,7 +85,7 @@ int runServer()
         else if (strcmp(method, "POST") == 0)
         {
             if (strcmp(route, "/api/auth/register") == 0)
-                registerUser(request, clientSocket);
+                registerUser(request, clientSocket, user_data_cache);
 
             if (strcmp(route, "/api/users/me") == 0)
                 findUser(request, clientSocket, user_data_cache);
@@ -95,6 +95,9 @@ int runServer()
 
             if (strcmp(route, "/api/follow/user") == 0)
                 followUser(request, clientSocket);
+
+            if (strcmp(route, "/api/auth/login") == 0)
+                loginUser(request, clientSocket, user_data_cache);
         }
         else
         {

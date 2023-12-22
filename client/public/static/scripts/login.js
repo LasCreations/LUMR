@@ -25,7 +25,7 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
             errorDiv.style.alignItems = 'center';
             errorDiv.style.justifyContent = 'center';
             errorDiv.style.display = 'flex';
-            console.log("User couldnt be added");
+            console.log("User couldnt be found");
         }
     })
     .catch(error => {
