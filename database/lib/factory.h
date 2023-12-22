@@ -18,6 +18,7 @@
 #include <unordered_map>
 
 #include "../../models/user.h"
+#include "../../models/notifications.h"
 
 using namespace std;
 using namespace sql;
@@ -65,6 +66,8 @@ public:
 	bool updatePassport(string newCookie, User *data);
 
 	std::unordered_map<string, User*> *getUsersCacheData();
+
+	bool addNotificationToDatabase(Notification *notification);
 };
 
 #endif

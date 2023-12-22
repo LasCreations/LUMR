@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 19, 2023 at 10:09 PM
+-- Generation Time: Dec 21, 2023 at 10:28 PM
 -- Server version: 8.0.35-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.14
 
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Database: `lurm_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `notification_id` varchar(255) NOT NULL,
+  `user_id` varchar(255) NOT NULL,
+  `sender_id` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `timestamp` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -53,16 +69,44 @@ CREATE TABLE `user_connections` (
 --
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`notification_id`),
+  ADD KEY `sender_id` (`sender_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`passport`);
+  ADD PRIMARY KEY (`username`);
 
 --
 -- Indexes for table `user_connections`
 --
 ALTER TABLE `user_connections`
-  ADD PRIMARY KEY (`connection_key`);
+  ADD PRIMARY KEY (`connection_key`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `following_id` (`following_id`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`username`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`username`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `user_connections`
+--
+ALTER TABLE `user_connections`
+  ADD CONSTRAINT `user_connections_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`username`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `user_connections_ibfk_2` FOREIGN KEY (`following_id`) REFERENCES `users` (`username`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
