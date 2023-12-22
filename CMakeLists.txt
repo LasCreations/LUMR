@@ -5,27 +5,35 @@ project(LURM C CXX)
 
 # C++ source files
 file(GLOB SOURCES 
-        "api/src/*.cpp"
-        "server/src/*.cpp"
-        "database/src/*cpp"
-        "cache/src/*cpp"
-        "include/*cpp"
-        "tests/*cpp"
+    "server/src/*.cpp"
+    "routes/src/*.cpp"
+    "controllers/src/*.cpp"
+    "utils/*.cpp"
+    "database/connection/src/*.cpp"
+    "database/queries/src/*.cpp"
     )
 
 # Include directories
 include_directories(
-    include/
-    cache/lib
+    utils/
+    controllers/lib
     server/lib
-    api/lib
-    database/lib
+    routes/lib
+    database/connection/lib
+    database/queries/lib
 )
 
 # Create an executable for C++ sources
 add_executable(LURM ${SOURCES})
 
-target_include_directories(LURM PRIVATE server/lib api/lib)
+target_include_directories(LURM PRIVATE 
+                                server/lib
+                                routes/lib
+                                utils/
+                                controllers/lib
+                                database/connection/lib
+                                database/queries/lib
+)
 
 # Set C++ standard
 set_property(TARGET LURM PROPERTY CXX_STANDARD 11)  # adjust to your preferred C++ standard
