@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Set minimum height to viewport height */
+}
+
+.signup-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 500px;
+    text-align: center;
+    /* max-height: 100vh;  */
+    
+}
+
+.signup-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-container label, .login-container input {
+    margin-bottom: 10px;
+}
+
+.signup-container  a {
+    color: #eee8e8;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.signup-container input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Adjust the border-radius value to your preference */
+}
+
+.signup-container button {
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.signup-container  a {
+    color: #8a8686;
+    font-size: 13px;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+h1 {
+    color: #333;
+    font-size: 20px;
+}
+
+#profileContainer {
+    text-align: center;
+}
+
+#avatarContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Two columns with equal width */
+    grid-gap: 1px; /* Optional gap between items */
+}
+
+#avatar1, #avatar2,#avatar3, #avatar4, #avatar5,#avatar6, #avatar7, #avatar8,
+#avatar9, #avatar10  {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fff; /* Add a white border for better visibility */
+    padding: 3px;
+}
+
+.custom-icon {
+    color: red; /* Change this to your desired color */
+}
+
+#avatarContainer .tick {
+    display: none;
+}

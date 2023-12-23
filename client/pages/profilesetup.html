@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/profilesetup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>LURM</title>
+</head>
+<body>
+
+
+    <div class="signup-container">
+        <h1>Select An Avatar</h1>
+        <div id="avatarContainer">
+            <div id="profileContainer"  onclick="selectAvatar('avatar1')">
+                <i id="tick1" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar1">
+            </div>
+        
+            
+            <div id="profileContainer"  onclick="selectAvatar('avatar2')">
+                <i id="tick2" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar2" >
+            </div>
+        
+            
+            <div id="profileContainer"  onclick="selectAvatar('avatar3')">
+                <i id="tick3" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar3"  >
+            </div>
+    
+            <div id="profileContainer"  onclick="selectAvatar('avatar4')">
+                <i id="tick4" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar4"  >
+            </div>
+    
+            <div id="profileContainer"  onclick="selectAvatar('avatar5')">
+                <i id="tick5" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar5"  >
+            </div>
+    
+            <div id="profileContainer"  onclick="selectAvatar('avatar6')">
+                <i id="tick6" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar6"  >
+            </div>
+
+            <div id="profileContainer"  onclick="selectAvatar('avatar7')">
+                <i id="tick7" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar7"  >
+            </div>
+
+            <div id="profileContainer"  onclick="selectAvatar('avatar8')">
+                <i id="tick8" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar8"  >
+            </div>
+
+            <div id="profileContainer"  onclick="selectAvatar('avatar9')">
+                <i id="tick9" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar9"  >
+            </div>
+
+            <div id="profileContainer"  onclick="selectAvatar('avatar10')">
+                <i id="tick10" class="fa fa-check custom-icon tick" aria-hidden="true"></i>
+                <img id="avatar10"  >
+            </div>
+        </div>
+
+        <form id="myForm"  method="POST"  autocomplete="off">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <br>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <br>
+            <input type="text" id="password" name="password" placeholder="Password" required>
+            <br>
+            <button type="submit">Submit</button>
+            <!-- <input type="submit" value="Submit">-->
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+    
+    
+
+    <!-- <div class="container">
+        <h1>SignUp</h1>
+        <form id="myForm"  method="POST">
+            <label for="name">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password" required>
+            <br>
+            <button type="submit">Submit</button>
+            
+        </form>
+    </div> -->
+    
+
+    <script src="/static/scripts/profilesetup.js"></script>
+</body>
+</html>
