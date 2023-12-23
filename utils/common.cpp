@@ -1,7 +1,5 @@
 #include "common.h"
 
-
-
 string parseHttpRequest(char *request)
 {
     const std::regex jsonRegex(R"(\{[^{}]*\})"); // Define a regex pattern to match JSON

@@ -9,9 +9,11 @@ function updateButtonVisibility() {
     }
 }
 
-document.getElementById("signUpForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+// document.getElementById("signUpForm").addEventListener("submit", function(event) {
+    // event.preventDefault();
 
+function submitform(event){
+    event.preventDefault();
     var formData = {
         username: document.getElementById("username").value,
         password: document.getElementById("first-pass").value
@@ -27,11 +29,12 @@ document.getElementById("signUpForm").addEventListener("submit", function(event)
     .then(res => {
         if(res.ok){
             console.log("User added");
+            window.location.href = "/pages/profilesetup.html";
         }else{
-            console.log("Username already exists use another name");
+            alert("Username already exists use another name");
         }
     })
     .catch(error => {
         console.error("Error:", error.message);
     });
-});
+}
