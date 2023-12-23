@@ -22,10 +22,18 @@ void apiRoute(char* request, int clientSocket, USERCACHE *userCacheData){
             if (strcmp(route, "/user/register") == 0){
                 if(!userExistsInCache(request,clientSocket,userCacheData)){
                     addUser(request, clientSocket, userCacheData);
+                }else{
+                    const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+                    send(clientSocket, response, sizeof(response) - 1, 0);
                 }
             }
-               
 
+            if (strcmp(route, "/user/login") == 0){
+                if(userExistsInCache(request,clientSocket,userCacheData)){
+                    checkUserCredentials(request, clientSocket, userCacheData);
+                }
+            } 
+            
             // if (strcmp(route, "/api/users/me") == 0)
             //     findUser(request, clientSocket, user_data_cache);
 

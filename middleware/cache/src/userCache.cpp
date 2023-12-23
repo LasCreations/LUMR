@@ -66,7 +66,13 @@ void USERCACHE::scan(){
     }
 }
 
-
+void USERCACHE::updateUserTokenInCache(USER *data, string token){
+    for (const auto& pair : *(this->cacheData)) {
+        if(data->getUsername() == pair.second->getUsername()){
+            pair.second->setToken(token);
+        }
+    }
+}
 
 void USERCACHE::addUserToMap(USER *data){
     (*this->cacheData)[data->getUsername()] = data;

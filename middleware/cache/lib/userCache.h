@@ -16,6 +16,7 @@ class USERCACHE{
         void scan();
 
         void addUserToMap(USER *data);
+        void updateUserTokenInCache(USER *data, string token);
         bool isEmpty();
         bool userExists(string username);
         USER* getUserFromCache(string key);

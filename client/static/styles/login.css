@@ -1,77 +1,16 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-
-
-.login-container {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 300px;
-    text-align: center;
-}
-
-.login-container form {
-    display: flex;
-    flex-direction: column;
-}
-
-.login-container label, .login-container input {
-    margin-bottom: 10px;
-}
-
-.login-container  a {
-    color: #8a8686;
-    font-size: 13px;
-    margin: 0 10px;
-    text-decoration: none;
-}
-
-.login-container input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 20px; /* Adjust the border-radius value to your preference */
-}
-
-.login-container button {
-    background-color: #4caf50;
-    color: #ffffff;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 .custom-icon {
-    color: red; /* Change this to your desired color */
+    color: rgb(170, 170, 170); 
 }
 
-.error {
-    display: none;
+.form-check-label a {
+    text-decoration: none;
+    color: rgb(170, 170, 170); 
 }
-
-.error .text, .error .icon {
-    padding: 5px;
-    margin: 2px;
-}
-
-.error p {
-    color: #ff0000;
-}
-
 
 footer {
-    background-color: #333;
+    background-color: #babcbe;
     color: #fff;
-    padding: 10px;
+    padding: 1px;
     text-align: center;
     position: fixed;
     bottom: 0;
@@ -79,14 +18,14 @@ footer {
 }
 
 footer a {
-    font-size: 9px;
+    font-size: 15px;
     color: #fff;
     margin: 0 4px;
     text-decoration: none;
 }
 
 footer p {
-    font-size: 7px;
+    font-size: 12px;
     color: #fff;
     margin: 0 4px;
 }

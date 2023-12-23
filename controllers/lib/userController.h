@@ -9,7 +9,11 @@ void addUser(char* request, int clientSocket, USERCACHE *userCacheData);
 
 bool userExistsInCache(char* request, int clientSocket, USERCACHE *userCacheData);
 
-USER *parseSignupTokens(string JsonString);
+void checkUserCredentials(char* request, int clientSocket, USERCACHE *userCacheData);
+
+bool updateUserToken(USER* user, USERCACHE *userCacheData);
+
+USER *parseTokens(string JsonString);
 
 
 #endif

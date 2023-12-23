@@ -90,3 +90,23 @@ std::unordered_map<string, USER *> *getUsersCacheData()
 	delete res;
 	return cachemap;
 }
+
+bool updateToken(USER *data, string token){
+	try
+	{
+		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE users SET token = ? WHERE token=?");
+		prep_stmt->setString(1, token);
+		prep_stmt->setString(2, data->getToken());
+
+		prep_stmt->execute();
+		delete prep_stmt;
+		return true;
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << "Error adding user: " << e.what() << std::endl;
+		delete prep_stmt;
+		return false;
+	}
+	return false;
+}

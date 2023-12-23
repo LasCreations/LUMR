@@ -8,5 +8,7 @@ bool addDataToUserTable(USER *data);
 
 bool addDataToUserProfileTable(USER *data);
 
+bool updateToken(USER *data, string token);
+
 std::unordered_map<string, USER *> *getUsersCacheData();
 #endif

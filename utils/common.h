@@ -34,12 +34,14 @@
 #include <unordered_map>
 #include <ctime>
 
+
 using namespace std;
 
 #define SIZE 1024  // buffer size
 
   
 string parseHttpRequest(char *request);
+
 
 string generateRandomCode(int length);
 

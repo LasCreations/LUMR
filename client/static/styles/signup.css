@@ -6,6 +6,11 @@
     display:none;
 }
 
+.form-check-label a {
+    text-decoration: none;
+    color: rgb(170, 170, 170); 
+}
+
 footer {
     background-color: #babcbe;
     color: #fff;
