@@ -5,7 +5,7 @@ char method[10] = "";
 char route[100] = "";
 
 
-void apiRoute(char* request, int clientSocket){
+void apiRoute(char* request, int clientSocket, USERCACHE *userCacheData){
         // parse HTTP request
         sscanf(request, "%s %s", method, route);
         printf("%s %s\n", method, route);
@@ -13,14 +13,18 @@ void apiRoute(char* request, int clientSocket){
         // only support GET method
         if (strcmp(method, "GET") == 0)
         {
-            addUser();
+            // addUser();
             handlePageRequest(route, clientSocket);
             
         }
         else if (strcmp(method, "POST") == 0)
         {
-            // if (strcmp(route, "/api/auth/register") == 0)
-            //     registerUser(request, clientSocket, user_data_cache);
+            if (strcmp(route, "/user/register") == 0){
+                if(!userExistsInCache(request,clientSocket,userCacheData)){
+                    addUser(request, clientSocket, userCacheData);
+                }
+            }
+               
 
             // if (strcmp(route, "/api/users/me") == 0)
             //     findUser(request, clientSocket, user_data_cache);

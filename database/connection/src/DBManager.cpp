@@ -1,5 +1,10 @@
 #include "../lib/DBManager.h"
 
+DATABASEMANAGER *dbMan = new DATABASEMANAGER();
+Statement *stmt = nullptr;
+PreparedStatement *prep_stmt = nullptr;
+ResultSet *res = nullptr;
+
 DATABASEMANAGER::DATABASEMANAGER() : driver(nullptr), con(nullptr)
 {
     getEnvConfig("config/config.json");

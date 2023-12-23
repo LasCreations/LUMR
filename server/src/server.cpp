@@ -49,6 +49,12 @@ int runServer()
     }
 
     printf("\nServer is listening on http://%s:%s/\n\n", hostBuffer, serviceBuffer);
+    
+    USERCACHE *cacheUserData = new USERCACHE();
+    cacheUserData->preloadUserData();
+    // if(!cacheUserData->isEmpty()){
+    //     cacheUserData->scan();
+    // }
 
     while (1)
     {
@@ -66,7 +72,7 @@ int runServer()
             return 1; // or return 1; depending on your application logic
         }
 
-        apiRoute(request, clientSocket);
+        apiRoute(request, clientSocket, cacheUserData);
 
         free(request);
         close(clientSocket);

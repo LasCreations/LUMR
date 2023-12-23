@@ -20,13 +20,19 @@ string parseHttpRequest(char *request)
     return match.str();
 }
 
+
 string generateRandomCode(int length)
 {
-    const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    string Code;
+    const std::string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    std::string Code;
 
-    // Seed the random number generator with the current time
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    // Seed the random number generator only once
+    static bool seedInitialized = false;
+    if (!seedInitialized)
+    {
+        std::srand(static_cast<unsigned int>(std::time(nullptr)));
+        seedInitialized = true;
+    }
 
     for (int i = 0; i < length; ++i)
     {

@@ -1,7 +1,7 @@
 #ifndef DB_MANAGER_H
 #define DB_MANAGER_H
 
-#include "../../../utils/databaselibs.h"
+#include "../../../utils/database.h"
 
 class DATABASEMANAGER
 {
@@ -21,5 +21,11 @@ public:
     
     bool deleteConnections();
 };
+
+
+extern DATABASEMANAGER *dbMan;
+extern Statement *stmt;
+extern PreparedStatement *prep_stmt;
+extern ResultSet *res;
 
 #endif

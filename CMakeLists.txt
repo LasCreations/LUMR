@@ -11,6 +11,7 @@ file(GLOB SOURCES
     "utils/*.cpp"
     "database/connection/src/*.cpp"
     "database/queries/src/*.cpp"
+    "middleware/cache/src/*.cpp"
     )
 
 # Include directories
@@ -21,6 +22,7 @@ include_directories(
     routes/lib
     database/connection/lib
     database/queries/lib
+    middleware/cache/lib
 )
 
 # Create an executable for C++ sources
@@ -33,6 +35,7 @@ target_include_directories(LURM PRIVATE
                                 controllers/lib
                                 database/connection/lib
                                 database/queries/lib
+                                middleware/cache/lib
 )
 
 # Set C++ standard

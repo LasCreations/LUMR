@@ -1,41 +1,43 @@
 #ifndef USER_H
 #define USER_H
 
-#include"profile.h"
+#include "profile.h"
 
 using namespace std;
 
 class USER
 {
 private:
-    string username, email, password, cookie, avatarURL;
+    string username, password, token;
+    PROFILE *profile;
 
 public:
     USER()
     {
-        this->email = "";
+        this->token = "";
         this->username = "";
         this->password = "";
-        this->cookie = "";
-        this->avatarURL = "";
+        this->profile = new PROFILE();
     }
 
-    USER(string username, string email, string password, string cookie, string avatarURL)
+    USER(string username, string password, string token, PROFILE *profile)
     {
-        this->email = email;
+        this->profile = profile;
         this->username = username;
         this->password = password;
-        this->cookie = cookie;
-        this->avatarURL = avatarURL;
+        this->token = token;
     }
 
     USER(USER *user)
     {
-        this->email = user->email;
+        this->profile = user->profile;
         this->username = user->username;
         this->password = user->password;
-        this->cookie = user->cookie;
-        this->avatarURL = user->avatarURL;
+        this->token = user->token;
+    }
+
+    void setProfile(PROFILE *profile){
+        this->profile = profile;
     }
 
     void setUsername(string username)
@@ -43,24 +45,18 @@ public:
         this->username = username;
     }
 
-    void setEmail(string email)
-    {
-        this->email = email;
-    }
-
     void setPassword(string password)
     {
         this->password = password;
     }
 
-    void setCookie(string cookie)
+    void setToken(string token)
     {
-        this->cookie = cookie;
+        this->token = token;
     }
 
-    void setAvatarURL(string avatarURL)
-    {
-        this->avatarURL = avatarURL;
+    PROFILE *getProfile(){
+        return this->profile;
     }
 
     string getUsername()
@@ -68,24 +64,14 @@ public:
         return this->username;
     }
 
-    string getAvatarURL()
-    {
-        return this->avatarURL;
-    }
-
     string getPassword()
     {
         return this->password;
     }
 
-    string getEmail()
+    string getToken()
     {
-        return this->email;
-    }
-
-    string getCookie()
-    {
-        return this->cookie;
+        return this->token;
     }
 };
 

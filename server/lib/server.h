@@ -26,6 +26,7 @@ int clientSocket;
 char *request;
 
 #include "../../routes/lib/routes.h"
+#include "../../middleware/cache/lib/userCache.h"
 
 
 int runServer();

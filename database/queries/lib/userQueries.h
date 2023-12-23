@@ -4,12 +4,9 @@
 #include"../../connection/lib/DBManager.h"
 
 
-extern DATABASEMANAGER *dbMan;
+bool addDataToUserTable(USER *data);
 
-extern Statement *stmt;
-extern PreparedStatement *prep_stmt;
-extern ResultSet *res;
+bool addDataToUserProfileTable(USER *data);
 
-bool addUserToDatabase();
-
+std::unordered_map<string, USER *> *getUsersCacheData();
 #endif

@@ -14,7 +14,7 @@ class PROFILE{
             this->profile_id = "";
             this->user_id = "";
             this->email  = "";
-            this->avatar_url  = "";
+            this->avatar_url  = "default";
             this->bio = "";
             this->gender = "";
 	        this->status = true; //user currently online
