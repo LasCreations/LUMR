@@ -10,7 +10,9 @@ window.onload = function (){
     fetchAndSetImage('/avatars/avatar7.jpg', 'avatar7');
     fetchAndSetImage('/avatars/avatar8.jpg', 'avatar8');
     fetchAndSetImage('/avatars/avatar9.jpg', 'avatar9');
-    fetchAndSetImage('/avatars/avatar10.jpg', 'avatar10');
+    fetchAndSetImage('/avatars/avatarA.jpg', 'avatarA');
+    fetchAndSetImage('/avatars/avatarB.jpg', 'avatarB');
+    fetchAndSetImage('/avatars/avatarC.jpg', 'avatarC');
 }
 
 function fetchAndSetImage(url, elementId) {

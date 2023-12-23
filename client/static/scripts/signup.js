@@ -9,10 +9,10 @@ function updateButtonVisibility() {
     }
 }
 
-// document.getElementById("signUpForm").addEventListener("submit", function(event) {
-    // event.preventDefault();
+document.getElementById("signUpForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-function submitform(event){
+// function submitform(event){
     event.preventDefault();
     var formData = {
         username: document.getElementById("username").value,
@@ -31,10 +31,10 @@ function submitform(event){
             console.log("User added");
             window.location.href = "/pages/profilesetup.html";
         }else{
-            alert("Username already exists use another name");
+            console.log("Username already exists use another name");
         }
     })
     .catch(error => {
         console.error("Error:", error.message);
     });
-}
+});
