@@ -15,21 +15,27 @@
 #include <time.h>   // time
 #include <errno.h>
 
+#include <pthread.h>
 #include <inttypes.h>
+
 
 #define SIZE 1024  // buffer size
 #define PORT 8081  // port number
 #define BACKLOG 10 // number of pending connections queue will hold
 
 int serverSocket;
-int clientSocket;
-char *request;
+
 
 #include "../../routes/lib/routes.h"
 #include "../../middleware/cache/lib/userCache.h"
 
 
+USERCACHE *cacheUserData;
+
 int runServer();
+
 static void handleSignal(int signal);
+
+void *handleRequests(void *pClientSocket);
 
 #endif

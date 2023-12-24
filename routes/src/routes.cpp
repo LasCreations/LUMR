@@ -41,15 +41,6 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData)
 
         if (strcmp(route, "/user/me") == 0)
             userDataDashBoard(request, clientSocket, userCacheData);
-            
-        // if (strcmp(route, "/api/search/user") == 0)
-        //     searchUser(request, clientSocket);
-
-        // if (strcmp(route, "/api/follow/user") == 0)
-        //     followUser(request, clientSocket);
-
-        // if (strcmp(route, "/api/auth/login") == 0)
-        //     loginUser(request, clientSocket, user_data_cache);
     }
     else
     {

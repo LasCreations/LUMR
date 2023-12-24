@@ -1,5 +1,26 @@
 #include "../lib/server.h"
 
+void *handleRequests(void *pClientSocket){
+        int clientThreadSocket = *((int *)pClientSocket);
+        // free(pClientSocket);
+        char *request = (char *)malloc(SIZE * sizeof(char));
+        ssize_t bytesRead = read(clientThreadSocket, request, SIZE);
+        if (bytesRead < 0)
+        {
+            perror("Error reading from client socket");
+            close(clientThreadSocket);
+            return NULL; // or return 1; depending on your application logic
+        }
+
+        apiRoute(request, clientThreadSocket, cacheUserData);
+
+        free(request);
+        close(clientThreadSocket);
+        // close(clientThreadSocket);
+        printf("\n");
+        return NULL;
+}
+
 int runServer()
 {
     // register signal handler
@@ -50,33 +71,22 @@ int runServer()
 
     printf("\nServer is listening on http://%s:%s/\n\n", hostBuffer, serviceBuffer);
     
-    USERCACHE *cacheUserData = new USERCACHE();
+    cacheUserData = new USERCACHE();
     cacheUserData->preloadUserData();
-    // if(!cacheUserData->isEmpty()){
-    //     cacheUserData->scan();
-    // }
 
     while (1)
     {
-        // buffer to store data (request)
-        request = (char *)malloc(SIZE * sizeof(char));
-
         // accept connection and read data
-        clientSocket = accept(serverSocket, NULL, NULL);
+        int clientSocket = accept(serverSocket, NULL, NULL);
 
-        ssize_t bytesRead = read(clientSocket, request, SIZE);
-        if (bytesRead < 0)
-        {
-            perror("Error reading from client socket");
+        pthread_t t;
+        if(pthread_create(&t, NULL, handleRequests, (void *)&clientSocket)!=0){
+            perror("Error creating thread");
             close(clientSocket);
-            return 1; // or return 1; depending on your application logic
+        }else{
+            // Detach the thread to allow it to clean up its resources when it exits
+            pthread_detach(t);
         }
-
-        apiRoute(request, clientSocket, cacheUserData);
-
-        free(request);
-        close(clientSocket);
-        printf("\n");
     }
 }
 
@@ -86,11 +96,11 @@ static void handleSignal(int signal)
     {
         printf("\nShutting down server...\n");
 
-        close(clientSocket);
+        // close(clientSocket);
         close(serverSocket);
 
-        if (request != NULL)
-            free(request);
+        // if (request != NULL)
+        //     free(request);
 
         exit(0);
     }
