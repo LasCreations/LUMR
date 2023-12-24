@@ -1,5 +1,20 @@
 var avatar = "default";
 
+function getToken() {
+    if (/\S/.test(document.cookie)) {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("Token=")) {
+                var token = cookie.substring("Token=".length);
+                console.log(token);
+                return token;
+            }
+        }
+    }
+    return null;
+}
+
 window.onload = function (){
     fetchAndSetImage('/avatars/avatar1.jpg', 'avatar1');
     fetchAndSetImage('/avatars/avatar2.jpg', 'avatar2');
@@ -63,15 +78,19 @@ function selectAvatar(avatarId) {
 document.getElementById("myForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
+    var genderElement = document.querySelector('.classic');
+    var genderValue = genderElement.value;
+
     // Get form data
     var formData = {
-        username: document.getElementById("username").value,
         email: document.getElementById("email").value,
-        password: document.getElementById("password").value,
-        avatarurl: avatar
+        bio: document.getElementById("bio").value,
+        gender: genderValue,
+        avatarurl: avatar,
+        token: getToken()
     };
     
-    fetch("/api/auth/register", {
+    fetch("/user/profile/create", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -80,16 +99,10 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     })
     .then(res => {
         if(res.ok){
-            console.log("User added");
-            window.location.href = "/dashboard.html";
+            console.log("Profile added");
+            window.location.href = "/pages/dashboard.html";
         }else{
-            const errorDiv = document.getElementById('error');
-            errorDiv.style.display = 'block';
-            errorDiv.style.textAlign = 'center';
-            errorDiv.style.alignItems = 'center';
-            errorDiv.style.justifyContent = 'center';
-            errorDiv.style.display = 'flex';
-            console.log("User couldnt be added");
+            console.log("Profile couldnt be added");
         }
     })
     .catch(error => {

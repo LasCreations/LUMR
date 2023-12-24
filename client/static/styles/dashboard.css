@@ -1,4 +1,4 @@
-/* Main CSS Here */
+/**************************************** MAIN CSS CONFIGURATION ************************************/
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
@@ -26,9 +26,13 @@ body {
     max-width: 100%;
     overflow-x: hidden;
 }
+/**************************************** MAIN CSS CONFIGURATION ************************************/
 
+
+
+/**************************************** HEADER************************************/
 header {
-    height: 50px;
+    height: 55px;
     width: 100vw;
     padding: 0 30px;
     background-color: var(--background-color1);
@@ -58,7 +62,7 @@ header {
     border: none;
     border-radius: 5px 20px 20px 5px;
     cursor: pointer;
-  }
+}
 
 .menuicn,
 .closemenuicn {
@@ -83,7 +87,7 @@ header {
     display: none;
 }
 
-.custom-icon{
+.custom-icon {
     color: rgb(192, 192, 192);
 }
 
@@ -129,7 +133,18 @@ header {
     top: 8px;
 }
 
-.dp {
+.online {
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    background-color: #67ff53;
+    border-radius: 50%;
+    right: 19px;
+    top: 8px;
+}
+
+.dp,
+.profileImage {
     height: 40px;
     width: 40px;
     background-color: #626262;
@@ -140,46 +155,22 @@ header {
     overflow: hidden;
 }
 
+.dpicn {
+    height: 42px;
+}
+
+/**************************************** HEADER************************************/
+
+
+/**************************************** SIDE NAV BAR ************************************/
+
 .main-container {
     display: flex;
     width: 100vw;
     position: relative;
     /* top: 70px; */
-    top: 50px;
+    top: 55px;
     z-index: 1;
-}
-
-.dpicn {
-    height: 42px;
-}
-
-.main {
-    height: calc(100vh - 70px);
-    width: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding: 40px 30px 30px 30px;
-}
-
-.main::-webkit-scrollbar-thumb {
-    background-image:
-        linear-gradient(to bottom, rgb(0, 0, 85), rgb(0, 0, 50));
-}
-
-.main::-webkit-scrollbar {
-    width: 5px;
-}
-
-.main::-webkit-scrollbar-track {
-    background-color: #9e9e9eb2;
-}
-
-.box-container {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 50px;
 }
 
 .nav {
@@ -255,6 +246,157 @@ header {
     background-color: var(--Border-color);
 }
 
+/**************************************** SIDE NAV BAR ************************************/
+
+
+
+/**************************************** MAIN SECTION ************************************/
+.main {
+    height: calc(100vh - 70px);
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 40px 30px 30px 30px;
+}
+
+.main::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.main::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.main::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.main::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+/**************************************** PROFILE SECTION************************************/
+
+/**************************************** PROFILE SECTION************************************/
+
+#profile-view{
+    display:none;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 50px;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 50px;
+}
+
+.small-username-container {
+    display: inline-block;
+    border-radius: 2rem;
+    background-color: rgb(192, 194, 192);
+}
+
+.profile-image {
+    height: 80px;
+    width: 80px;
+}
+
+#userProfileViewImage{
+    height: 75px;
+    width: 75px;
+    background-color: #626262;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+
+.profile-bio {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    padding: 1.5rem;
+    align-items: center;
+    max-width: 250px;
+    gap: 20px;
+    word-wrap: break-word;
+    border-radius: 2rem;
+    border: rgb(126, 129, 127) 0.1rem solid; 
+}
+
+.bio-header {
+    border-bottom: 2px solid rgb(126, 129, 127);
+}
+
+.profile-details{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+}
+
+.follower-count, .following-count{
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.profile-actions{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+}
+
+.edit-btn{
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    height: 38px;
+    min-width: 111px;
+    min-height: 38px;
+    border: none;
+    color: #fff;
+    background-color: rgb(132, 132, 134);
+    transition: background-color .17s ease,color .17s ease;
+}
+
+.edit-btn:hover {
+    color: #5c5656;
+    background-color: rgb(200, 200, 204);
+}
+
+
+
+/**************************************** TOP SECTION WITH CARDS(BOX)************************************/
+.box-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
 .box {
     height: 130px;
     width: 230px;
@@ -306,7 +448,9 @@ header {
     font-size: 30px;
     letter-spacing: 3px;
 }
+/**************************************** TOP SECTION WITH CARDS(BOX)************************************/
 
+/**************************************** REPORT CONTAINER ************************************/
 .report-container {
     min-height: 300px;
     max-width: 1200px;
@@ -385,3 +529,6 @@ header {
     color: white;
     border-radius: 4px;
 }
+/**************************************** REPORT CONTAINER ************************************/
+
+/**************************************** MAIN SECTION ************************************/

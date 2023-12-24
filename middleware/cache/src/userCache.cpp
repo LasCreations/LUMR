@@ -4,9 +4,7 @@ USERCACHE::USERCACHE(){
 }
 
 void USERCACHE::preloadUserData(){
-    
     this->cacheData = getUsersCacheData();
-    
 }
 
 void USERCACHE::updateUserData(){
@@ -30,6 +28,15 @@ USER* USERCACHE::getUserFromCache(string key){
 USER* USERCACHE::getUserFromCache(string username, string password){
     for (const auto& pair : *(this->cacheData)) {
         if(username == pair.second->getUsername() && password == pair.second->getPassword()){
+            return pair.second;
+        }
+    }
+    return nullptr;
+}
+
+USER* USERCACHE::getUserFromCacheByToken(string token){
+    for (const auto& pair : *(this->cacheData)) {
+        if(token == pair.second->getToken()){
             return pair.second;
         }
     }
@@ -72,6 +79,19 @@ void USERCACHE::updateUserTokenInCache(USER *data, string token){
             pair.second->setToken(token);
         }
     }
+}
+
+USER* USERCACHE::updateUserProfileInCache(PROFILE *data){
+    for (const auto& pair : *(this->cacheData)) {
+        if(data->getProfileID() == pair.second->getToken()){
+            pair.second->getProfile()->setAvatarURL(data->getAvatarURL());
+            pair.second->getProfile()->setBio(data->getBio());
+            pair.second->getProfile()->setEmail(data->getEmail());
+            pair.second->getProfile()->setGender(data->getGender());
+            return pair.second;
+        }
+    }
+    return nullptr;
 }
 
 void USERCACHE::addUserToMap(USER *data){

@@ -45,4 +45,6 @@ string parseHttpRequest(char *request);
 
 string generateRandomCode(int length);
 
+string parseTokenFromRequest(string JsonString);
+
 #endif

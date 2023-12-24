@@ -16,10 +16,9 @@
 
         <div class="logosec">
             <div class="logo">LURM</div>
-            <i class="fa fa-bars fa-2x icn menuicn" id="menuicn" alt="menu-icon" aria-hidden="true"></i>
-            <i class="fa fa-times fa-2x icn closemenuicn" id="closemenuicn" alt="close-menu-icon" aria-hidden="true"></i>
-            <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182541/Untitled-design-(30).png"
-                class="icn menuicn" id="menuicn" alt="menu-icon"> -->
+            <i class="fa fa-bars fa-2x icn menuicn custom-icon" id="menuicn" alt="menu-icon" aria-hidden="true"></i>
+            <i class="fa fa-times fa-2x icn closemenuicn custom-icon" id="closemenuicn" alt="close-menu-icon"
+                aria-hidden="true"></i>
         </div>
 
         <div class="searchbar">
@@ -28,8 +27,6 @@
                 <button class="icon-btn" onclick="handleButtonClick()">
                     <i class="fa fa-search icn fa-2x srchicn"></i>
                 </button>
-                <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                    class="icn srchicn" alt="search-icon"> -->
             </div>
         </div>
 
@@ -37,12 +34,11 @@
             <div class="circle"></div>
             <i class="fa fa-bell icn fa-2x custom-icon" aria-hidden="true"></i>
             <div class="dp">
-                <i class="fa fa-user dpicn fa-2x nav-img" aria-hidden="true"></i>
-                <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
-                    class="dpicn" alt="dp"> -->
-
+                <img id="dpicn" class="profileImage ">
             </div>
         </div>
+
+        <div class="online"></div>
 
     </header>
 
@@ -55,7 +51,7 @@
                         <h3>Home</h3>
                     </div>
 
-                    <div class="option2 nav-option">
+                    <div class="option2 nav-option" onclick="showUserProfile()">
                         <i class="fa fa-user fa-2x nav-img" aria-hidden="true"></i>
                         <h3>Profile</h3>
                     </div>
@@ -88,18 +84,53 @@
                 </div>
             </nav>
         </div>
-        <div class="main">
 
-            <div class="searchbar2">
-                <input type="text" name="" id="" placeholder="Search">
-                <div class="searchbtn">
-                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                        class="icn srchicn" alt="search-button">
+        <div class="main">
+            <div id="profile-view">
+                <div class="profile-container" id="Profile-Container">
+                    <div class="profile-header">
+                        <div class="profile-image">
+                            <!-- <img id="dpicn" class="profileImage "> -->
+                            <img id="userProfileViewImage" class="profileViewImage ">
+                        </div>
+                        <div class="profile-name">
+                            <h1 class="username"> </h1> <!-- Username big font -->
+                            <div class="small-username-container">
+                                <small class="page-title"> </small> <!-- Username with @ small font -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-bio">
+                        <div class="bio-header">
+                            <i class="fa fa-info-circle"></i>
+                            Bio
+                        </div>
+                        <p class="bio-text">
+                            <!-- BIO -->
+                        </p>
+                    </div>
+
+                    <div class="profile-details">
+                        <div>
+                            <p class="follower-count">0</p> <!-- Follower count -->
+                            <p class="follower-text">Followers</p>
+                        </div>
+                        <div>
+                            <p class="following-count">0</p> <!-- Following count -->
+                            <p class="following-text">Following</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="edit-btn">Edit Profile</button>
+                        <!-- <button class="follow-btn">Follow</button>
+                        <button class="message-btn">Message</button> -->
+                    </div>
                 </div>
             </div>
 
-            <div class="box-container">
-
+            <!--<div class="box-container">
                 <div class="box box1">
                     <div class="text">
                         <h2 class="topic-heading">60.5k</h2>
@@ -137,7 +168,7 @@
 
                     <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png" alt="published">
                 </div>
-            </div>
+            </div> 
 
             <div class="report-container">
                 <div class="report-header">
@@ -219,11 +250,11 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
-    <script src="/static/scripts/dashboard.js"></script>
+    <script src="/static/scripts/userdashboard.js"></script>
     <script src="/static/scripts/responsive.js"></script>
 </body>
 

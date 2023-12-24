@@ -7,13 +7,21 @@
 
 void addUser(char* request, int clientSocket, USERCACHE *userCacheData);
 
+void updateUserProfile(char* request, int clientSocket, USERCACHE *userCacheData);
+
 bool userExistsInCache(char* request, int clientSocket, USERCACHE *userCacheData);
 
 void checkUserCredentials(char* request, int clientSocket, USERCACHE *userCacheData);
 
+void userDataDashBoard(char* request, int clientSocket, USERCACHE *userCacheData);
+
 bool updateUserToken(USER* user, USERCACHE *userCacheData);
 
+string ParseUserDataToJSON(USER *user);
+
 USER *parseTokens(string JsonString);
+
+PROFILE *parseProfileTokens(string JsonString);
 
 
 #endif

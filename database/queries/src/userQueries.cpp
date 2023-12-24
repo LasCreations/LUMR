@@ -110,3 +110,40 @@ bool updateToken(USER *data, string token){
 	}
 	return false;
 }
+
+
+bool updateUserProfile(USER *data){
+	try
+	{
+		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE user_profile SET email = ? WHERE user_id = ?");
+		prep_stmt->setString(1, data->getProfile()->getEmail());
+		prep_stmt->setString(2, data->getUsername());
+		prep_stmt->execute();
+
+		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE user_profile SET bio = ? WHERE user_id = ?");
+		prep_stmt->setString(1, data->getProfile()->getBio());
+		prep_stmt->setString(2, data->getUsername());
+		prep_stmt->execute();
+
+		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE user_profile SET gender = ? WHERE user_id = ?");
+		prep_stmt->setString(1, data->getProfile()->getGender());
+		prep_stmt->setString(2, data->getUsername());
+		prep_stmt->execute();
+
+		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE user_profile SET avatar_url = ? WHERE user_id = ?");
+		prep_stmt->setString(1, data->getProfile()->getAvatarURL());
+		prep_stmt->setString(2, data->getUsername());
+		prep_stmt->execute();
+
+
+		delete prep_stmt;
+		return true;
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << "Error adding user: " << e.what() << std::endl;
+		delete prep_stmt;
+		return false;
+	}
+	return false;
+}

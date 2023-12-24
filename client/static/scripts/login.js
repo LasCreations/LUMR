@@ -15,7 +15,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     })
     .then(res => {
         if(res.ok){
-            // console.log("User added");
+            window.location.href = "/pages/dashboard.html";
         }else{
             // console.log("Username already exists use another name");
         }

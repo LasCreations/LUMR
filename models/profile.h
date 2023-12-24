@@ -30,7 +30,7 @@ class PROFILE{
 	        this->status = profile->status;
         }
 
-        PROFILE(string profile_id, string user_id, string email, string avatar_url,string bio,string gender,bool status ){
+        PROFILE(string profile_id, string user_id, string email, string avatar_url,string bio,string gender,bool status){
             this->profile_id = profile_id;
             this->user_id = user_id;
             this->email  = email;

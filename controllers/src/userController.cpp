@@ -52,35 +52,101 @@ void addUser(char *request, int clientSocket, USERCACHE *userCacheData)
     }
 }
 
-void checkUserCredentials(char* request, int clientSocket, USERCACHE *userCacheData){
-    USER *data = parseTokens(parseHttpRequest(request));
-    USER *cacheData = userCacheData->getUserFromCache(data->getUsername(), data->getPassword());
+void updateUserProfile(char *request, int clientSocket, USERCACHE *userCacheData)
+{
 
-    if(cacheData != nullptr){
-        if(updateUserToken(cacheData, userCacheData)){
-            char response[256];
-            std::snprintf(response, sizeof(response),
-                          "HTTP/1.1 200 OK\r\nSet-Cookie: Token=%s; Path=/; Max-Age=3153600000\r\n\r\n",
-                          cacheData->getToken().c_str());
-            send(clientSocket, response, sizeof(response) - 1, 0);
-        }else{
-            const char response[] = "HTTP/1.1 500 Internal Server Error\r\n\r\n";
-            send(clientSocket, response, sizeof(response) - 1, 0);
-        }
-    }else{
+    if (updateUserProfile(userCacheData->updateUserProfileInCache(parseProfileTokens(parseHttpRequest(request)))))
+    {
+        const char response[] = "HTTP/1.1 200 OK\r\n\r\n";
+        send(clientSocket, response, sizeof(response) - 1, 0);
+    }
+    else
+    {
         const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
         send(clientSocket, response, sizeof(response) - 1, 0);
     }
 }
 
-bool updateUserToken(USER* user, USERCACHE *userCacheData){
+void userDataDashBoard(char *request, int clientSocket, USERCACHE *userCacheData)
+{
+    // use this for authentication
+
+    USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
+    if (data != nullptr)
+    {
+        std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
+                                   ParseUserDataToJSON(data);
+
+        send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
+    }
+    else
+    {
+        const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+        send(clientSocket, response, sizeof(response) - 1, 0);
+    }
+}
+
+void checkUserCredentials(char *request, int clientSocket, USERCACHE *userCacheData)
+{
+    USER *data = parseTokens(parseHttpRequest(request));
+    USER *cacheData = userCacheData->getUserFromCache(data->getUsername(), data->getPassword());
+
+    if (cacheData != nullptr)
+    {
+        if (updateUserToken(cacheData, userCacheData))
+        {
+            char response[256];
+            std::snprintf(response, sizeof(response),
+                          "HTTP/1.1 200 OK\r\nSet-Cookie: Token=%s; Path=/; Max-Age=3153600000\r\n\r\n",
+                          cacheData->getToken().c_str());
+            send(clientSocket, response, sizeof(response) - 1, 0);
+        }
+        else
+        {
+            const char response[] = "HTTP/1.1 500 Internal Server Error\r\n\r\n";
+            send(clientSocket, response, sizeof(response) - 1, 0);
+        }
+    }
+    else
+    {
+        const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+        send(clientSocket, response, sizeof(response) - 1, 0);
+    }
+}
+
+bool updateUserToken(USER *user, USERCACHE *userCacheData)
+{
     string token = generateRandomCode(24);
-    if(updateToken(user, token)){
+    if (updateToken(user, token))
+    {
         user->setToken(token);
         userCacheData->updateUserTokenInCache(user, token);
         return true;
-    } 
+    }
     return false;
+}
+
+PROFILE *parseProfileTokens(string JsonString)
+{
+    // Your JSON string
+    Json::Value jsonData;
+    Json::CharReaderBuilder readerBuilder;
+    std::istringstream jsonStream(JsonString);
+    PROFILE *data = nullptr;
+    try
+    {
+        // Parse the JSON string
+        Json::parseFromStream(readerBuilder, jsonStream, &jsonData, nullptr);
+        // set the token as the profile id
+        data = new PROFILE(jsonData["token"].asString(), "", jsonData["email"].asString(), jsonData["avatarurl"].asString(),
+                           jsonData["bio"].asString(), jsonData["gender"].asString(), false);
+        return data;
+    }
+    catch (const Json::Exception &e)
+    {
+        std::cerr << "Error parsing JSON: " << e.what() << "\n";
+    }
+    return data;
 }
 
 USER *parseTokens(string JsonString)
@@ -103,4 +169,22 @@ USER *parseTokens(string JsonString)
         std::cerr << "Error parsing JSON: " << e.what() << "\n";
     }
     return user;
+}
+
+string ParseUserDataToJSON(USER *user)
+{
+    // Create a JSON object
+    Json::Value jsonValue;
+
+    // Add key-value pairs to the JSON object
+    jsonValue["username"] = user->getUsername();
+    jsonValue["avatarurl"] = user->getProfile()->getAvatarURL();
+    jsonValue["bio"] = user->getProfile()->getBio();
+    // Convert the JSON object to a JSON string
+    std::string jsonString = jsonValue.toStyledString();
+
+    // Print the resulting JSON string
+    std::cout << "\n\n"
+              << jsonString << std::endl;
+    return jsonString;
 }

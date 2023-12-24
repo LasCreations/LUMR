@@ -40,3 +40,21 @@ string generateRandomCode(int length)
 
     return Code;
 }
+
+string parseTokenFromRequest(string JsonString){
+    // Your JSON string
+    Json::Value jsonData;
+    Json::CharReaderBuilder readerBuilder;
+    std::istringstream jsonStream(JsonString);
+    try
+    {
+        // Parse the JSON string
+        Json::parseFromStream(readerBuilder, jsonStream, &jsonData, nullptr);
+        return jsonData["token"].asString();
+    }
+    catch (const Json::Exception &e)
+    {
+        std::cerr << "Error parsing JSON: " << e.what() << "\n";
+    }
+    return NULL;
+}
