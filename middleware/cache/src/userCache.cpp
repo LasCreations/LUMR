@@ -3,8 +3,8 @@
 USERCACHE::USERCACHE(){
 }
 
-void USERCACHE::preloadUserData(){
-    this->cacheData = getUsersCacheData();
+void USERCACHE::preloadUserData(DATABASEMANAGER *dbMan){
+    this->cacheData = getUsersCacheData(dbMan);
 }
 
 void USERCACHE::updateUserData(){

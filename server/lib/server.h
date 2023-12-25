@@ -28,9 +28,11 @@ int serverSocket;
 
 #include "../../routes/lib/routes.h"
 #include "../../middleware/cache/lib/userCache.h"
+#include "../../database/connection/lib/DBManager.h"
 
 
 USERCACHE *cacheUserData;
+DATABASEMANAGER *dbMan;
 
 int runServer();
 

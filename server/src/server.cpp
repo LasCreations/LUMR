@@ -12,7 +12,7 @@ void *handleRequests(void *pClientSocket){
             return NULL; // or return 1; depending on your application logic
         }
 
-        apiRoute(request, clientThreadSocket, cacheUserData);
+        apiRoute(request, clientThreadSocket, cacheUserData, dbMan);
 
         free(request);
         close(clientThreadSocket);
@@ -71,8 +71,12 @@ int runServer()
 
     printf("\nServer is listening on http://%s:%s/\n\n", hostBuffer, serviceBuffer);
     
+
+
+    dbMan = new DATABASEMANAGER();
+
     cacheUserData = new USERCACHE();
-    cacheUserData->preloadUserData();
+    cacheUserData->preloadUserData(dbMan);
 
     while (1)
     {
@@ -80,13 +84,8 @@ int runServer()
         int clientSocket = accept(serverSocket, NULL, NULL);
 
         pthread_t t;
-        if(pthread_create(&t, NULL, handleRequests, (void *)&clientSocket)!=0){
-            perror("Error creating thread");
-            close(clientSocket);
-        }else{
-            // Detach the thread to allow it to clean up its resources when it exits
-            pthread_detach(t);
-        }
+        pthread_create(&t, NULL, handleRequests, (void *)&clientSocket);
+        pthread_join(t, NULL);
     }
 }
 

@@ -21,7 +21,7 @@ bool userExistsInCache(char *request, int clientSocket, USERCACHE *userCacheData
     return false;
 }
 
-void addUser(char *request, int clientSocket, USERCACHE *userCacheData)
+void addUser(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
 {
     USER *data = parseTokens(parseHttpRequest(request));
 
@@ -30,7 +30,7 @@ void addUser(char *request, int clientSocket, USERCACHE *userCacheData)
         data->getProfile()->setProfileID(generateRandomCode(12));
         data->getProfile()->setUserID(data->getUsername());
         data->setToken(generateRandomCode(24));
-        if (addDataToUserTable(data) && addDataToUserProfileTable(data))
+        if (addDataToUserTable(dbMan, data) && addDataToUserProfileTable(dbMan, data))
         {
             userCacheData->addUserToMap(data);
             char response[256];
@@ -52,10 +52,10 @@ void addUser(char *request, int clientSocket, USERCACHE *userCacheData)
     }
 }
 
-void updateUserProfile(char *request, int clientSocket, USERCACHE *userCacheData)
+void updateUserProfile(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
 {
 
-    if (updateUserProfile(userCacheData->updateUserProfileInCache(parseProfileTokens(parseHttpRequest(request)))))
+    if (updateUserProfile(dbMan, userCacheData->updateUserProfileInCache(parseProfileTokens(parseHttpRequest(request)))))
     {
         const char response[] = "HTTP/1.1 200 OK\r\n\r\n";
         send(clientSocket, response, sizeof(response) - 1, 0);
@@ -86,14 +86,14 @@ void userDataDashBoard(char *request, int clientSocket, USERCACHE *userCacheData
     }
 }
 
-void checkUserCredentials(char *request, int clientSocket, USERCACHE *userCacheData)
+void checkUserCredentials(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
 {
     USER *data = parseTokens(parseHttpRequest(request));
     USER *cacheData = userCacheData->getUserFromCache(data->getUsername(), data->getPassword());
 
     if (cacheData != nullptr)
     {
-        if (updateUserToken(cacheData, userCacheData))
+        if (updateUserToken(cacheData, userCacheData, dbMan))
         {
             char response[256];
             std::snprintf(response, sizeof(response),
@@ -114,10 +114,10 @@ void checkUserCredentials(char *request, int clientSocket, USERCACHE *userCacheD
     }
 }
 
-bool updateUserToken(USER *user, USERCACHE *userCacheData)
+bool updateUserToken(USER *user, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
 {
     string token = generateRandomCode(24);
-    if (updateToken(user, token))
+    if (updateToken(dbMan,user, token))
     {
         user->setToken(token);
         userCacheData->updateUserTokenInCache(user, token);

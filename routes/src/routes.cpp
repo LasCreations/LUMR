@@ -3,7 +3,7 @@
 char method[10] = "";
 char route[100] = "";
 
-void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData)
+void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
 {
     // parse HTTP request
     sscanf(request, "%s %s", method, route);
@@ -19,7 +19,7 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData)
         {
             if (!userExistsInCache(request, clientSocket, userCacheData))
             {
-                addUser(request, clientSocket, userCacheData);
+                addUser(request, clientSocket, userCacheData, dbMan);
             }
             else
             {
@@ -32,12 +32,12 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData)
         {
             if (userExistsInCache(request, clientSocket, userCacheData))
             {
-                checkUserCredentials(request, clientSocket, userCacheData);
+                checkUserCredentials(request, clientSocket, userCacheData, dbMan);
             }
         }
 
         if (strcmp(route, "/user/profile/create") == 0)
-            updateUserProfile(request, clientSocket, userCacheData);
+            updateUserProfile(request, clientSocket, userCacheData, dbMan);
 
         if (strcmp(route, "/user/me") == 0)
             userDataDashBoard(request, clientSocket, userCacheData);

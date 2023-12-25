@@ -9,6 +9,6 @@
 extern char method[10], route[100];
 
 
-void apiRoute(char* request, int clientSocket, USERCACHE *userCacheData);
+void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan);
 
 #endif

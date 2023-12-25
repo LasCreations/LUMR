@@ -1,6 +1,6 @@
 #include "../lib/userQueries.h"
 
-bool addDataToUserTable(USER *data)
+bool addDataToUserTable(DATABASEMANAGER *dbMan, USER *data)
 {
 	try
 	{
@@ -21,7 +21,7 @@ bool addDataToUserTable(USER *data)
 	}
 }
 
-bool addDataToUserProfileTable(USER *data)
+bool addDataToUserProfileTable(DATABASEMANAGER *dbMan, USER *data)
 {
 	try
 	{
@@ -46,7 +46,7 @@ bool addDataToUserProfileTable(USER *data)
 	}
 }
 
-std::unordered_map<string, USER *> *getUsersCacheData()
+std::unordered_map<string, USER *> *getUsersCacheData(DATABASEMANAGER *dbMan)
 {
 	USER *data = nullptr;
 	PROFILE *profile = nullptr;
@@ -91,7 +91,7 @@ std::unordered_map<string, USER *> *getUsersCacheData()
 	return cachemap;
 }
 
-bool updateToken(USER *data, string token){
+bool updateToken(DATABASEMANAGER *dbMan, USER *data, string token){
 	try
 	{
 		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE users SET token = ? WHERE token=?");
@@ -112,7 +112,7 @@ bool updateToken(USER *data, string token){
 }
 
 
-bool updateUserProfile(USER *data){
+bool updateUserProfile(DATABASEMANAGER *dbMan, USER *data){
 	try
 	{
 		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE user_profile SET email = ? WHERE user_id = ?");

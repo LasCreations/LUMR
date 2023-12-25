@@ -11,7 +11,7 @@ class USERCACHE{
     public:
 
         USERCACHE();
-        void preloadUserData();
+        void preloadUserData(DATABASEMANAGER *dbMan);
         void updateUserData();
         void scan();
 

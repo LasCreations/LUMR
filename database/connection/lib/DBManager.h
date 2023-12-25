@@ -23,7 +23,7 @@ public:
 };
 
 
-extern DATABASEMANAGER *dbMan;
+// extern DATABASEMANAGER *dbMan;
 extern Statement *stmt;
 extern PreparedStatement *prep_stmt;
 extern ResultSet *res;

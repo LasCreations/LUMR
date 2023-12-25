@@ -4,13 +4,13 @@
 #include"../../connection/lib/DBManager.h"
 
 
-bool addDataToUserTable(USER *data);
+bool addDataToUserTable(DATABASEMANAGER *dbMan, USER *data);
 
-bool addDataToUserProfileTable(USER *data);
+bool addDataToUserProfileTable(DATABASEMANAGER *dbMan, USER *data);
 
-bool updateToken(USER *data, string token);
+bool updateToken(DATABASEMANAGER *dbMan, USER *data, string token);
 
-bool updateUserProfile(USER *data);
+bool updateUserProfile(DATABASEMANAGER *dbMan, USER *data);
 
-std::unordered_map<string, USER *> *getUsersCacheData();
+std::unordered_map<string, USER *> *getUsersCacheData(DATABASEMANAGER *dbMan);
 #endif
