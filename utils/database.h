@@ -21,6 +21,6 @@ using namespace std;
 using namespace sql;
 
 #include "../models/user.h"
-
+#include "../models/connection.h"
 
 #endif

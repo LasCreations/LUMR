@@ -91,3 +91,9 @@ function showUserProfile(){
     followBtn.style.display = "none";
     messageBtn.style.display = "none";
 }
+
+function showHome(){
+    const profileDiv = document.getElementById("profile-view");
+
+    profileDiv.style.display = "none";
+}

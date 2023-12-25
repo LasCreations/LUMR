@@ -54,6 +54,9 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
                 send(clientSocket, response, sizeof(response) - 1, 0);
             }
         }
+
+        if (strcmp(route, "/user/follow") == 0)
+            addConnection(request, clientSocket, dbMan,userCacheData);
     }
     else
     {

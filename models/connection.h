@@ -7,21 +7,19 @@ class CONNECTION{
     private:
         USER* user1;
         USER* user2;
-        bool user1_status, user2_status;
+        bool status;
         
     public:
         CONNECTION(){
             this->user1 = new USER();
             this->user2 = new USER();
-            this->user1_status = false;
-            this->user2_status = false;
+            this->status = false;
         }
 
-        CONNECTION(USER* user1, USER* user2, bool user1_status, bool user2_status){
+        CONNECTION(USER* user1, USER* user2, bool status){
             this->user1 = user1;
             this->user2 = user2;
-            this->user1_status = user1_status;
-            this->user2_status = user2_status;
+            this->status = status;
         }
 
         void setUser1(USER* user1){
@@ -32,12 +30,8 @@ class CONNECTION{
             this->user2 = user2;
         }
 
-        void setUser1_status(bool user1_status){
-            this->user1_status = user1_status;
-        }
-
-        void setUser2_status(bool user2_status){
-            this->user2_status = user2_status;
+        void setStatus(bool status){
+            this->status = status;
         }
         
         USER *getUser1(){
@@ -48,12 +42,8 @@ class CONNECTION{
             return this->user2;
         }
 
-        bool getUser1_Status(){
-            return this->user1_status;
-        }
-
-        bool getUser2_Status(){
-            return this->user2_status;
+        bool getStatus(){
+            return this->status;
         }
 };
 

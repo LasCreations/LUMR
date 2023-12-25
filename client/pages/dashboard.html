@@ -45,8 +45,8 @@
     <div class="main-container">
         <div class="navcontainer">
             <nav class="nav">
-                <div class="nav-upper-options">
-                    <div class="nav-option option1">
+                <div class="nav-upper-options" >
+                    <div class="nav-option option1"  onclick="showHome()">
                         <i class="fa fa-home fa-2x nav-img" aria-hidden="true"></i>
                         <h3>Home</h3>
                     </div>
@@ -122,11 +122,15 @@
                             <p class="following-count">0</p> <!-- Following count -->
                             <p class="following-text">Following</p>
                         </div>
+                        <div>
+                            <p class="post-count">0</p> <!-- Following count -->
+                            <p class="post-text">Posts</p>
+                        </div>
                     </div>
 
                     <div class="profile-actions">
                         <button class="edit-btn">Edit Profile</button>
-                        <button class="follow-btn">Follow</button>
+                        <button class="follow-btn" onclick="followUser()">Follow</button>
                         <button class="message-btn">Message</button>
                     </div>
                 </div>
@@ -140,6 +144,7 @@
 
     <script src="/static/scripts/userdashboard.js"></script>
     <script src="/static/scripts/userSearch.js"></script>
+    <script src="/static/scripts/followUser.js"></script>
     <script src="/static/scripts/responsive.js"></script>
 </body>
 

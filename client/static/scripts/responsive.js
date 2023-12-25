@@ -9,13 +9,16 @@ navOptions.forEach(option => {
     option.addEventListener("click", function() {
       // Remove the "selected" class from all options
       navOptions.forEach(otherOption => {
-        otherOption.style.backgroundColor = "#fafaff";
+        //
+        // otherOption.style.backgroundColor = "#fafaff";
+        otherOption.style.backgroundColor = "#d8d4d4";
         otherOption.style.color = "#3f3939";
         otherOption.style.borderLeft = "";
         // otherOption.classList.remove("selected");
       });
 
       // Add the "selected" class to the clicked option
+      // option.style.backgroundColor = "#c3c1c5";
       option.style.backgroundColor = "#c3c1c5";
       option.style.color = "#e7e5e5";
       option.style.borderLeft  =  "5px solid #a2a2a2";
