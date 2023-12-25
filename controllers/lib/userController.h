@@ -4,6 +4,7 @@
 
 #include "../../database/queries/lib/userQueries.h"
 #include "../../middleware/cache/lib/userCache.h"
+#include "../../jsonparsing/lib/jsonParser.h"
 
 void addUser(char* request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan);
 
@@ -16,12 +17,5 @@ void checkUserCredentials(char* request, int clientSocket, USERCACHE *userCacheD
 void userDataDashBoard(char* request, int clientSocket, USERCACHE *userCacheData);
 
 bool updateUserToken(USER* user, USERCACHE *userCacheData, DATABASEMANAGER *dbMan);
-
-string ParseUserDataToJSON(USER *user);
-
-USER *parseTokens(string JsonString);
-
-PROFILE *parseProfileTokens(string JsonString);
-
 
 #endif

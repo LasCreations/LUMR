@@ -2,7 +2,7 @@
 <br/>
 <i>~ Link for live website will be available soon. ~</i>
 
-- Google Chrome & Firefox compatible
+
 <br/>
 
 ## What is LURM?
@@ -14,9 +14,16 @@
 ## Database Connection
 
 ## Port Forwarding
+
+## Browser Compatability
+### Google Chrome
+### Firefox
 	
 ## Compile
 
 ### Using Docker-Compose
 
 ### Using CMake
+```bash
+cmake .
+```

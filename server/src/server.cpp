@@ -73,10 +73,10 @@ int runServer()
     
 
 
-    dbMan = new DATABASEMANAGER();
+    dbMan = new DATABASEMANAGER();  //create a database connection
 
-    cacheUserData = new USERCACHE();
-    cacheUserData->preloadUserData(dbMan);
+    cacheUserData = new USERCACHE();  
+    cacheUserData->preloadUserData(dbMan);  //preload data into memory from the database
 
     while (1)
     {
@@ -86,7 +86,7 @@ int runServer()
         //implementation of multithreading 
         pthread_t t;
         pthread_create(&t, NULL, handleRequests, (void *)&clientSocket);
-        pthread_join(t, NULL);
+        pthread_join(t, NULL);  //each thread follows after the other to avoid conflicts in requests
     }
 }
 

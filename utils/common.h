@@ -22,10 +22,6 @@
 #include <thread>
 #include <chrono>
 
-
-#include <jsoncpp/json/value.h>
-#include <jsoncpp/json/json.h>
-
 #include <fstream>
 #include <cstring>
 
@@ -39,12 +35,7 @@ using namespace std;
 
 #define SIZE 1024  // buffer size
 
-  
-string parseHttpRequest(char *request);
-
-
 string generateRandomCode(int length);
-
-string parseTokenFromRequest(string JsonString);
+string parseHttpRequest(char *request);
 
 #endif
