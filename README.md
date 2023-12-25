@@ -7,18 +7,13 @@
 
 ## What is LURM?
 
-
-## Direct Messaging & Blog Post
-
-
 ## Web Architecture
+
+## Multithreaded Server
 
 	
 ## Compile
 
-
-
 ### Using Docker-Compose
-
 
 ### Using CMake

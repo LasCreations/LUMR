@@ -82,7 +82,8 @@ int runServer()
     {
         // accept connection and read data
         int clientSocket = accept(serverSocket, NULL, NULL);
-
+        
+        //implementation of multithreading 
         pthread_t t;
         pthread_create(&t, NULL, handleRequests, (void *)&clientSocket);
         pthread_join(t, NULL);
