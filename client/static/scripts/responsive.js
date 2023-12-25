@@ -36,21 +36,3 @@ closemenuicn.addEventListener("click", () => {
 	nav.classList.toggle("navclose"); 
 })
 
-
-// if (selectedTick.style.display === 'block') {
-//     // If the selected tick is already visible, hide it (toggle off)
-//     selectedTick.style.display = 'none';
-//     // Optionally, you may want to reset or clear the selected avatar ID here
-//     console.log(`Deselected Avatar: ${avatarId}`);
-// } else {
-//     // Reset all ticks
-//     const allTicks = document.querySelectorAll('.tick');
-//     allTicks.forEach(tick => tick.style.display = 'none');
-
-//     // Show the tick for the selected avatar
-//     selectedTick.style.display = 'block';
-
-//     avatar = avatarId;
-//     // Store the selected avatar ID or perform any other necessary actions
-//     console.log(`Selected Avatar: ${avatarId}`);
-// }

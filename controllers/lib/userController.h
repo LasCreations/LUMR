@@ -16,6 +16,8 @@ void checkUserCredentials(char* request, int clientSocket, USERCACHE *userCacheD
 
 void userDataDashBoard(char* request, int clientSocket, USERCACHE *userCacheData);
 
+void searchUser(char* request, int clientSocket, USERCACHE *userCacheData);
+
 bool updateUserToken(USER* user, USERCACHE *userCacheData, DATABASEMANAGER *dbMan);
 
 #endif

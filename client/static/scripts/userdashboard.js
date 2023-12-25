@@ -43,19 +43,19 @@ function getProfileData(token){
         }
     }).then(data => {
         console.log(data);
-        // const usernameContainer = document.getElementById('UsernameContainer');
-        // usernameContainer.textContent = `${data.username}`;
-        // username page-title bio-text
-
+        
         const usernameLarge = document.querySelector(".username");
         const usernameSmall = document.querySelector(".page-title");
         const bioText = document.querySelector(".bio-text");
 
+        
         usernameLarge.textContent = `${data.username}`;
         usernameSmall.textContent = `@${data.username}`;
         bioText.textContent = `${data.bio}`;
+
         var avatar = data.avatarurl;
         var url = "/avatars/" + avatar + ".jpg";
+
         fetchAndSetImage(url, ".profileImage");
         fetchAndSetImage(url, ".profileViewImage");
     }).catch(error => {
@@ -72,22 +72,22 @@ function fetchAndSetImage(url, elementID) {
             return response.blob(); // Convert the response to a Blob
         })
         .then(blob => {
-            // Create a data URL from the Blob
-            const imageUrl = URL.createObjectURL(blob);
+            
+            const imageUrl = URL.createObjectURL(blob); // Create a data URL from the Blob
 
-            // Set the image source
-            // const imgElement = document.getElementById(elementID);
             const imgElement = document.querySelector(elementID);
             
             imgElement.src = imageUrl;
-
-            // Optional: Revoke the object URL to free up resources
-            // URL.revokeObjectURL(imageUrl);
         })
         .catch(error => console.error(`Error fetching image for ${elementId}:`, error));
 }
 
 function showUserProfile(){
+    const followBtn = document.querySelector(".follow-btn");
+    const messageBtn = document.querySelector(".message-btn");
     const profileDiv = document.getElementById("profile-view");
+
     profileDiv.style.display = "block";
+    followBtn.style.display = "none";
+    messageBtn.style.display = "none";
 }

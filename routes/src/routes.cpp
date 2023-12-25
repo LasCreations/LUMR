@@ -41,6 +41,19 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
 
         if (strcmp(route, "/user/me") == 0)
             userDataDashBoard(request, clientSocket, userCacheData);
+
+        if (strcmp(route, "/user/search") == 0)
+        {
+            if (userExistsInCache(request, clientSocket, userCacheData))
+            {
+                searchUser(request, clientSocket, userCacheData);
+            }
+            else
+            {
+                const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+                send(clientSocket, response, sizeof(response) - 1, 0);
+            }
+        }
     }
     else
     {

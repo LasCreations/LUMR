@@ -117,7 +117,7 @@ void checkUserCredentials(char *request, int clientSocket, USERCACHE *userCacheD
 bool updateUserToken(USER *user, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
 {
     string token = generateRandomCode(24);
-    if (updateToken(dbMan,user, token))
+    if (updateToken(dbMan, user, token))
     {
         user->setToken(token);
         userCacheData->updateUserTokenInCache(user, token);
@@ -126,3 +126,19 @@ bool updateUserToken(USER *user, USERCACHE *userCacheData, DATABASEMANAGER *dbMa
     return false;
 }
 
+void searchUser(char *request, int clientSocket, USERCACHE *userCacheData)
+{
+    USER *data = parseTokens(parseHttpRequest(request));
+    USER *temp = userCacheData->getUserFromCache(data->getUsername());
+    if (temp != nullptr)
+    {
+        std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
+                                   ParseUserDataToJSON(temp);
+        send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
+    }
+    else
+    {
+        const char response[] = "HTTP/1.1 500 SERVER ERROR\r\n\r\n";
+        send(clientSocket, response, sizeof(response) - 1, 0);
+    }
+}
