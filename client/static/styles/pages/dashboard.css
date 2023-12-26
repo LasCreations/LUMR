@@ -1,36 +1,3 @@
-/**************************************** MAIN CSS CONFIGURATION ************************************/
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-
-:root {
-    --background-color1: #fafaff;
-    --background-color2: #d8d4d4;
-    --background-color3: #ededed;
-    --background-color4: #ffffffa4;
-    --primary-color: #4b49ac;
-    --secondary-color: #0c007d;
-    --Border-color: #c3c1c5;
-    --one-use-color: #3f0097;
-    --two-use-color: #5500cb;
-}
-
-body {
-    background-color: var(--background-color4);
-    max-width: 100%;
-    overflow-x: hidden;
-}
-/**************************************** MAIN CSS CONFIGURATION ************************************/
-
-
-
-/**************************************** HEADER************************************/
 header {
     height: 55px;
     width: 100vw;
@@ -281,11 +248,11 @@ header {
 
 
 /**************************************** PROFILE SECTION************************************/
-#profile-view{
-    display:none;
+#profile-view {
+    display: none;
 }
 
-.profile-container { 
+.profile-container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -313,7 +280,7 @@ header {
     width: 80px;
 }
 
-#userProfileViewImage{
+#userProfileViewImage {
     height: 75px;
     width: 75px;
     background-color: #626262;
@@ -335,14 +302,14 @@ header {
     gap: 20px;
     word-wrap: break-word;
     border-radius: 2rem;
-    border: rgb(126, 129, 127) 0.1rem solid; 
+    border: rgb(126, 129, 127) 0.1rem solid;
 }
 
 .bio-header {
     border-bottom: 2px solid rgb(126, 129, 127);
 }
 
-.profile-details{
+.profile-details {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -350,16 +317,19 @@ header {
     gap: 50px;
 }
 
-.follower-count, .following-count, .post-count{
+.follower-count,
+.following-count,
+.post-count {
     font-weight: 600;
     font-size: 2rem;
 }
 
-.follower-count:hover, .following-count:hover {
+.follower-count:hover,
+.following-count:hover {
     cursor: pointer;
 }
 
-.profile-actions{
+.profile-actions {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -367,7 +337,9 @@ header {
     gap: 50px;
 }
 
-.edit-btn, .follow-btn, .message-btn{
+.edit-btn,
+.follow-btn,
+.message-btn {
     display: inline-block;
     outline: none;
     cursor: pointer;
@@ -382,13 +354,16 @@ header {
     border: none;
     color: #fff;
     background-color: rgb(132, 132, 134);
-    transition: background-color .17s ease,color .17s ease;
+    transition: background-color .17s ease, color .17s ease;
 }
 
-.edit-btn:hover,  .follow-btn:hover, .message-btn:hover {
+.edit-btn:hover,
+.follow-btn:hover,
+.message-btn:hover {
     color: #5c5656;
     background-color: rgb(200, 200, 204);
 }
+
 /**************************************** PROFILE SECTION************************************/
 
 

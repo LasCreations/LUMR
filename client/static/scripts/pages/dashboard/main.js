@@ -1,10 +1,10 @@
-import {getToken, followUser, sendFollowRequest} from './events/followUser.js'
+import {getToken, followUser} from './events/followUser.js'
 
 import {searchUserProfile} from './events/userSearch.js'
 
 import setUpMenu from './responsive/responsive.js'
 
-import {getProfileData, fetchAndSetImage, showUserProfile, showHome} from './views/userdashboard.js'
+import {getProfileData, showUserProfile, showHome} from './views/userdashboard.js'
 
 
 window.onload = function () {
