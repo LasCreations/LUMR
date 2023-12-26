@@ -61,17 +61,17 @@
                         <h3>Notifications</h3>
                     </div>
 
-                    <div class="nav-option option4">
+                    <!-- <div class="nav-option option4">
                         <i class="fa fa-users nav-img fa-2x" aria-hidden="true"></i>
                         <h3>Friends</h3>
-                    </div>
+                    </div> -->
 
-                    <div class="nav-option option5">
+                    <div class="nav-option option4">
                         <i class="fa fa-inbox nav-img fa-2x" aria-hidden="true"></i>
                         <h3> Messages</h3>
                     </div>
 
-                    <div class="nav-option option6">
+                    <div class="nav-option option5">
                         <i class="fa fa-cog nav-img fa-2x" aria-hidden="true"></i>
                         <h3> Settings</h3>
                     </div>
@@ -115,11 +115,11 @@
 
                     <div class="profile-details">
                         <div>
-                            <p class="follower-count">0</p> <!-- Follower count -->
+                            <p class="follower-count"></p> <!-- Follower count -->
                             <p class="follower-text">Followers</p>
                         </div>
                         <div>
-                            <p class="following-count">0</p> <!-- Following count -->
+                            <p class="following-count"></p> <!-- Following count -->
                             <p class="following-text">Following</p>
                         </div>
                         <div>
@@ -142,10 +142,15 @@
         </div>
     </div>
 
-    <script src="/static/scripts/userdashboard.js"></script>
-    <script src="/static/scripts/userSearch.js"></script>
-    <script src="/static/scripts/followUser.js"></script>
-    <script src="/static/scripts/responsive.js"></script>
+    <!--VIEWS-->
+    <script src="/static/scripts/pages/dashboard/views/userdashboard.js"></script>
+    <script src="/static/scripts/pages/dashboard/views/followView.js"></script>
+     <!--EVENTS-->
+    <script src="/static/scripts/pages/dashboard/events/userSearch.js"></script>
+    <script src="/static/scripts/pages/dashboard/events/followUser.js"></script>
+     <!--RESPONSIVE-->
+    <script src="/static/scripts/pages/dashboard/responsive/responsive.js"></script>
+    
 </body>
 
 </html>

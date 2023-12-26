@@ -47,8 +47,11 @@ function getProfileData(token){
         const usernameLarge = document.querySelector(".username");
         const usernameSmall = document.querySelector(".page-title");
         const bioText = document.querySelector(".bio-text");
+        const followerCount = document.querySelector(".follower-count");
+        const followingCount = document.querySelector(".following-count");
 
-        
+        followerCount.textContent = `${data.followercount}`;
+        followingCount.textContent = `${data.followingcount}`;
         usernameLarge.textContent = `${data.username}`;
         usernameSmall.textContent = `@${data.username}`;
         bioText.textContent = `${data.bio}`;
@@ -85,11 +88,21 @@ function fetchAndSetImage(url, elementID) {
 function showUserProfile(){
     const followBtn = document.querySelector(".follow-btn");
     const messageBtn = document.querySelector(".message-btn");
+    const editBtn = document.querySelector(".edit-btn");
     const profileDiv = document.getElementById("profile-view");
+    
 
+    
     profileDiv.style.display = "block";
+    editBtn.style.display = "block";
     followBtn.style.display = "none";
     messageBtn.style.display = "none";
+
+    var tokenJson = {
+        token: getToken()
+    }
+
+    getProfileData(tokenJson);
 }
 
 function showHome(){

@@ -25,7 +25,7 @@ bool addDataToUserProfileTable(DATABASEMANAGER *dbMan, USER *data)
 {
 	try
 	{
-		prep_stmt = dbMan->getConnection()->prepareStatement("INSERT INTO user_profile(profile_id, user_id, email, avatar_url, bio, gender, status) VALUES(?,?,?,?,?,?,?)");
+		prep_stmt = dbMan->getConnection()->prepareStatement("INSERT INTO user_profile(profile_id, user_id, email, avatar_url, bio, gender, online_status) VALUES(?,?,?,?,?,?,?)");
 		prep_stmt->setString(1, data->getProfile()->getProfileID());
 		prep_stmt->setString(2, data->getProfile()->getUserID());
 		prep_stmt->setString(3, data->getProfile()->getEmail());
@@ -58,13 +58,13 @@ std::unordered_map<string, USER *> *getUsersCacheData(DATABASEMANAGER *dbMan)
 		userProfiles = new std::vector<PROFILE*>;
 		stmt = dbMan->getConnection()->createStatement();
 
-		res = stmt->executeQuery("SELECT profile_id, user_id, email, avatar_url, bio, gender, status FROM user_profile");
+		res = stmt->executeQuery("SELECT profile_id, user_id, email, avatar_url, bio, gender, online_status FROM user_profile");
 		while (res->next())
 		{
 			profile = new PROFILE(res->getString("profile_id"), res->getString("user_id"),
 								  res->getString("email"), res->getString("avatar_url"),
 								  res->getString("bio"), res->getString("gender"),
-								  res->getBoolean("status"));
+								  res->getBoolean("online_status"));
 			userProfiles->push_back(profile);
 		}
 

@@ -12,7 +12,7 @@ void *handleRequests(void *pClientSocket){
             return NULL; // or return 1; depending on your application logic
         }
 
-        apiRoute(request, clientThreadSocket, cacheUserData, dbMan);
+        apiRoute(request, clientThreadSocket, cacheUserData, dbMan, cacheConnectionData);
 
         free(request);
         close(clientThreadSocket);
@@ -76,7 +76,12 @@ int runServer()
     dbMan = new DATABASEMANAGER();  //create a database connection
 
     cacheUserData = new USERCACHE();  
+    cacheConnectionData = new USERCONNECTIONCACHE();
+    
+
     cacheUserData->preloadUserData(dbMan);  //preload data into memory from the database
+    cacheConnectionData->preloadConnectionData(dbMan,cacheUserData);
+    
 
     while (1)
     {

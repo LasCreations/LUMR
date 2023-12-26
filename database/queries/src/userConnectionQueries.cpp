@@ -3,12 +3,16 @@
 bool addConnectionToDatabase(DATABASEMANAGER *dbMan, CONNECTION *data){
     try
 	{
-		prep_stmt = dbMan->getConnection()->prepareStatement("INSERT INTO connections(user_1_id, user_2_id, status) VALUES(?,?,?)");
+		prep_stmt = dbMan->getConnection()->prepareStatement("INSERT INTO connections(user_1_id, user_2_id, friendship_status) VALUES(?,?,?)");
 		
         prep_stmt->setString(1, data->getUser1()->getUsername());
 		prep_stmt->setString(2, data->getUser2()->getUsername());
-        prep_stmt->setBoolean(3, data->getStatus());
+        prep_stmt->setBoolean(3, true);
+		prep_stmt->execute();
 
+		prep_stmt->setString(1, data->getUser2()->getUsername());
+		prep_stmt->setString(2, data->getUser1()->getUsername());
+        prep_stmt->setBoolean(3, false);
 		prep_stmt->execute();
 		delete prep_stmt;
 		return true;
@@ -19,4 +23,29 @@ bool addConnectionToDatabase(DATABASEMANAGER *dbMan, CONNECTION *data){
 		delete prep_stmt;
 		return false;
 	}
+}
+
+std::unordered_map<string, CONNECTION *> *getConnectionCacheData(DATABASEMANAGER *dbMan, USERCACHE *userCacheData){	
+	unordered_map<string, CONNECTION *> *connectionmap = nullptr;
+	try
+	{
+		connectionmap = new unordered_map<string, CONNECTION *>;
+
+		stmt = dbMan->getConnection()->createStatement();
+		
+		res = stmt->executeQuery("SELECT * FROM connections");
+		while (res->next()){
+			USER *user1 = userCacheData->getUserFromCache(res->getString("user_1_id"));
+			USER *user2 = userCacheData->getUserFromCache(res->getString("user_2_id"));
+			CONNECTION *userCon = new CONNECTION(user1, user2, res->getBoolean("friendship_status"));
+			(*connectionmap)[generateRandomCode(13)] = userCon;
+		}
+	}
+	catch (const sql::SQLException &e)
+	{
+		std::cerr << "SQLException: " << e.what() << std::endl;
+	}
+	delete stmt;
+	delete res;
+	return connectionmap;
 }

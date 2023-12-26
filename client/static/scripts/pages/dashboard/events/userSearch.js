@@ -7,11 +7,26 @@ function searchUserProfile() {
     } else {
         var userID = {
             username: searchFieldValue,
-            password: ""
+            password: "",
+            token: getToken()
         };
         getUserProfileData(userID);
     }
-    
+}
+
+function getToken() {
+    if (/\S/.test(document.cookie)) {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.startsWith("Token=")) {
+                var token = cookie.substring("Token=".length);
+                console.log(token);
+                return token;
+            }
+        }
+    }
+    return null;
 }
 
 function getUserProfileData(userID) {
@@ -39,13 +54,26 @@ function getUserProfileData(userID) {
 
         profileDiv.style.display = "block";
         editBtn.style.display = "none";
+
+
         followBtn.style.display = "block";
         messageBtn.style.display = "block";
+
+        if(data.status == true){
+            followBtn.textContent = 'Following';
+        }else{
+            followBtn.textContent = 'Follow';
+        }
+
 
         const usernameLarge = document.querySelector(".username");
         const usernameSmall = document.querySelector(".page-title");
         const bioText = document.querySelector(".bio-text");
+        const followerCount = document.querySelector(".follower-count");
+        const followingCount = document.querySelector(".following-count");
 
+        followerCount.textContent = `${data.followercount}`;
+        followingCount.textContent = `${data.followingcount}`;
         
         usernameLarge.textContent = `${data.username}`;
         usernameSmall.textContent = `@${data.username}`;
@@ -60,3 +88,4 @@ function getUserProfileData(userID) {
         console.error("Error:", error.message);
     });
 }
+

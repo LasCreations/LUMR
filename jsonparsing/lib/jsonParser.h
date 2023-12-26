@@ -13,7 +13,11 @@ using namespace std;
 
 PROFILE *parseProfileTokens(string JsonString);
 USER *parseTokens(string JsonString);
-string ParseUserDataToJSON(USER *user);
+
+
 string parseTokenFromRequest(string JsonString);
+
+
+string UnparseUserDataToJSON(USER *user, bool isFriend, uint32_t followercount, uint32_t followingcount);
 
 #endif

@@ -63,7 +63,7 @@ USER *parseTokens(string JsonString)
     return user;
 }
 
-string ParseUserDataToJSON(USER *user)
+string UnparseUserDataToJSON(USER *user, bool isFriend, uint32_t followercount, uint32_t followingcount)
 {
     // Create a JSON object
     Json::Value jsonValue;
@@ -72,11 +72,13 @@ string ParseUserDataToJSON(USER *user)
     jsonValue["username"] = user->getUsername();
     jsonValue["avatarurl"] = user->getProfile()->getAvatarURL();
     jsonValue["bio"] = user->getProfile()->getBio();
+    jsonValue["status"] = isFriend;
+    jsonValue["followercount"] = followercount;
+    jsonValue["followingcount"] = followingcount;
     // Convert the JSON object to a JSON string
     std::string jsonString = jsonValue.toStyledString();
 
-    // Print the resulting JSON string
-    std::cout << "\n\n"
-              << jsonString << std::endl;
+    
+    std::cout << "\n\n" << jsonString << std::endl;
     return jsonString;
 }

@@ -67,15 +67,15 @@ void updateUserProfile(char *request, int clientSocket, USERCACHE *userCacheData
     }
 }
 
-void userDataDashBoard(char *request, int clientSocket, USERCACHE *userCacheData)
+void userDataDashBoard(char *request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData)
 {
-    // use this for authentication
 
     USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
     if (data != nullptr)
     {
         std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
-                                   ParseUserDataToJSON(data);
+                                   UnparseUserDataToJSON(data, false, cacheConnectionData->followerCount(data->getUsername()),
+                                                        cacheConnectionData->followingCount(data->getUsername()));
 
         send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
     }
@@ -126,14 +126,19 @@ bool updateUserToken(USER *user, USERCACHE *userCacheData, DATABASEMANAGER *dbMa
     return false;
 }
 
-void searchUser(char *request, int clientSocket, USERCACHE *userCacheData)
+void searchUser(char *request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData)
 {
+    USER *user1 = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
+
     USER *data = parseTokens(parseHttpRequest(request));
-    USER *temp = userCacheData->getUserFromCache(data->getUsername());
-    if (temp != nullptr)
+    USER *user2 = userCacheData->getUserFromCache(data->getUsername());
+
+    if ((user1 != nullptr) && (user2 != nullptr))
     {
         std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
-                                   ParseUserDataToJSON(temp);
+                                   UnparseUserDataToJSON(user2, cacheConnectionData->isConnected(user1->getUsername(),
+                                                        user2->getUsername()), cacheConnectionData->followerCount(user2->getUsername()),
+                                                        cacheConnectionData->followingCount(user2->getUsername()));
         send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
     }
     else

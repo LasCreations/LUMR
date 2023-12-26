@@ -3,7 +3,8 @@
 char method[10] = "";
 char route[100] = "";
 
-void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
+void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan, 
+                USERCONNECTIONCACHE *cacheConnectionData)
 {
     // parse HTTP request
     sscanf(request, "%s %s", method, route);
@@ -40,13 +41,13 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
             updateUserProfile(request, clientSocket, userCacheData, dbMan);
 
         if (strcmp(route, "/user/me") == 0)
-            userDataDashBoard(request, clientSocket, userCacheData);
+            userDataDashBoard(request, clientSocket, userCacheData, cacheConnectionData);
 
         if (strcmp(route, "/user/search") == 0)
         {
             if (userExistsInCache(request, clientSocket, userCacheData))
             {
-                searchUser(request, clientSocket, userCacheData);
+                searchUser(request, clientSocket, userCacheData, cacheConnectionData);
             }
             else
             {
@@ -56,7 +57,7 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
         }
 
         if (strcmp(route, "/user/follow") == 0)
-            addConnection(request, clientSocket, dbMan,userCacheData);
+            addConnection(request, clientSocket, dbMan,userCacheData, cacheConnectionData);
     }
     else
     {

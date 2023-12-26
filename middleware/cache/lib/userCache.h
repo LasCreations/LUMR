@@ -25,6 +25,7 @@ class USERCACHE{
         USER* getUserFromCache(string key);
         USER* getUserFromCache(string username, string password);
         USER* getUserFromCacheByToken(string token);
+
 };
 
 #endif

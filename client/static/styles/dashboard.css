@@ -355,6 +355,10 @@ header {
     font-size: 2rem;
 }
 
+.follower-count:hover, .following-count:hover {
+    cursor: pointer;
+}
+
 .profile-actions{
     display: flex;
     justify-content: space-evenly;

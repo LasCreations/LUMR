@@ -31,8 +31,14 @@ function sendFollowRequest(followRequest) {
     }).then(res => {
         if (res.ok) {
             console.log("Request Successful");
+
             const followBtn = document.querySelector(".follow-btn");
+            const followerCount = document.querySelector(".follower-count");
+
+            var count = parseInt(followerCount.textContent) + 1;
+            followerCount.textContent = count;
             followBtn.textContent = 'Following';
+
         } else {
             console.log("Request not successful");
             throw new Error('Network response was not ok');
