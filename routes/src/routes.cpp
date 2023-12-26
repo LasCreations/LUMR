@@ -3,8 +3,8 @@
 char method[10] = "";
 char route[100] = "";
 
-void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan, 
-                USERCONNECTIONCACHE *cacheConnectionData)
+void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan,
+              USERCONNECTIONCACHE *cacheConnectionData)
 {
     // parse HTTP request
     sscanf(request, "%s %s", method, route);
@@ -35,10 +35,12 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
             {
                 checkUserCredentials(request, clientSocket, userCacheData, dbMan);
             }
+            else
+            {
+                const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+                send(clientSocket, response, sizeof(response) - 1, 0);
+            }
         }
-
-        if (strcmp(route, "/user/profile/create") == 0)
-            updateUserProfile(request, clientSocket, userCacheData, dbMan);
 
         if (strcmp(route, "/user/me") == 0)
             userDataDashBoard(request, clientSocket, userCacheData, cacheConnectionData);
@@ -57,7 +59,7 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
         }
 
         if (strcmp(route, "/user/follow") == 0)
-            addConnection(request, clientSocket, dbMan,userCacheData, cacheConnectionData);
+            addConnection(request, clientSocket, dbMan, userCacheData, cacheConnectionData);
     }
     else
     {

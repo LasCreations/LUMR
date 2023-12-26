@@ -41,6 +41,28 @@ PROFILE *parseProfileTokens(string JsonString)
     return data;
 }
 
+USER *parseRegisterTokens(string JsonString){
+    // Your JSON string
+    Json::Value jsonData;
+    Json::CharReaderBuilder readerBuilder;
+    std::istringstream jsonStream(JsonString);
+    USER *user = nullptr;
+    try
+    {   
+        Json::parseFromStream(readerBuilder, jsonStream, &jsonData, nullptr);
+        user = new USER(jsonData["username"].asString(), jsonData["password"].asString(),
+                        generateRandomCode(24), new PROFILE(generateRandomCode(24),jsonData["username"].asString(),
+                        jsonData["email"].asString(), jsonData["avatar"].asString(),jsonData["bio"].asString(),
+                        jsonData["gender"].asString(), true));
+        return user;
+    }
+    catch (const Json::Exception &e)
+    {
+        std::cerr << "Error parsing JSON: " << e.what() << "\n";
+    }
+    return user;
+}
+
 USER *parseTokens(string JsonString)
 {
     // Your JSON string

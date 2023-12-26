@@ -23,13 +23,10 @@ bool userExistsInCache(char *request, int clientSocket, USERCACHE *userCacheData
 
 void addUser(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
 {
-    USER *data = parseTokens(parseHttpRequest(request));
+    USER *data = parseRegisterTokens(parseHttpRequest(request));
 
     if (data != nullptr)
     {
-        data->getProfile()->setProfileID(generateRandomCode(12));
-        data->getProfile()->setUserID(data->getUsername());
-        data->setToken(generateRandomCode(24));
         if (addDataToUserTable(dbMan, data) && addDataToUserProfileTable(dbMan, data))
         {
             userCacheData->addUserToMap(data);
@@ -52,24 +49,8 @@ void addUser(char *request, int clientSocket, USERCACHE *userCacheData, DATABASE
     }
 }
 
-void updateUserProfile(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
-{
-
-    if (updateUserProfile(dbMan, userCacheData->updateUserProfileInCache(parseProfileTokens(parseHttpRequest(request)))))
-    {
-        const char response[] = "HTTP/1.1 200 OK\r\n\r\n";
-        send(clientSocket, response, sizeof(response) - 1, 0);
-    }
-    else
-    {
-        const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
-        send(clientSocket, response, sizeof(response) - 1, 0);
-    }
-}
-
 void userDataDashBoard(char *request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData)
 {
-
     USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
     if (data != nullptr)
     {

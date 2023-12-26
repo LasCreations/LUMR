@@ -9,9 +9,9 @@
 #include "../../middleware/cache/lib/userCache.h"
 #include "../../middleware/cache/lib/userConnectionCache.h"
 
-void addUser(char* request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan);
 
-void updateUserProfile(char* request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan);
+
+void addUser(char* request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan);
 
 bool userExistsInCache(char* request, int clientSocket, USERCACHE *userCacheData);
 

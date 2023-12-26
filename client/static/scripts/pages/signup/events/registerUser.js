@@ -53,42 +53,30 @@ export function registerUser(){
             username: document.getElementById("username").value,
             gender: document.querySelector('.classic').value
         };
-        console.log(JSON.stringify(userInformation));
+        sendRegisterRequest(userInformation);
     }else{
         alert("passwords dont match");
     }
 }
 
-// document.getElementById("signUpForm").addEventListener("submit", function(event) {
-//     event.preventDefault();
-
-//     var formData = {
-//         username: document.getElementById("username").value,
-//         password: document.getElementById("first-pass").value
-//     };
-    
-//     fetch("/user/register", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(formData),
-//     })
-//     .then(res => {
-//         if(res.ok){
-//             console.log("User added");
-
-//             var signupContainer = document.querySelector('.container');
-//             var setupContainer = document.querySelector('.setup-container');
-
-//             signupContainer.style.display = 'none';
-//             setupContainer.style.display = 'block';
-//         }else{
-//             console.log("Username already exists use another name");
-//         }
-//     })
-//     .catch(error => {
-//         console.error("Error:", error.message);
-//     });
-// });
+function sendRegisterRequest(userInformation){
+    fetch("/user/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInformation),
+    })
+    .then(res => {
+        if(res.ok){
+            console.log("User added");  
+            window.location.href = '/pages/dashboard.html';
+        }else{
+            console.log("Username already exists use another name");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error.message);
+    });
+}
 

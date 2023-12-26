@@ -13,6 +13,7 @@ using namespace std;
 
 PROFILE *parseProfileTokens(string JsonString);
 USER *parseTokens(string JsonString);
+USER *parseRegisterTokens(string JsonString);
 
 
 string parseTokenFromRequest(string JsonString);

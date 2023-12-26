@@ -17,7 +17,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         if(res.ok){
             window.location.href = "/pages/dashboard.html";
         }else{
-            // console.log("Username already exists use another name");
+            alert("Incorrect Password Or Username ... Please Try Again");
         }
     })
     .catch(error => {

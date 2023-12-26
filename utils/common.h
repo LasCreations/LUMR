@@ -35,7 +35,23 @@ using namespace std;
 
 #define SIZE 1024  // buffer size
 
+
+/*!
+ * @function    generateRandomCode
+ * @abstract    create a code with a given length
+ * @param       int    lenght
+ * @result      returns a string
+*/
 string generateRandomCode(int length);
+
+/*!
+ * @function    parseHttpRequest
+ * @abstract    Removes the json data from a request
+ * @discussion  Uses regular expression to extract the json
+ *              from the request
+ * @param       char*   request
+ * @result      returns a string
+*/
 string parseHttpRequest(char *request);
 
 #endif
