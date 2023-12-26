@@ -95,7 +95,7 @@ void getMimeType(char *file, char *mime){
         strcpy(mime, "text/css");
 
     else if (strcmp(dot, ".js") == 0)
-        strcpy(mime, "application/js");
+        strcpy(mime, "application/javascript");
 
     else if (strcmp(dot, ".jpg") == 0)
         strcpy(mime, "image/jpeg");

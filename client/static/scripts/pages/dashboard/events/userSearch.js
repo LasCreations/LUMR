@@ -1,4 +1,7 @@
-function searchUserProfile() {
+import {fetchAndSetImage, getToken} from '../views/userdashboard.js'
+
+
+export function searchUserProfile() {
 
     var searchFieldValue = document.getElementById("searchField").value;
 
@@ -14,22 +17,7 @@ function searchUserProfile() {
     }
 }
 
-function getToken() {
-    if (/\S/.test(document.cookie)) {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.startsWith("Token=")) {
-                var token = cookie.substring("Token=".length);
-                console.log(token);
-                return token;
-            }
-        }
-    }
-    return null;
-}
-
-function getUserProfileData(userID) {
+export function getUserProfileData(userID) {
     fetch("/user/search", {
         method: "POST",
         headers: {

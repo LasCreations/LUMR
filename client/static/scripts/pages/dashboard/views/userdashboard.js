@@ -1,17 +1,4 @@
-window.onload = function () {
-
-    var token = {
-        token: getToken()
-    }
-
-    if (token != null) {
-        getProfileData(token);
-    } else {
-        window.location.href = "/pages/login.html";
-    }
-};
-
-function getToken() {
+export function getToken() {
     if (/\S/.test(document.cookie)) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
@@ -26,7 +13,7 @@ function getToken() {
     return null;
 }
 
-function getProfileData(token){
+export function getProfileData(token){
     fetch("/user/me", {
         method: "POST",
         headers: {
@@ -66,7 +53,7 @@ function getProfileData(token){
     });
 }
 
-function fetchAndSetImage(url, elementID) {
+export function fetchAndSetImage(url, elementID) {
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -85,7 +72,7 @@ function fetchAndSetImage(url, elementID) {
         .catch(error => console.error(`Error fetching image for ${elementId}:`, error));
 }
 
-function showUserProfile(){
+export function showUserProfile(){
     const followBtn = document.querySelector(".follow-btn");
     const messageBtn = document.querySelector(".message-btn");
     const editBtn = document.querySelector(".edit-btn");
@@ -105,7 +92,7 @@ function showUserProfile(){
     getProfileData(tokenJson);
 }
 
-function showHome(){
+export function showHome(){
     const profileDiv = document.getElementById("profile-view");
 
     profileDiv.style.display = "none";

@@ -24,7 +24,7 @@
         <div class="searchbar">
             <input id="searchField" type="text" placeholder="Search">
             <div class="searchbtn">
-                <button class="icon-btn" onclick="searchUserProfile()">
+                <button class="icon-btn" id="search-btn" >
                     <i class="fa fa-search icn fa-2x srchicn"></i>
                 </button>
             </div>
@@ -45,13 +45,13 @@
     <div class="main-container">
         <div class="navcontainer">
             <nav class="nav">
-                <div class="nav-upper-options" >
-                    <div class="nav-option option1"  onclick="showHome()">
+                <div class="nav-upper-options">
+                    <div class="nav-option option1" >
                         <i class="fa fa-home fa-2x nav-img" aria-hidden="true"></i>
                         <h3>Home</h3>
                     </div>
 
-                    <div class="option2 nav-option" onclick="showUserProfile()">
+                    <div class="option2 nav-option" >
                         <i class="fa fa-user fa-2x nav-img" aria-hidden="true"></i>
                         <h3>Profile</h3>
                     </div>
@@ -87,7 +87,6 @@
 
         <div class="main">
 
-
             <div id="profile-view">
                 <div class="profile-container" id="Profile-Container">
                     <div class="profile-header">
@@ -108,18 +107,16 @@
                             <i class="fa fa-info-circle"></i>
                             Bio
                         </div>
-                        <p class="bio-text">
-                            <!-- BIO -->
-                        </p>
+                        <p class="bio-text"></p> <!-- BIO -->
                     </div>
 
                     <div class="profile-details">
                         <div>
-                            <p class="follower-count"></p> <!-- Follower count -->
+                            <p class="follower-count" onclick="showFollowInfo()"></p> <!-- Follower count -->
                             <p class="follower-text">Followers</p>
                         </div>
                         <div>
-                            <p class="following-count"></p> <!-- Following count -->
+                            <p class="following-count" onclick="showFollowInfo()"></p> <!-- Following count -->
                             <p class="following-text">Following</p>
                         </div>
                         <div>
@@ -130,27 +127,24 @@
 
                     <div class="profile-actions">
                         <button class="edit-btn">Edit Profile</button>
-                        <button class="follow-btn" onclick="followUser()">Follow</button>
+                        <button class="follow-btn">Follow</button>
                         <button class="message-btn">Message</button>
                     </div>
                 </div>
             </div>
 
-            
+            <div class="follow-view">
+                <div class="follow-info-container">
 
-            
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!--VIEWS-->
-    <script src="/static/scripts/pages/dashboard/views/userdashboard.js"></script>
-    <script src="/static/scripts/pages/dashboard/views/followView.js"></script>
-     <!--EVENTS-->
-    <script src="/static/scripts/pages/dashboard/events/userSearch.js"></script>
-    <script src="/static/scripts/pages/dashboard/events/followUser.js"></script>
-     <!--RESPONSIVE-->
-    <script src="/static/scripts/pages/dashboard/responsive/responsive.js"></script>
-    
+
+    <script src="/static/scripts/pages/dashboard/main.js" type="module"></script>
+
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-function getToken() {
+export function getToken() {
     if (/\S/.test(document.cookie)) {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
@@ -13,7 +13,7 @@ function getToken() {
     return null;
 }
 
-function followUser(){
+export function followUser(){
     var followRequest = {
         username: document.querySelector(".username").textContent,
         token: getToken()
@@ -21,7 +21,7 @@ function followUser(){
     sendFollowRequest(followRequest);
 }
 
-function sendFollowRequest(followRequest) {
+export function sendFollowRequest(followRequest) {
     fetch("/user/follow", {
         method: "POST",
         headers: {
