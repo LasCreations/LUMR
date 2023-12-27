@@ -1,0 +1,127 @@
+header {
+    height: 55px;
+    width: 100vw;
+    padding: 0 30px;
+    background-color: var(--background-color1);
+    position: fixed;
+    z-index: 100;
+    box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(126, 129, 127);
+}
+
+.icn {
+    height: 30px;
+}
+
+.icon-btn {
+    padding: 5px 10px;
+    background-color: #ffffff;
+    /* searchbar */
+    border: none;
+    border-radius: 5px 20px 20px 5px;
+    cursor: pointer;
+}
+
+.menuicn,
+.closemenuicn {
+    cursor: pointer;
+}
+
+#closemenuicn,
+#menuicn {
+    display: none;
+}
+
+.searchbar,
+.message,
+.logosec {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.searchbar2 {
+    display: none;
+}
+
+.custom-icon {
+    color: rgb(192, 192, 192);
+}
+
+.logosec {
+    gap: 60px;
+}
+
+.searchbar input {
+    width: 250px;
+    height: 35px;
+    border-radius: 50px 50px 50px 50px;
+    background-color: var(--background-color3);
+    padding: 0 20px;
+    font-size: 15px;
+    outline: none;
+    border: none;
+}
+
+.searchbtn {
+    width: 50px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 50px 50px 0px;
+    /* background-color: var(--secondary-color); */
+    cursor: pointer;
+}
+
+.message {
+    gap: 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+.circle {
+    height: 7px;
+    width: 7px;
+    position: absolute;
+    background-color: #fa7bb4;
+    border-radius: 50%;
+    left: 19px;
+    top: 8px;
+}
+
+.online {
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    background-color: #67ff53;
+    border-radius: 50%;
+    right: 19px;
+    top: 8px;
+}
+
+.dp,
+.profileImage {
+    height: 40px;
+    width: 40px;
+    background-color: #626262;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.dpicn {
+    height: 42px;
+}

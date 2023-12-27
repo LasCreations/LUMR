@@ -26,6 +26,7 @@ export function getProfileData(token){
             return res.json(); // Parse the JSON from the response
         } else {
             console.log("User not found");
+            window.location.href = '/'
             throw new Error('Network response was not ok');
         }
     }).then(data => {

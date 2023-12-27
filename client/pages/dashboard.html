@@ -106,11 +106,11 @@
 
                     <div class="profile-details">
                         <div>
-                            <p class="follower-count" onclick="showFollowInfo()"></p>
+                            <p class="follower-count"></p>
                             <p class="follower-text">Followers</p>
                         </div>
                         <div>
-                            <p class="following-count" onclick="showFollowInfo()"></p> 
+                            <p class="following-count"></p> 
                             <p class="following-text">Following</p>
                         </div>
                         <div>
@@ -126,10 +126,22 @@
                     </div>
                 </div>
             </div>
-
+            
+            <!--use grid to display users-->
             <div class="follow-view">
-                <div class="follow-info-container">
-
+                <div class="follow-container">
+                    <div class="follow-option">
+                        <div class="follower-heading-container">
+                            <h1 class="heading-text">Followers</h1>
+                        </div>
+                        <div class="following-heading-container">
+                            <h1 class="heading-text">Following</h1>
+                        </div>
+                    </div>
+                    
+                    <div id="users-container">
+                        
+                    </div>
                 </div>
             </div>
 

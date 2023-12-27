@@ -1,4 +1,4 @@
-.main-btn {
+.main-btn, .buttonElement {
     display: inline-block;
     outline: none;
     cursor: pointer;
@@ -16,7 +16,7 @@
     transition: background-color .17s ease, color .17s ease;
 }
 
-.main-btn:hover {
+.main-btn:hover,.buttonElement:hover {
     color: #5c5656;
     background-color: rgb(200, 200, 204);
 }

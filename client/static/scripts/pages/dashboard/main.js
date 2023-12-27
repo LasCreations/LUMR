@@ -6,6 +6,7 @@ import setUpMenu from './responsive/responsive.js'
 
 import {getProfileData, showUserProfile, showHome} from './views/userdashboard.js'
 
+import {addUser} from './views/followView.js' 
 
 window.onload = function () {
     var token = {
@@ -17,6 +18,10 @@ window.onload = function () {
     } else {
         window.location.href = "/pages/login.html";
     }
+
+    addUser('Bc39');
+    addUser('LasCapone');
+    addUser('some');
 };
 
 setUpMenu();
