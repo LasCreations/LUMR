@@ -12,6 +12,7 @@ file(GLOB SOURCES
     "database/connection/src/*.cpp"
     "database/queries/src/*.cpp"
     "middleware/cache/src/*.cpp"
+    "middleware/authenticate/src/*.cpp"
     "jsonparsing/src/*.cpp"
     )
 
@@ -24,6 +25,7 @@ include_directories(
     database/connection/lib
     database/queries/lib
     middleware/cache/lib
+    middleware/authenticate/lib
     jsonparsing/lib
 )
 
@@ -38,6 +40,7 @@ target_include_directories(LURM PRIVATE
                                 database/connection/lib
                                 database/queries/lib
                                 middleware/cache/lib
+                                middleware/authenticate/lib
                                 jsonparsing/lib
 )
 

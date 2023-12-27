@@ -14,18 +14,18 @@ bool userExistsInCache(char *request, int clientSocket, USERCACHE *userCacheData
             return false;
         }
     }
-    else
-    {
-        return false;
-    }
     return false;
 }
 
 void addUser(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
 {
-    USER *data = parseRegisterTokens(parseHttpRequest(request));
+    
+    USER *data = parseRegisterTokens(parseHttpRequest(request)); //parse the register request
 
-    if (data != nullptr)
+    //Check cache memory
+    USER *cacheData = userCacheData->getUserFromCache(data->getUsername()); //check if user exists
+
+    if (cacheData == nullptr)
     {
         if (addDataToUserTable(dbMan, data) && addDataToUserProfileTable(dbMan, data))
         {
@@ -67,50 +67,52 @@ void userDataDashBoard(char *request, int clientSocket, USERCACHE *userCacheData
     }
 }
 
-void checkUserCredentials(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
-{
-    USER *data = parseTokens(parseHttpRequest(request));
-    USER *cacheData = userCacheData->getUserFromCache(data->getUsername(), data->getPassword());
+// void checkUserCredentials(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
+// {
+//     USER *data = parseTokens(parseHttpRequest(request));
+//     USER *cacheData = userCacheData->getUserFromCache(data->getUsername(), data->getPassword());
 
-    if (cacheData != nullptr)
-    {
-        if (updateUserToken(cacheData, userCacheData, dbMan))
-        {
-            char response[256];
-            std::snprintf(response, sizeof(response),
-                          "HTTP/1.1 200 OK\r\nSet-Cookie: Token=%s; Path=/; Max-Age=3153600000\r\n\r\n",
-                          cacheData->getToken().c_str());
-            send(clientSocket, response, sizeof(response) - 1, 0);
-        }
-        else
-        {
-            const char response[] = "HTTP/1.1 500 Internal Server Error\r\n\r\n";
-            send(clientSocket, response, sizeof(response) - 1, 0);
-        }
-    }
-    else
-    {
-        const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
-        send(clientSocket, response, sizeof(response) - 1, 0);
-    }
-}
+//     if (cacheData != nullptr)
+//     {
+//         if (updateUserToken(cacheData, userCacheData, dbMan))
+//         {
+//             char response[256];
+//             std::snprintf(response, sizeof(response),
+//                           "HTTP/1.1 200 OK\r\nSet-Cookie: Token=%s; Path=/; Max-Age=3153600000\r\n\r\n",
+//                           cacheData->getToken().c_str());
+//             send(clientSocket, response, sizeof(response) - 1, 0);
+//         }
+//         else
+//         {
+//             const char response[] = "HTTP/1.1 500 Internal Server Error\r\n\r\n";
+//             send(clientSocket, response, sizeof(response) - 1, 0);
+//         }
+//     }
+//     else
+//     {
+//         const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+//         send(clientSocket, response, sizeof(response) - 1, 0);
+//     }
+// }
 
-bool updateUserToken(USER *user, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
-{
-    string token = generateRandomCode(24);
-    if (updateToken(dbMan, user, token))
-    {
-        user->setToken(token);
-        userCacheData->updateUserTokenInCache(user, token);
-        return true;
-    }
-    return false;
-}
+// bool updateUserToken(USER *user, USERCACHE *userCacheData, DATABASEMANAGER *dbMan)
+// {
+//     string token = generateRandomCode(24);
+//     if (updateToken(dbMan, user, token))
+//     {
+//         user->setToken(token);
+//         userCacheData->updateUserTokenInCache(user, token);
+//         return true;
+//     }
+//     return false;
+// }
 
 void searchUser(char *request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData)
 {
+    //get sender information
     USER *user1 = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
 
+    //parse name 
     USER *data = parseTokens(parseHttpRequest(request));
     USER *user2 = userCacheData->getUserFromCache(data->getUsername());
 

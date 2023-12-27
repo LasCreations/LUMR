@@ -9,13 +9,18 @@ string parseTokenFromRequest(string JsonString){
     {
         // Parse the JSON string
         Json::parseFromStream(readerBuilder, jsonStream, &jsonData, nullptr);
-        return jsonData["token"].asString();
+
+        if (jsonData["token"].isNull()) {
+            return "";
+        }else{
+            return jsonData["token"].asString();
+        }
     }
     catch (const Json::Exception &e)
     {
         std::cerr << "Error parsing JSON: " << e.what() << "\n";
     }
-    return NULL;
+    return "";
 }
 
 PROFILE *parseProfileTokens(string JsonString)

@@ -17,47 +17,17 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
     else if (strcmp(method, "POST") == 0)
     {
         if (strcmp(route, "/user/register") == 0)
-        {
-            if (!userExistsInCache(request, clientSocket, userCacheData))
-            {
-                addUser(request, clientSocket, userCacheData, dbMan);
-            }
-            else
-            {
-                const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
-                send(clientSocket, response, sizeof(response) - 1, 0);
-            }
-        }
+            addUser(request, clientSocket, userCacheData, dbMan);
 
         if (strcmp(route, "/user/login") == 0)
-        {
-            if (userExistsInCache(request, clientSocket, userCacheData))
-            {
-                checkUserCredentials(request, clientSocket, userCacheData, dbMan);
-            }
-            else
-            {
-                const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
-                send(clientSocket, response, sizeof(response) - 1, 0);
-            }
-        }
+            checkUserCredentials(request, clientSocket, userCacheData, dbMan);  //add to authenticate
 
         if (strcmp(route, "/user/me") == 0)
             userDataDashBoard(request, clientSocket, userCacheData, cacheConnectionData);
 
         if (strcmp(route, "/user/search") == 0)
-        {
-            if (userExistsInCache(request, clientSocket, userCacheData))
-            {
-                searchUser(request, clientSocket, userCacheData, cacheConnectionData);
-            }
-            else
-            {
-                const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
-                send(clientSocket, response, sizeof(response) - 1, 0);
-            }
-        }
-
+            searchUser(request, clientSocket, userCacheData, cacheConnectionData);
+        
         if (strcmp(route, "/user/follow") == 0)
             addConnection(request, clientSocket, dbMan, userCacheData, cacheConnectionData);
     }

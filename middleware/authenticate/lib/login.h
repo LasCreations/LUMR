@@ -1,1 +1,0 @@
-// Validate user credentials username and password
