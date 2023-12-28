@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 22, 2023 at 12:40 PM
+-- Generation Time: Dec 27, 2023 at 11:59 PM
 -- Server version: 8.0.35-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.14
 
@@ -43,8 +43,18 @@ CREATE TABLE `blog` (
 CREATE TABLE `connections` (
   `user_1_id` varchar(255) NOT NULL,
   `user_2_id` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `user1_status` tinyint(1) NOT NULL,
+  `user2_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `connections`
+--
+
+INSERT INTO `connections` (`user_1_id`, `user_2_id`, `user1_status`, `user2_status`) VALUES
+('lascelle', 'lisa', 1, 0),
+('lisa', 'knfj', 1, 0),
+('lisa', 'lascelle', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -99,6 +109,8 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+
 -- --------------------------------------------------------
 
 --
@@ -112,7 +124,7 @@ CREATE TABLE `user_profile` (
   `avatar_url` varchar(255) NOT NULL,
   `bio` varchar(255) NOT NULL,
   `gender` varchar(10) NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `online_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -130,7 +142,7 @@ ALTER TABLE `blog`
 -- Indexes for table `connections`
 --
 ALTER TABLE `connections`
-  ADD PRIMARY KEY (`user_1_id`,`user_2_id`,`status`),
+  ADD PRIMARY KEY (`user_1_id`,`user_2_id`,`user1_status`),
   ADD KEY `user_2_id` (`user_2_id`);
 
 --

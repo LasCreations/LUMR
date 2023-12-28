@@ -7,7 +7,7 @@
 #include <jsoncpp/json/json.h>
 
 #include "../../models/user.h"
-#include "../../models/connection.h"
+#include "../../middleware/cache/lib/userConnectionCache.h"
 #include "vector"
 
 using namespace std;
@@ -24,5 +24,7 @@ string parseTokenFromRequest(string JsonString);
 string UnparseUserDataToJSON(USER *user, bool isFriend, uint32_t followercount, uint32_t followingcount);
 
 
-string createJSONObjectArray(vector<CONNECTION> followers, vector<CONNECTION> following, string request);
+string createJSONObjectArray(vector<CONNECTION> users, string username, USERCONNECTIONCACHE *cacheConnectionData);
+
+Json::Value createJSONObjectFollowView(string username, string avatarurl, bool status);
 #endif

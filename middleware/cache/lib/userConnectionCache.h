@@ -13,11 +13,12 @@ class USERCONNECTIONCACHE{
         USERCONNECTIONCACHE();
         void preloadConnectionData(DATABASEMANAGER *dbMan, USERCACHE *userCacheData);
         CONNECTION* getConnectionFromCache(string user1_ID, string user2_ID);
-        bool isConnected(string user1_ID, string user2_ID);
+        bool isFollowing(string user1_ID, string user2_ID);
         uint32_t followerCount(string username); //Store unsigned value for memory purposes
         uint32_t followingCount(string username); //Store unsigned value for memory purposes
         vector<CONNECTION> getFollowerConnections(string username);
         vector<CONNECTION> getFollowingConnections(string username);
+        USER getConnectionUser(string username, CONNECTION con);
 };
 
 

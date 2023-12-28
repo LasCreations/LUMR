@@ -20,7 +20,7 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
             addUser(request, clientSocket, userCacheData, dbMan);
 
         if (strcmp(route, "/user/login") == 0)
-            checkUserCredentials(request, clientSocket, userCacheData, dbMan);  //add to authenticate
+            checkUserCredentials(request, clientSocket, userCacheData, dbMan); 
 
         if (strcmp(route, "/user/me") == 0)
             userDataDashBoard(request, clientSocket, userCacheData, cacheConnectionData);
@@ -30,6 +30,12 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
         
         if (strcmp(route, "/user/follow") == 0)
             addConnection(request, clientSocket, dbMan, userCacheData, cacheConnectionData);
+        
+        if (strcmp(route, "/user/followers") == 0)
+            getFollowers(request, clientSocket, userCacheData, cacheConnectionData);
+
+        if (strcmp(route, "/user/following") == 0)
+            getFollowing(request, clientSocket, userCacheData, cacheConnectionData);
     }
     else
     {

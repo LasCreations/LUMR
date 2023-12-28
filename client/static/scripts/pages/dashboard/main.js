@@ -9,6 +9,8 @@ import {getProfileData, showUserProfile, showHome} from './views/userdashboard.j
 import {getFollowers, getFollowing} from './views/followView.js' 
 
 window.onload = function () {
+    clearSreen(); //CLEARS SCREEN
+
     var token = {
         token: getToken()
     }
@@ -18,19 +20,21 @@ window.onload = function () {
     } else {
         window.location.href = "/pages/login.html";
     }
-
-    // addUser('Bc39');
-    // addUser('LasCapone');
-    // addUser('some');
 };
 
 setUpMenu();
 
 const searchbutton = document.getElementById('search-btn');
-searchbutton.addEventListener('click', searchUserProfile);
+searchbutton.addEventListener('click', function() {
+    clearSreen();
+    searchUserProfile();
+});
 
 const homeDiv = document.querySelector('.option1');
-homeDiv.addEventListener('click', showHome);
+homeDiv.addEventListener('click', function() {
+    clearSreen();
+    showHome();
+});
 
 const ProfileDiv = document.querySelector('.option2');
 ProfileDiv.addEventListener('click', function() {
@@ -42,3 +46,18 @@ const followBtn = document.querySelector('.follow-btn');
 followBtn.addEventListener('click', followUser);
 
 
+const followerCountView = document.querySelector('.follower-count');
+followerCountView.addEventListener('click', function() {
+    clearSreen();
+    var followView = document.querySelector('.follow-view');
+    followView.style.display = 'block';
+    getFollowers();
+});
+
+const followingCountView = document.querySelector('.following-count');
+followingCountView.addEventListener('click', function() {
+    clearSreen();
+    var followView = document.querySelector('.follow-view');
+    followView.style.display = 'block';
+    getFollowing();
+});

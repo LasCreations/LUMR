@@ -4,4 +4,10 @@ export function clearSreen(){
     
     profileView.style.display = 'none';
     followView.style.display = 'none';
+
+    var parentElement = document.getElementById('users-container');
+
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.firstChild);
+    }
 }   

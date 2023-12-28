@@ -8,7 +8,7 @@ void addConnection(char* request, int clientSocket, DATABASEMANAGER *dbMan, USER
     USER *tempdata = parseTokens(parseHttpRequest(request));
     USER *userSearch = userCacheData->getUserFromCache(tempdata->getUsername());
 
-    CONNECTION *userCon = new CONNECTION(data,userSearch,true);
+    CONNECTION *userCon = new CONNECTION(data,userSearch,true,false);
     
     if(addConnectionToDatabase(dbMan, userCon)){
         cacheConnectionData->preloadConnectionData(dbMan, userCacheData);

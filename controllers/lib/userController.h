@@ -17,5 +17,7 @@ void userDataDashBoard(char* request, int clientSocket, USERCACHE *userCacheData
 
 void searchUser(char* request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData);
 
+void getFollowers(char* request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData);
 
+void getFollowing(char* request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData);
 #endif

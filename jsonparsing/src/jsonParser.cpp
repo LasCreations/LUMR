@@ -1,6 +1,7 @@
 #include "../lib/jsonParser.h"
 
-string parseTokenFromRequest(string JsonString){
+string parseTokenFromRequest(string JsonString)
+{
     // Your JSON string
     Json::Value jsonData;
     Json::CharReaderBuilder readerBuilder;
@@ -10,9 +11,12 @@ string parseTokenFromRequest(string JsonString){
         // Parse the JSON string
         Json::parseFromStream(readerBuilder, jsonStream, &jsonData, nullptr);
 
-        if (jsonData["token"].isNull()) {
+        if (jsonData["token"].isNull())
+        {
             return "";
-        }else{
+        }
+        else
+        {
             return jsonData["token"].asString();
         }
     }
@@ -46,19 +50,18 @@ PROFILE *parseProfileTokens(string JsonString)
     return data;
 }
 
-USER *parseRegisterTokens(string JsonString){
+USER *parseRegisterTokens(string JsonString)
+{
     // Your JSON string
     Json::Value jsonData;
     Json::CharReaderBuilder readerBuilder;
     std::istringstream jsonStream(JsonString);
     USER *user = nullptr;
     try
-    {   
+    {
         Json::parseFromStream(readerBuilder, jsonStream, &jsonData, nullptr);
         user = new USER(jsonData["username"].asString(), jsonData["password"].asString(),
-                        generateRandomCode(24), new PROFILE(generateRandomCode(24),jsonData["username"].asString(),
-                        jsonData["email"].asString(), jsonData["avatar"].asString(),jsonData["bio"].asString(),
-                        jsonData["gender"].asString(), true));
+                        generateRandomCode(24), new PROFILE(generateRandomCode(24), jsonData["username"].asString(), jsonData["email"].asString(), jsonData["avatar"].asString(), jsonData["bio"].asString(), jsonData["gender"].asString(), true));
         return user;
     }
     catch (const Json::Exception &e)
@@ -105,30 +108,34 @@ string UnparseUserDataToJSON(USER *user, bool isFriend, uint32_t followercount, 
     // Convert the JSON object to a JSON string
     std::string jsonString = jsonValue.toStyledString();
 
-    
     std::cout << "\n\n" << jsonString << std::endl;
     return jsonString;
 }
 
-string createJSONObjectArray(vector<CONNECTION> followers, vector<CONNECTION> following, string request){
-    Json::Value jsonObject;
+string createJSONObjectArray(vector<CONNECTION> users, string username, USERCONNECTIONCACHE *cacheConnectionData)
+{
+
     Json::Value jsonArray;
 
-    if(request == "following"){
-        for(size_t i = 0; i < following.size(); i++){
-            // jsonObject["username"] = user->getUsername();
-            // jsonObject["avatarurl"] = user->getProfile()->getAvatarURL();
-        }
-    }else if(request == "follower"){
-        for(size_t i = 0; i < followers.size(); i++){
-            
-        }
+    for (size_t i = 0; i < users.size(); i++)
+    {
+        USER data = cacheConnectionData->getConnectionUser(username, users[i]);
+        Json::Value jsonObject = createJSONObjectFollowView(data.getUsername(),
+                                                            data.getProfile()->getAvatarURL(),
+                                                            cacheConnectionData->isFollowing(username, data.getUsername()));
+        jsonArray.append(jsonObject);
     }
+    std::cout << "\n\n" << jsonArray.toStyledString() << std::endl;
+    return jsonArray.toStyledString();
+}
 
+Json::Value createJSONObjectFollowView(string username, string avatarurl, bool status)
+{
+    Json::Value jsonObject;
 
-    // for(size_t i = 0; i < users.size(); i++){
-    //         cout << users[i].getStatus() << endl;
-    //         cout << users[i].getUser1()->getUsername() << endl;
-    //         cout << users[i].getUser2()->getUsername() << endl;
-    // }
+    jsonObject["username"] = username;
+    jsonObject["avatarurl"] = avatarurl;
+    jsonObject["status"] = status;
+
+    return jsonObject;
 }
