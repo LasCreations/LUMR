@@ -55,19 +55,20 @@ void userDataDashBoard(char *request, int clientSocket, USERCACHE *userCacheData
     USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
     if (data != nullptr)
     {
+        
+        // vector<CONNECTION> followers = cacheConnectionData->getFollowerConnections(data->getUsername());
+        // vector<CONNECTION> following = cacheConnectionData->getFollowingConnections(data->getUsername());
+        // for(size_t i = 0; i < followers.size(); i++){
+        //     cout << followers[i].getStatus() << endl;
+        //     cout << followers[i].getUser1()->getUsername() << endl;
+        //     cout << followers[i].getUser2()->getUsername() << endl;
+        // }
 
-        ////TESTING
-        // vector<CONNECTION> followers = cacheConnectionData->getFollowers(data->getToken());
-        vector<CONNECTION> following = cacheConnectionData->getFollowing(data->getToken());
-
-        for (std::vector<CONNECTION>::size_type i = 0; i < following.size(); i++){
-            cout << "Following  : " << i++ << endl;
-            cout << following[i].getUser1()->getUsername() << endl;
-            cout << following[i].getUser2()->getUsername() << endl;
-            cout << "\n\n"<< endl;
-        }
-
-        /////TESTING
+        // for(size_t i = 0; i < following.size(); i++){
+        //     cout << following[i].getStatus() << endl;
+        //     cout << following[i].getUser1()->getUsername() << endl;
+        //     cout << following[i].getUser2()->getUsername() << endl;
+        // }
 
         std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
                                     UnparseUserDataToJSON(data, false, cacheConnectionData->followerCount(data->getUsername()),

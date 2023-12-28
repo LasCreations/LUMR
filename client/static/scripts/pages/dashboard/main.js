@@ -3,10 +3,10 @@ import {getToken, followUser} from './events/followUser.js'
 import {searchUserProfile} from './events/userSearch.js'
 
 import setUpMenu from './responsive/responsive.js'
-
+import { clearSreen } from './events/clearScreen.js'
 import {getProfileData, showUserProfile, showHome} from './views/userdashboard.js'
 
-import {addUser} from './views/followView.js' 
+import {getFollowers, getFollowing} from './views/followView.js' 
 
 window.onload = function () {
     var token = {
@@ -19,9 +19,9 @@ window.onload = function () {
         window.location.href = "/pages/login.html";
     }
 
-    addUser('Bc39');
-    addUser('LasCapone');
-    addUser('some');
+    // addUser('Bc39');
+    // addUser('LasCapone');
+    // addUser('some');
 };
 
 setUpMenu();
@@ -33,7 +33,12 @@ const homeDiv = document.querySelector('.option1');
 homeDiv.addEventListener('click', showHome);
 
 const ProfileDiv = document.querySelector('.option2');
-ProfileDiv.addEventListener('click', showUserProfile);
+ProfileDiv.addEventListener('click', function() {
+    clearSreen();
+    showUserProfile();
+});
 
 const followBtn = document.querySelector('.follow-btn');
 followBtn.addEventListener('click', followUser);
+
+

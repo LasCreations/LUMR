@@ -109,3 +109,26 @@ string UnparseUserDataToJSON(USER *user, bool isFriend, uint32_t followercount, 
     std::cout << "\n\n" << jsonString << std::endl;
     return jsonString;
 }
+
+string createJSONObjectArray(vector<CONNECTION> followers, vector<CONNECTION> following, string request){
+    Json::Value jsonObject;
+    Json::Value jsonArray;
+
+    if(request == "following"){
+        for(size_t i = 0; i < following.size(); i++){
+            // jsonObject["username"] = user->getUsername();
+            // jsonObject["avatarurl"] = user->getProfile()->getAvatarURL();
+        }
+    }else if(request == "follower"){
+        for(size_t i = 0; i < followers.size(); i++){
+            
+        }
+    }
+
+
+    // for(size_t i = 0; i < users.size(); i++){
+    //         cout << users[i].getStatus() << endl;
+    //         cout << users[i].getUser1()->getUsername() << endl;
+    //         cout << users[i].getUser2()->getUsername() << endl;
+    // }
+}

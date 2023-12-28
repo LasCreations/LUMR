@@ -64,28 +64,26 @@ uint32_t USERCONNECTIONCACHE::followingCount(string username)
     return count;
 }
 
-// vector<CONNECTION> USERCONNECTIONCACHE::getFollowers(string token)
-// {
-//     vector<CONNECTION*> *followers = nullptr;
-//     for (const auto &pair : *(this->cacheConnectionData))
-//     {
-//         if (token == pair.second->getUser2()->getToken() && pair.second->getStatus())
-//         {   
-//             followers->push_back(pair.second);
-//         }
-//     }
-//     return followers;
-// }
-
-vector<CONNECTION> USERCONNECTIONCACHE::getFollowing(string token)
-{
+vector<CONNECTION> USERCONNECTIONCACHE::getFollowerConnections(string username){
     vector<CONNECTION> followers; 
     for (const auto &pair : *(this->cacheConnectionData))
     {
-        if (token == pair.second->getUser1()->getToken() && pair.second->getStatus())
+        if (username == pair.second->getUser2()->getUsername() && pair.second->getStatus())
         {   
             followers.push_back((*pair.second));
         }
     }
     return followers;
+}
+
+vector<CONNECTION> USERCONNECTIONCACHE::getFollowingConnections(string username){
+    vector<CONNECTION> following; 
+    for (const auto &pair : *(this->cacheConnectionData))
+    {
+        if (username == pair.second->getUser1()->getUsername() && pair.second->getStatus())
+        {   
+            following.push_back((*pair.second));
+        }
+    }
+    return following;
 }

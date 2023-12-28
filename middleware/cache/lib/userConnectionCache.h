@@ -16,8 +16,8 @@ class USERCONNECTIONCACHE{
         bool isConnected(string user1_ID, string user2_ID);
         uint32_t followerCount(string username); //Store unsigned value for memory purposes
         uint32_t followingCount(string username); //Store unsigned value for memory purposes
-        vector<CONNECTION> getFollowers(string token);
-        vector<CONNECTION> getFollowing(string token);
+        vector<CONNECTION> getFollowerConnections(string username);
+        vector<CONNECTION> getFollowingConnections(string username);
 };
 
 
