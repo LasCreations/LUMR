@@ -10,7 +10,12 @@ void addConnection(char* request, int clientSocket, DATABASEMANAGER *dbMan, USER
 
     CONNECTION *userCon = new CONNECTION(data,userSearch,true,false);
     
-    if(addConnectionToDatabase(dbMan, userCon)){
+    //passed the current time using time(nullptr)
+    NOTIFICATION *notification = new NOTIFICATION(generateRandomCode(15), userSearch->getUsername(),
+                                                    data->getUsername(), "Follow", 
+                                                    data->getUsername() + " is following you.", false, time(nullptr));
+
+    if(addConnectionToDatabase(dbMan, userCon) && addNotificationToDatabase(dbMan, notification)){
         cacheConnectionData->preloadConnectionData(dbMan, userCacheData);
         const char response[] = "HTTP/1.1 200 OK\r\n\r\n";
         send(clientSocket, response, sizeof(response) - 1, 0);

@@ -1,0 +1,23 @@
+
+.notification-container{
+    /* display:none; */
+}
+
+.notificationBox  {
+
+display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+
+
+
+    /* min-height: 91vh; */
+    width: 300px;
+    position: absolute;
+    top: 0px;
+    right: 1px;
+    background-color: aqua;
+}

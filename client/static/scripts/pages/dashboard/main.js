@@ -61,3 +61,22 @@ followingCountView.addEventListener('click', function() {
     followView.style.display = 'block';
     getFollowing();
 });
+
+// function fetchData() {
+//     // Your fetch request code goes here
+//     fetch('/get/notification')
+//       .then(response => response.json())
+//       .then(data => {
+//         // Handle the fetched data as needed
+//         console.log(data);
+//       })
+//       .catch(error => {
+//         // Handle errors from the fetch request
+//         console.error('Error fetching data:', error);
+//       });
+//   }
+  
+// //Call the function on load of the window 
+
+//   // Set up an interval to call fetchData every 1000 milliseconds (1 second)
+//   const intervalId = setInterval(fetchData, 3000);

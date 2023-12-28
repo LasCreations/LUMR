@@ -4,7 +4,7 @@
     background-color: var(--background-color2);
     position: absolute;
     top: 0px;
-    left: 00;
+    left: 0;
     /* box-shadow: 10px 0 10px rgba(0, 0, 0, 0.1); */
     box-shadow: 10px 8px 10px rgba(198, 189, 248, 0.825);
     display: flex;

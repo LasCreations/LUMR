@@ -8,7 +8,7 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
 {
     // parse HTTP request
     sscanf(request, "%s %s", method, route);
-    printf("%s %s\n", method, route);
+    // printf("%s %s\n", method, route);
 
     if (strcmp(method, "GET") == 0)
     {

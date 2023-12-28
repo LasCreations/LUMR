@@ -1,5 +1,5 @@
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef WEBSERVER_H
+#define WEBSERVER_H
 
 #include <stdio.h>  // console input/output, perror
 #include <stdlib.h> // exit
@@ -36,10 +36,17 @@ USERCACHE *cacheUserData;
 USERCONNECTIONCACHE *cacheConnectionData;
 DATABASEMANAGER *dbMan;
 
+struct Request {
+    int clientSocket;
+    char* request;
+};
+
 int runServer();
 
 static void handleSignal(int signal);
 
-void *handleRequests(void *pClientSocket);
+// void *handleRequests(void *pClientSocket);
+
+void *handleRequests(void *req);
 
 #endif

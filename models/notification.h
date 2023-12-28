@@ -86,7 +86,7 @@ class NOTIFICATION{
         }
 
         string getContent(){
-            this->content = content;
+            return this->content = content;
         }
 
         bool getStatus(){

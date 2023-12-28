@@ -1,24 +1,16 @@
-#include "../lib/server.h"
+#include "../lib/webserver.h"
+char *request;
 
-void *handleRequests(void *pClientSocket){
-        int clientThreadSocket = *((int *)pClientSocket);
-        // free(pClientSocket);
-        char *request = (char *)malloc(SIZE * sizeof(char));
-        ssize_t bytesRead = read(clientThreadSocket, request, SIZE);
-        if (bytesRead < 0)
-        {
-            perror("Error reading from client socket");
-            close(clientThreadSocket);
-            return NULL; // or return 1; depending on your application logic
-        }
+void *handleRequests(void *req){
+    
+    struct Request *reqArgs = (struct Request *)req;
 
-        apiRoute(request, clientThreadSocket, cacheUserData, dbMan, cacheConnectionData);
+    apiRoute(reqArgs->request, reqArgs->clientSocket, cacheUserData, dbMan, cacheConnectionData);
 
-        free(request);
-        close(clientThreadSocket);
-        // close(clientThreadSocket);
-        printf("\n");
-        return NULL;
+    free(reqArgs->request);
+    close(reqArgs->clientSocket);
+    printf("\n");
+    return NULL;
 }
 
 int runServer()
@@ -70,28 +62,42 @@ int runServer()
     }
 
     printf("\nServer is listening on http://%s:%s/\n\n", hostBuffer, serviceBuffer);
-    
 
+    dbMan = new DATABASEMANAGER(); // create a database connection
 
-    dbMan = new DATABASEMANAGER();  //create a database connection
-
-    cacheUserData = new USERCACHE();  
+    cacheUserData = new USERCACHE();
     cacheConnectionData = new USERCONNECTIONCACHE();
-    
 
-    cacheUserData->preloadUserData(dbMan);  //preload data into memory from the database
-    cacheConnectionData->preloadConnectionData(dbMan,cacheUserData);
-    
+    cacheUserData->preloadUserData(dbMan); // preload data into memory from the database
+    cacheConnectionData->preloadConnectionData(dbMan, cacheUserData);
 
     while (1)
     {
+        request = (char *)malloc(SIZE * sizeof(char));
+        char method[10], route[100];
         // accept connection and read data
         int clientSocket = accept(serverSocket, NULL, NULL);
+        cout << "Accepted new connection. Client socket: " << clientSocket << endl;
+
+        ssize_t bytesRead = read(clientSocket, request, SIZE);
+        sscanf(request, "%s %s", method, route);
+        printf("%s %s\n", method, route);
         
-        //implementation of multithreading 
+        struct Request req;
+
+        req.clientSocket = clientSocket;
+        req.request = request;
+
+
         pthread_t t;
-        pthread_create(&t, NULL, handleRequests, (void *)&clientSocket);
-        pthread_join(t, NULL);  //each thread follows after the other to avoid conflicts in requests
+        pthread_create(&t, NULL, handleRequests, (void *)&req);
+
+        // pthread_join(t, NULL); 
+        if(strcmp(route, "/user/me") == 0){
+            pthread_detach(t);  //LONG POLLING   IMPLEMENT 
+        }else{
+            pthread_join(t, NULL); 
+        }
     }
 }
 
@@ -100,13 +106,7 @@ static void handleSignal(int signal)
     if (signal == SIGINT)
     {
         printf("\nShutting down server...\n");
-
-        // close(clientSocket);
         close(serverSocket);
-
-        // if (request != NULL)
-        //     free(request);
-
         exit(0);
     }
 }

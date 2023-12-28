@@ -91,13 +91,14 @@ header {
 }
 
 .circle {
-    height: 7px;
-    width: 7px;
+    height: 20px;
+    width: 20px;
     position: absolute;
-    background-color: #fa7bb4;
+    color:#ffffff;
+    background-color: #ca1616;
     border-radius: 50%;
-    left: 19px;
-    top: 8px;
+    left: 14px;
+    top: 5px;
 }
 
 .online {

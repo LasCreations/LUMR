@@ -1,5 +1,6 @@
 @import url(../layout/header.css);
 @import url(../layout/nav.css);
+@import url(../layout/notification.css);
 @import url(../components/scrollbar/scrollbar.css);
 @import url(../views/profileView.css);
 @import url(../views/followView.css);
@@ -20,4 +21,5 @@
     overflow-x: hidden;
     padding: 40px 30px 30px 30px;
 }
+
 

@@ -2,7 +2,7 @@
 #define CONNECTION_CONTROLLER_H
 
 #include "../../database/queries/lib/userConnectionQueries.h"
-
+#include "../../database/queries/lib/notificationsQueries.h"
 #include "../../jsonparsing/lib/jsonParser.h"
 
 #include "../../middleware/cache/lib/userCache.h"
