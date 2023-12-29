@@ -1,6 +1,9 @@
 #include "../lib/connectionController.h"
 
-void addConnection(char* request, int clientSocket, DATABASEMANAGER *dbMan, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData){
+void addConnection(char* request, int clientSocket, 
+                    DATABASEMANAGER *dbMan, USERCACHE *userCacheData, 
+                    USERCONNECTIONCACHE *cacheConnectionData, 
+                    NOTIFICATIONCACHE *cacheNotificationData){
     //get the current user
     USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
     
@@ -13,10 +16,11 @@ void addConnection(char* request, int clientSocket, DATABASEMANAGER *dbMan, USER
     //passed the current time using time(nullptr)
     NOTIFICATION *notification = new NOTIFICATION(generateRandomCode(15), userSearch->getUsername(),
                                                     data->getUsername(), "Follow", 
-                                                    data->getUsername() + " is following you.", false, time(nullptr));
+                                                    data->getUsername() + " is following you.", false, getCurrentTime());
 
     if(addConnectionToDatabase(dbMan, userCon) && addNotificationToDatabase(dbMan, notification)){
         cacheConnectionData->preloadConnectionData(dbMan, userCacheData);
+        cacheNotificationData->addNotificationToCache(notification);
         const char response[] = "HTTP/1.1 200 OK\r\n\r\n";
         send(clientSocket, response, sizeof(response) - 1, 0);
     }else{

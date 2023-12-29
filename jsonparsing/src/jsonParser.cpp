@@ -95,10 +95,9 @@ USER *parseTokens(string JsonString)
 
 string UnparseUserDataToJSON(USER *user, bool isFriend, uint32_t followercount, uint32_t followingcount)
 {
-    // Create a JSON object
+    
     Json::Value jsonValue;
 
-    // Add key-value pairs to the JSON object
     jsonValue["username"] = user->getUsername();
     jsonValue["avatarurl"] = user->getProfile()->getAvatarURL();
     jsonValue["bio"] = user->getProfile()->getBio();
@@ -137,5 +136,35 @@ Json::Value createJSONObjectFollowView(string username, string avatarurl, bool s
     jsonObject["avatarurl"] = avatarurl;
     jsonObject["status"] = status;
 
+    return jsonObject;
+}
+
+string createNotificationObjectArray(vector<NOTIFICATION> notification, 
+                                        USERCONNECTIONCACHE *cacheConnectionData,
+                                        USERCACHE *userCache){
+    Json::Value jsonArray;
+    for (size_t i = 0; i < notification.size(); i++){
+        USER *user = userCache->getUserFromCache(notification[i].getSenderID());
+        Json::Value jsonObject = createJSONObjectNotification(notification[i],
+                                                            user->getProfile()->getAvatarURL(),
+                                                            cacheConnectionData->isFollowing(
+                                                                notification[i].getRecieverID(), 
+                                                                notification[i].getSenderID())  );
+        jsonArray.append(jsonObject);
+    }
+    std::cout << "\n\n" << jsonArray.toStyledString() << std::endl;
+    return jsonArray.toStyledString();
+}
+
+Json::Value createJSONObjectNotification(NOTIFICATION notification, string avatarurl, bool status){
+    Json::Value jsonObject;
+    jsonObject["type"] = notification.getType();
+    jsonObject["content"] = notification.getContent();
+    jsonObject["timestamp"] = notification.getTimestamp();
+    jsonObject["recieverID"] = notification.getRecieverID();
+    jsonObject["senderID"] = notification.getSenderID();
+    jsonObject["avatarurl"] = avatarurl;
+    jsonObject["friendStatus"] = status;
+    jsonObject["notificationStatus"] = notification.getStatus();
     return jsonObject;
 }

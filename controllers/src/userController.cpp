@@ -134,3 +134,37 @@ void getFollowing(char *request, int clientSocket, USERCACHE *userCacheData, USE
         send(clientSocket, response, sizeof(response) - 1, 0);
     }
 }
+
+void getNotification(char *request, int clientSocket,
+                     USERCACHE *userCacheData,
+                     USERCONNECTIONCACHE *cacheConnectionData,
+                     NOTIFICATIONCACHE *cacheNotificationData, 
+                     DATABASEMANAGER *dbMan)
+{
+    USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
+    vector<NOTIFICATION> newNotifications;
+
+    while (true)
+    {
+        if (cacheNotificationData->hasNewNotification(data->getUsername()))
+        {
+            vector<NOTIFICATION> notification = cacheNotificationData->getNotifications(data->getUsername());
+            for (size_t i = 0; i < notification.size(); i++)
+            {
+                if (!notification[i].getStatus()){
+                    newNotifications.push_back(notification[i]);
+                    updateNotificationStatus(notification[i], dbMan);
+                }     
+            }
+            break;
+        }
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+    }
+    std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
+                               createNotificationObjectArray(newNotifications,
+                                                             cacheConnectionData,
+                                                             userCacheData);
+
+    send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
+    cacheNotificationData->preloadNotificationData(dbMan);
+}

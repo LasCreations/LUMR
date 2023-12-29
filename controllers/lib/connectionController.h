@@ -8,6 +8,5 @@
 #include "../../middleware/cache/lib/userCache.h"
 #include "../../middleware/cache/lib/userConnectionCache.h"
 
-void addConnection(char* request, int clientSocket, DATABASEMANAGER *dbMan, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData);
-
+void addConnection(char* request, int clientSocket, DATABASEMANAGER *dbMan, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData, NOTIFICATIONCACHE *cacheNotificationData);
 #endif

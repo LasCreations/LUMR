@@ -14,18 +14,14 @@ class USERCACHE{
         void preloadUserData(DATABASEMANAGER *dbMan);
         void updateUserData();
         void scan();
-
         void addUserToMap(USER *data);
         void updateUserTokenInCache(USER *data, string token);
-        
         bool isEmpty();
         bool userExists(string username);
-
         USER* updateUserProfileInCache(PROFILE *data);
         USER* getUserFromCache(string key);
         USER* getUserFromCache(string username, string password);
         USER* getUserFromCacheByToken(string token);
-
 };
 
 #endif

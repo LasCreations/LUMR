@@ -55,4 +55,6 @@ string generateRandomCode(int length);
 */
 string parseHttpRequest(char *request);
 
+string getCurrentTime();
+
 #endif

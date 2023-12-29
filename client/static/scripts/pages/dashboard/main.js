@@ -7,6 +7,8 @@ import { clearSreen } from './events/clearScreen.js'
 import {getProfileData, showUserProfile, showHome} from './views/userdashboard.js'
 
 import {getFollowers, getFollowing} from './views/followView.js' 
+import  {getNotification} from './events/fetchNotification.js'
+
 
 window.onload = function () {
     clearSreen(); //CLEARS SCREEN
@@ -17,6 +19,7 @@ window.onload = function () {
 
     if (token != null) {
         getProfileData(token);
+        getNotification();
     } else {
         window.location.href = "/pages/login.html";
     }
@@ -62,21 +65,3 @@ followingCountView.addEventListener('click', function() {
     getFollowing();
 });
 
-// function fetchData() {
-//     // Your fetch request code goes here
-//     fetch('/get/notification')
-//       .then(response => response.json())
-//       .then(data => {
-//         // Handle the fetched data as needed
-//         console.log(data);
-//       })
-//       .catch(error => {
-//         // Handle errors from the fetch request
-//         console.error('Error fetching data:', error);
-//       });
-//   }
-  
-// //Call the function on load of the window 
-
-//   // Set up an interval to call fetchData every 1000 milliseconds (1 second)
-//   const intervalId = setInterval(fetchData, 3000);

@@ -5,9 +5,9 @@
 
 class NOTIFICATION{
     private:
-        string notification_id,	reciever_id, sender_id, type, content;
+        string notification_id,	reciever_id, sender_id, type, content,timestamp;
         bool status;
-        time_t timestamp;
+        
 
     public:
         NOTIFICATION(){
@@ -17,11 +17,11 @@ class NOTIFICATION{
             this->type = "";
             this->content = "";
             this->status = false;
-            this->timestamp = time(0); //set it as the current time
+            this->timestamp = "";
         }
 
         NOTIFICATION(string notification_id, string reciever_id, string sender_id, string type,
-                        string content, bool status, time_t timestamp){
+                        string content, bool status, string timestamp){
             this->notification_id = notification_id;
             this->reciever_id = reciever_id;
             this->sender_id = sender_id;
@@ -65,7 +65,7 @@ class NOTIFICATION{
             this->status = status;
         }
 
-        void setTimestamp(time_t timestamp){
+        void setTimestamp(string timestamp){
             this->timestamp = timestamp;
         }
 
@@ -93,7 +93,7 @@ class NOTIFICATION{
             return this->status;
         }
 
-        time_t getTimestamp(){
+        string getTimestamp(){
             return this->timestamp;
         }
 

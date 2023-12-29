@@ -11,6 +11,7 @@
 #include <cppconn/exception.h>
 #include <cppconn/prepared_statement.h>
 
+#include <ctime>
 #include <fstream>
 #include <jsoncpp/json/value.h>
 #include <jsoncpp/json/json.h>

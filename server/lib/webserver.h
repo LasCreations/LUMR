@@ -21,17 +21,19 @@
 
 #define SIZE 1024  // buffer size
 #define PORT 8081  // port number
-#define BACKLOG 10 // number of pending connections queue will hold
+#define BACKLOG 500 // number of pending connections queue will hold
 
 int serverSocket;
 
 
 #include "../../routes/lib/routes.h"
 #include "../../middleware/cache/lib/userCache.h"
+#include "../../middleware/cache/lib/notificationCache.h"
 #include "../../middleware/cache/lib/userConnectionCache.h"
 #include "../../database/connection/lib/DBManager.h"
 
 
+NOTIFICATIONCACHE *cacheNotificationData;
 USERCACHE *cacheUserData;
 USERCONNECTIONCACHE *cacheConnectionData;
 DATABASEMANAGER *dbMan;
@@ -45,7 +47,7 @@ int runServer();
 
 static void handleSignal(int signal);
 
-// void *handleRequests(void *pClientSocket);
+void preloadCacheIntoMemory();
 
 void *handleRequests(void *req);
 

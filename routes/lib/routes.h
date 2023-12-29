@@ -11,6 +11,7 @@
 
 //Caching
 #include "../../middleware/cache/lib/userCache.h"
+#include "../../middleware/cache/lib/notificationCache.h"
 #include "../../middleware/cache/lib/userConnectionCache.h"
 
 #include "../../middleware/authenticate/lib/authenticate.h"
@@ -19,6 +20,7 @@ extern char method[10], route[100];
 
 
 void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData,
-                DATABASEMANAGER *dbMan, USERCONNECTIONCACHE *cacheConnectionData);
+                DATABASEMANAGER *dbMan, USERCONNECTIONCACHE *cacheConnectionData, 
+                NOTIFICATIONCACHE *cacheNotificationData);
 
 #endif

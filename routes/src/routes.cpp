@@ -4,7 +4,7 @@ char method[10] = "";
 char route[100] = "";
 
 void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABASEMANAGER *dbMan,
-              USERCONNECTIONCACHE *cacheConnectionData)
+              USERCONNECTIONCACHE *cacheConnectionData, NOTIFICATIONCACHE *cacheNotificationData)
 {
     // parse HTTP request
     sscanf(request, "%s %s", method, route);
@@ -29,13 +29,20 @@ void apiRoute(char *request, int clientSocket, USERCACHE *userCacheData, DATABAS
             searchUser(request, clientSocket, userCacheData, cacheConnectionData);
         
         if (strcmp(route, "/user/follow") == 0)
-            addConnection(request, clientSocket, dbMan, userCacheData, cacheConnectionData);
+            addConnection(request, clientSocket, dbMan, userCacheData, cacheConnectionData, cacheNotificationData);
         
         if (strcmp(route, "/user/followers") == 0)
             getFollowers(request, clientSocket, userCacheData, cacheConnectionData);
 
         if (strcmp(route, "/user/following") == 0)
             getFollowing(request, clientSocket, userCacheData, cacheConnectionData);
+        
+        if (strcmp(route, "/user/notification") == 0)
+            getNotification(request, clientSocket,
+                        userCacheData, 
+                        cacheConnectionData, 
+                        cacheNotificationData,
+                        dbMan);
     }
     else
     {

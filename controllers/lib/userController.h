@@ -7,6 +7,7 @@
 #include "../../jsonparsing/lib/jsonParser.h"
 
 #include "../../middleware/cache/lib/userCache.h"
+#include "../../middleware/cache/lib/notificationCache.h"
 #include "../../middleware/cache/lib/userConnectionCache.h"
 
 
@@ -20,4 +21,10 @@ void searchUser(char* request, int clientSocket, USERCACHE *userCacheData, USERC
 void getFollowers(char* request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData);
 
 void getFollowing(char* request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData);
+
+void getNotification(   char* request, int clientSocket,
+                        USERCACHE *userCacheData, 
+                        USERCONNECTIONCACHE *cacheConnectionData, 
+                        NOTIFICATIONCACHE *cacheNotificationData,
+                        DATABASEMANAGER *dbMan );
 #endif

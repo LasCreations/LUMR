@@ -1,11 +1,12 @@
 #include "../lib/webserver.h"
 char *request;
 
-void *handleRequests(void *req){
-    
+void *handleRequests(void *req)
+{
+
     struct Request *reqArgs = (struct Request *)req;
 
-    apiRoute(reqArgs->request, reqArgs->clientSocket, cacheUserData, dbMan, cacheConnectionData);
+    apiRoute(reqArgs->request, reqArgs->clientSocket, cacheUserData, dbMan, cacheConnectionData, cacheNotificationData);
 
     free(reqArgs->request);
     close(reqArgs->clientSocket);
@@ -62,15 +63,7 @@ int runServer()
     }
 
     printf("\nServer is listening on http://%s:%s/\n\n", hostBuffer, serviceBuffer);
-
-    dbMan = new DATABASEMANAGER(); // create a database connection
-
-    cacheUserData = new USERCACHE();
-    cacheConnectionData = new USERCONNECTIONCACHE();
-
-    cacheUserData->preloadUserData(dbMan); // preload data into memory from the database
-    cacheConnectionData->preloadConnectionData(dbMan, cacheUserData);
-
+    preloadCacheIntoMemory();
     while (1)
     {
         request = (char *)malloc(SIZE * sizeof(char));
@@ -82,21 +75,21 @@ int runServer()
         ssize_t bytesRead = read(clientSocket, request, SIZE);
         sscanf(request, "%s %s", method, route);
         printf("%s %s\n", method, route);
-        
+
         struct Request req;
 
         req.clientSocket = clientSocket;
         req.request = request;
 
-
         pthread_t t;
         pthread_create(&t, NULL, handleRequests, (void *)&req);
-
-        // pthread_join(t, NULL); 
-        if(strcmp(route, "/user/me") == 0){
-            pthread_detach(t);  //LONG POLLING   IMPLEMENT 
-        }else{
-            pthread_join(t, NULL); 
+        if (strcmp(route, "/user/notification") == 0)
+        {
+            pthread_detach(t); // LONG POLLING   IMPLEMENT
+        }
+        else
+        {
+            pthread_join(t, NULL);  //CLient side rendering
         }
     }
 }
@@ -109,6 +102,19 @@ static void handleSignal(int signal)
         close(serverSocket);
         exit(0);
     }
+}
+
+void preloadCacheIntoMemory()
+{
+    dbMan = new DATABASEMANAGER(); // create a database connection
+
+    cacheUserData = new USERCACHE();
+    cacheConnectionData = new USERCONNECTIONCACHE();
+    cacheNotificationData = new NOTIFICATIONCACHE();
+
+    cacheUserData->preloadUserData(dbMan); // preload data into memory from the database
+    cacheNotificationData->preloadNotificationData(dbMan);
+    cacheConnectionData->preloadConnectionData(dbMan, cacheUserData);
 }
 
 int main()
