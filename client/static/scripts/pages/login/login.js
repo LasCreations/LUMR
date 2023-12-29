@@ -1,16 +1,9 @@
 import { getToken } from "../dashboard/events/followUser.js";
 
 window.onload = function () {
-    var token = {
-        token: getToken()
+    if (getToken() != null) {
+        window.location.href = "/pages/dashboard.html";
     }
-
-    // if (token != null) {
-    //     window.location.href = "/pages/dashboard.html";
-    // }
-    // } else {
-    //     // window.location.href = "/pages/login.html";
-    // }
 };
 
 document.getElementById("loginForm").addEventListener("submit", function(event) {

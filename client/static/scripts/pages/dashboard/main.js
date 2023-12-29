@@ -9,19 +9,20 @@ import {getProfileData, showUserProfile, showHome} from './views/userdashboard.j
 import {getFollowers, getFollowing} from './views/followView.js' 
 import  {getNotification} from './events/fetchNotification.js'
 
+import {ShowNavNotifications} from './views/notificationView.js'
+
 
 window.onload = function () {
-    clearSreen(); //CLEARS SCREEN
-
     var token = {
         token: getToken()
     }
 
-    if (token != null) {
+    if (getToken() != null) {
+        clearSreen(); //CLEARS SCREEN
         getProfileData(token);
         getNotification();
     } else {
-        window.location.href = "/pages/login.html";
+        window.location.href = "/";
     }
 };
 
@@ -65,3 +66,5 @@ followingCountView.addEventListener('click', function() {
     getFollowing();
 });
 
+const notificationBell = document.querySelector('.notification-bell');
+notificationBell.addEventListener('click', ShowNavNotifications);

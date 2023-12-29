@@ -1,9 +1,13 @@
 export function clearSreen(){
     var profileView = document.getElementById("profile-view");
     var followView = document.querySelector('.follow-view');
+    var notificationView = document.querySelector('.notification-container');
+
     
     profileView.style.display = 'none';
     followView.style.display = 'none';
+    notificationView.style.display = 'none';
+
 
     var parentElement = document.getElementById('users-container');
 
