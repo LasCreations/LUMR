@@ -1,8 +1,5 @@
 import { getToken } from "./followUser.js";
-
-
-let imageContainer, contentContainer, timestampContainer, notificationDiv;
-let imageElement;
+import {addNotificationToView} from '../views/notificationView.js'
 
 export function getNotification() {
     fetch("/user/notification", {
@@ -30,33 +27,3 @@ export function getNotification() {
   }
   
 
-function addNotificationToView(jsonData){
-    
-    jsonData.forEach(function(currentObject) {
-        imageContainer = document.createElement('div');  
-    contentContainer = document.createElement('div');  
-    timestampContainer = document.createElement('div');  
-    notificationDiv = document.createElement('div'); 
-
-
-    imageContainer.className = 'N-imageContainer';
-    contentContainer.className = 'N-contentContainer';
-    timestampContainer.className = 'N-timestampContainer';
-    notificationDiv.className = 'notification';
-
-    imageElement = document.createElement('img');
-    imageElement.className = 'imageElement';
-
-    imageElement.src = "/avatars/" + currentObject.avatarurl +".jpg";
-    contentContainer.textContent = currentObject.content;
-    timestampContainer.textContent = currentObject.timestamp;
-    
-    imageContainer.appendChild(imageElement);
-
-    notificationDiv.appendChild(imageContainer);
-    notificationDiv.appendChild(contentContainer);
-    notificationDiv.appendChild(timestampContainer);
-
-    document.querySelector('.notificationBox').appendChild(notificationDiv);
-    });
-}
