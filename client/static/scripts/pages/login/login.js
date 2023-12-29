@@ -1,3 +1,18 @@
+import { getToken } from "../dashboard/events/followUser.js";
+
+window.onload = function () {
+    var token = {
+        token: getToken()
+    }
+
+    // if (token != null) {
+    //     window.location.href = "/pages/dashboard.html";
+    // }
+    // } else {
+    //     // window.location.href = "/pages/login.html";
+    // }
+};
+
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault();
 

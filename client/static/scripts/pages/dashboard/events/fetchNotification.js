@@ -11,16 +11,15 @@ export function getNotification() {
     }).then(res => {
         if (res.ok) {
             console.log("Notification Recieved");
-            setInterval(getNotification, 3000);
             return res.json(); // Parse the JSON from the response 
         } else {
             throw new Error('Network response was not ok');
         }
     }).then(data => {
         console.log(data);
+        setTimeout(getNotification, 3000);
       }).catch(error => {
         console.error("Error:", error.message);
-        setInterval(getNotification, 3000);
     });
   }
   

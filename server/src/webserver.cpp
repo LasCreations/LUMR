@@ -1,15 +1,21 @@
 #include "../lib/webserver.h"
 char *request;
 
-void *handleRequests(void *req)
+void *handleClientSideRequests(void *req)
 {
-
     struct Request *reqArgs = (struct Request *)req;
-
     apiRoute(reqArgs->request, reqArgs->clientSocket, cacheUserData, dbMan, cacheConnectionData, cacheNotificationData);
-
     free(reqArgs->request);
     close(reqArgs->clientSocket);
+    printf("\n");
+    return NULL;
+}
+
+void *handlePollingRequests(void *req){
+    struct Request *reqArgs = (struct Request *)req;
+    apiRoute(reqArgs->request, reqArgs->clientSocket, cacheUserData, dbMan, cacheConnectionData, cacheNotificationData);
+    // free(reqArgs->request);
+    // close(reqArgs->clientSocket);
     printf("\n");
     return NULL;
 }
@@ -81,15 +87,17 @@ int runServer()
         req.clientSocket = clientSocket;
         req.request = request;
 
-        pthread_t t;
-        pthread_create(&t, NULL, handleRequests, (void *)&req);
         if (strcmp(route, "/user/notification") == 0)
         {
-            pthread_detach(t); // LONG POLLING   IMPLEMENT
+            pthread_t pollingThread;
+            pthread_create(&pollingThread, NULL, handlePollingRequests, (void *)&req);
+            pthread_detach(pollingThread); // LONG POLLING   IMPLEMENT
         }
         else
         {
-            pthread_join(t, NULL);  //CLient side rendering
+            pthread_t renderingThread;
+            pthread_create(&renderingThread, NULL, handleClientSideRequests, (void *)&req);
+            pthread_join(renderingThread, NULL);  //CLient side rendering
         }
     }
 }

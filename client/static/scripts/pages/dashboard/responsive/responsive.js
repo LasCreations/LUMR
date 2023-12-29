@@ -19,13 +19,10 @@ export default function setUpMenu(){
           otherOption.style.borderLeft = "";
           // otherOption.classList.remove("selected");
         });
-  
-        // Add the "selected" class to the clicked option
-        // option.style.backgroundColor = "#c3c1c5";
+
         option.style.backgroundColor = "#c3c1c5";
         option.style.color = "#e7e5e5";
         option.style.borderLeft  =  "5px solid #a2a2a2";
-      //   option.classList.add("selected");
       });
     });
   

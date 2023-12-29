@@ -49,6 +49,8 @@ static void handleSignal(int signal);
 
 void preloadCacheIntoMemory();
 
-void *handleRequests(void *req);
+void *handleClientSideRequests(void *req);
+
+void *handlePollingRequests(void *req);
 
 #endif

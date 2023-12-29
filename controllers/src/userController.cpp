@@ -154,6 +154,7 @@ void getNotification(char *request, int clientSocket,
                 if (!notification[i].getStatus()){
                     newNotifications.push_back(notification[i]);
                     updateNotificationStatus(notification[i], dbMan);
+                    cacheNotificationData->updateNotificationStatus(notification[i]);
                 }     
             }
             break;
@@ -166,5 +167,6 @@ void getNotification(char *request, int clientSocket,
                                                              userCacheData);
 
     send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
-    cacheNotificationData->preloadNotificationData(dbMan);
+    // cacheNotificationData->preloadNotificationData(dbMan);
+    close(clientSocket);
 }
