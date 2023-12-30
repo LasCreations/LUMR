@@ -45,3 +45,43 @@ std::unordered_map<string, CONNECTION *> *getConnectionCacheData(DATABASEMANAGER
 	delete res;
 	return connectionmap;
 }
+
+bool updateUser1Status(bool status, string username ,DATABASEMANAGER *dbMan){
+	try
+	{
+		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE connections SET user1_status = ? WHERE user_1_id = ?");
+		prep_stmt->setBoolean(1, status);
+		prep_stmt->setString(2, username);
+
+		prep_stmt->execute();
+		delete prep_stmt;
+		return true;
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << "Error adding user: " << e.what() << std::endl;
+		delete prep_stmt;
+		return false;
+	}
+	return false;
+}
+
+bool updateUser2Status(bool status, string username ,DATABASEMANAGER *dbMan){
+	try
+	{
+		prep_stmt = dbMan->getConnection()->prepareStatement("UPDATE connections SET user2_status = ? WHERE user_2_id = ?");
+		prep_stmt->setBoolean(1, status);
+		prep_stmt->setString(2, username);
+
+		prep_stmt->execute();
+		delete prep_stmt;
+		return true;
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << "Error adding user: " << e.what() << std::endl;
+		delete prep_stmt;
+		return false;
+	}
+	return false;
+}

@@ -15,6 +15,7 @@
 }
 .notification{
     display: inline-block;
+    cursor: pointer;
 }
 
 .N-imageContainer,
@@ -23,6 +24,7 @@
     width: 120px;
     float:left;
 }
+
 
 .imageElement {
     height: 75px;

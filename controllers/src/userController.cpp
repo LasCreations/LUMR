@@ -167,6 +167,5 @@ void getNotification(char *request, int clientSocket,
                                                              userCacheData);
 
     send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
-    // cacheNotificationData->preloadNotificationData(dbMan);
     close(clientSocket);
 }

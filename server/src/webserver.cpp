@@ -14,28 +14,21 @@ void *handleClientSideRequests(void *req)
 void *handlePollingRequests(void *req){
     struct Request *reqArgs = (struct Request *)req;
     apiRoute(reqArgs->request, reqArgs->clientSocket, cacheUserData, dbMan, cacheConnectionData, cacheNotificationData);
-    // free(reqArgs->request);
-    // close(reqArgs->clientSocket);
     printf("\n");
     return NULL;
 }
 
 int runServer()
 {
-    // register signal handler
     signal(SIGINT, handleSignal);
 
-    // server internet socket address
     struct sockaddr_in serverAddress;
-    serverAddress.sin_family = AF_INET;         // IPv4
-    serverAddress.sin_port = htons(PORT);       // port number in network byte order (host-to-network short)
-    serverAddress.sin_addr.s_addr = INADDR_ANY; // Bind to any available interface
+    serverAddress.sin_family = AF_INET;         
+    serverAddress.sin_port = htons(PORT);       
+    serverAddress.sin_addr.s_addr = INADDR_ANY; 
 
-    // socket of type IPv4 using TCP protocol
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 
-    // reuse address and port
-    // setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
     int option = 1;
     if (setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(int)) < 0)
     {
@@ -43,7 +36,6 @@ int runServer()
         return 1;
     }
 
-    // bind socket to address
     if (bind(serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0)
     {
         printf("Error: The server is not bound to the address.\n");
@@ -69,12 +61,14 @@ int runServer()
     }
 
     printf("\nServer is listening on http://%s:%s/\n\n", hostBuffer, serviceBuffer);
+
     preloadCacheIntoMemory();
+
     while (1)
     {
         request = (char *)malloc(SIZE * sizeof(char));
         char method[10], route[100];
-        // accept connection and read data
+        
         int clientSocket = accept(serverSocket, NULL, NULL);
         cout << "Accepted new connection. Client socket: " << clientSocket << endl;
 
@@ -97,7 +91,7 @@ int runServer()
         {
             pthread_t renderingThread;
             pthread_create(&renderingThread, NULL, handleClientSideRequests, (void *)&req);
-            pthread_join(renderingThread, NULL);  //CLient side rendering
+            pthread_join(renderingThread, NULL);  //CLIENT SIDE RENDERING
         }
     }
 }
@@ -114,13 +108,13 @@ static void handleSignal(int signal)
 
 void preloadCacheIntoMemory()
 {
-    dbMan = new DATABASEMANAGER(); // create a database connection
+    dbMan = new DATABASEMANAGER();
 
     cacheUserData = new USERCACHE();
     cacheConnectionData = new USERCONNECTIONCACHE();
     cacheNotificationData = new NOTIFICATIONCACHE();
 
-    cacheUserData->preloadUserData(dbMan); // preload data into memory from the database
+    cacheUserData->preloadUserData(dbMan);
     cacheNotificationData->preloadNotificationData(dbMan);
     cacheConnectionData->preloadConnectionData(dbMan, cacheUserData);
 }

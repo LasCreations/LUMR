@@ -18,6 +18,12 @@ CONNECTION *USERCONNECTIONCACHE::getConnectionFromCache(string user1_ID, string 
         {
             return pair.second;
         }
+        if (user1_ID == pair.second->getUser2()->getUsername() &&
+            user2_ID == pair.second->getUser1()->getUsername())
+        {
+            return pair.second;
+        }
+
     }
     return nullptr;
 }
@@ -106,4 +112,15 @@ USER USERCONNECTIONCACHE::getConnectionUser(string username, CONNECTION con){
     if (username == con.getUser2()->getUsername())
             return con.getUser1();
     return NULL;
+}
+
+void USERCONNECTIONCACHE::updateUser2FollowBackStatus(string user1, string user2){
+    for (const auto &pair : *(this->cacheConnectionData))
+    {
+        if (user1 == pair.second->getUser1()->getUsername() &&
+            user2 == pair.second->getUser2()->getUsername())
+        {
+            pair.second->setUser2Status(true);
+        }
+    }
 }

@@ -7,6 +7,10 @@
 
 bool addConnectionToDatabase(DATABASEMANAGER *dbMan, CONNECTION *data);
 
+bool updateUser1Status(bool status,  string username, DATABASEMANAGER *dbMan);
+
+bool updateUser2Status(bool status, string username,DATABASEMANAGER *dbMan);
+
 std::unordered_map<string, CONNECTION *> *getConnectionCacheData(DATABASEMANAGER *dbMan, USERCACHE *userCacheData);
 
 #endif

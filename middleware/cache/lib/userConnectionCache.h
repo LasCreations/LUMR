@@ -19,6 +19,7 @@ class USERCONNECTIONCACHE{
         vector<CONNECTION> getFollowerConnections(string username);
         vector<CONNECTION> getFollowingConnections(string username);
         USER getConnectionUser(string username, CONNECTION con);
+        void updateUser2FollowBackStatus(string user1, string user2);
 };
 
 

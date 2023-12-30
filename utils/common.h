@@ -12,7 +12,7 @@
 #include <unistd.h>     // open, close
 
 #include <signal.h> // signal handling
-#include <time.h>   // time
+#include <time.h> 
 
 #include<string>
 #include<iostream>
@@ -34,7 +34,7 @@
 
 using namespace std;
 
-#define SIZE 1024  // buffer size
+#define SIZE 1024
 
 
 /*!
@@ -48,13 +48,18 @@ string generateRandomCode(int length);
 /*!
  * @function    parseHttpRequest
  * @abstract    Removes the json data from a request
- * @discussion  Uses regular expression to extract the json
- *              from the request
  * @param       char*   request
  * @result      returns a string
 */
 string parseHttpRequest(char *request);
 
+/*!
+ * @function    getCurrentTime
+ * @abstract    converts the current time on the server
+ *              to a string
+ * @param       null
+ * @result      returns a string
+*/
 string getCurrentTime();
 
 #endif
