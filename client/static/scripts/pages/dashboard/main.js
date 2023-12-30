@@ -7,7 +7,7 @@ import { clearSreen } from './events/clearScreen.js'
 import {getProfileData, showUserProfile, showHome} from './views/userdashboard.js'
 
 import {getFollowers, getFollowing} from './views/followView.js' 
-import  {getNotification} from './events/fetchNotification.js'
+// import  {getNotification} from './events/fetchNotification.js'
 
 import {ShowNavNotifications} from './views/notificationView.js'
 
@@ -20,7 +20,7 @@ window.onload = function () {
     if (getToken() != null) {
         clearSreen(); //CLEARS SCREEN
         getProfileData(token);
-        getNotification();
+        // getNotification();
     } else {
         window.location.href = "/";
     }

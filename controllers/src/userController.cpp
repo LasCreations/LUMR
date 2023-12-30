@@ -52,20 +52,28 @@ void addUser(char *request, int clientSocket, USERCACHE *userCacheData, DATABASE
 void userDataDashBoard(char *request, int clientSocket, USERCACHE *userCacheData, USERCONNECTIONCACHE *cacheConnectionData)
 {
 
-    USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
-    if (data != nullptr)
+    if (!userCacheData->isEmpty())
     {
+        USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
+        if (data != nullptr)
+        {
 
-        vector<CONNECTION> followers = cacheConnectionData->getFollowerConnections(data->getUsername());
-        vector<CONNECTION> following = cacheConnectionData->getFollowingConnections(data->getUsername());
+            vector<CONNECTION> followers = cacheConnectionData->getFollowerConnections(data->getUsername());
+            vector<CONNECTION> following = cacheConnectionData->getFollowingConnections(data->getUsername());
 
-        createJSONObjectArray(following, data->getUsername(), cacheConnectionData);
+            createJSONObjectArray(following, data->getUsername(), cacheConnectionData);
 
-        std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
-                                   UnparseUserDataToJSON(data, false, cacheConnectionData->followerCount(data->getUsername()),
-                                                         cacheConnectionData->followingCount(data->getUsername()));
+            std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" +
+                                       UnparseUserDataToJSON(data, false, cacheConnectionData->followerCount(data->getUsername()),
+                                                             cacheConnectionData->followingCount(data->getUsername()));
 
-        send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
+            send(clientSocket, httpResponse.c_str(), httpResponse.length(), 0);
+        }
+        else
+        {
+            const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+            send(clientSocket, response, sizeof(response) - 1, 0);
+        }
     }
     else
     {
@@ -138,7 +146,7 @@ void getFollowing(char *request, int clientSocket, USERCACHE *userCacheData, USE
 void getNotification(char *request, int clientSocket,
                      USERCACHE *userCacheData,
                      USERCONNECTIONCACHE *cacheConnectionData,
-                     NOTIFICATIONCACHE *cacheNotificationData, 
+                     NOTIFICATIONCACHE *cacheNotificationData,
                      DATABASEMANAGER *dbMan)
 {
     USER *data = userCacheData->getUserFromCacheByToken(parseTokenFromRequest(parseHttpRequest(request)));
@@ -151,11 +159,12 @@ void getNotification(char *request, int clientSocket,
             vector<NOTIFICATION> notification = cacheNotificationData->getNotifications(data->getUsername());
             for (size_t i = 0; i < notification.size(); i++)
             {
-                if (!notification[i].getStatus()){
+                if (!notification[i].getStatus())
+                {
                     newNotifications.push_back(notification[i]);
                     updateNotificationStatus(notification[i], dbMan);
                     cacheNotificationData->updateNotificationStatus(notification[i]);
-                }     
+                }
             }
             break;
         }

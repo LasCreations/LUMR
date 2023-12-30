@@ -1,3 +1,5 @@
+import { getNotification } from "../events/fetchNotification.js";
+
 export function getToken() {
     if (/\S/.test(document.cookie)) {
         var cookies = document.cookie.split(';');
@@ -23,6 +25,7 @@ export function getProfileData(token){
     }).then(res => {
         if (res.ok) {
             console.log("User found");
+            getNotification();
             return res.json(); // Parse the JSON from the response
         } else {
             console.log("User not found");
@@ -78,8 +81,6 @@ export function showUserProfile(){
     const messageBtn = document.querySelector(".message-btn");
     const editBtn = document.querySelector(".edit-btn");
     const profileDiv = document.getElementById("profile-view");
-    
-
     
     profileDiv.style.display = "block";
     editBtn.style.display = "block";
