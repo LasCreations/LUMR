@@ -20,7 +20,7 @@ void *handlePollingRequests(void *req){
 
 int runServer()
 {
-    signal(SIGINT, handleSignal);
+    signal(SIGINT, handleSignal); //run handler function when a signal is recieved
 
     struct sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;         
