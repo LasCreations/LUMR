@@ -1,22 +1,10 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "headers.h"
+#include "route.h"
 
-#define SIZE 1024  // buffer size
 #define PORT 8081  // port number
 #define BACKLOG 500 //number of pending connections queue will hold
-
-
-
-
-//Creating a structure of client information to pass to threads
-struct CLIENT {
-    int socket;
-    char* request;
-    char* method;
-    char* route;
-};
 
 /*!
  * @function    confiureServer

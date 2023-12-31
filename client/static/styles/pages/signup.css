@@ -1,0 +1,20 @@
+
+@import url('../layout/footer.css');
+@import url('../layout/avatars.css');
+
+@import url(../components/buttons/buttons.css);
+@import url('../components/icons/icons.css');
+@import url('../components/checkbox/checkbox.css');
+@import url(../components/forms/forms.css);
+
+
+
+footer {
+    height: 60px;
+}
+
+@media screen and (max-width: 850px) {
+    footer {
+        height: 30px;
+    }
+}

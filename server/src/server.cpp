@@ -68,6 +68,7 @@ int readRequest(int clientSocket)
     }
 
     ssize_t bytesRead = read(clientSocket, request, SIZE);
+    printf("\nBytes Read: %d", bytesRead);
     if (bytesRead == -1)
     {
         perror("Error reading from socket");
@@ -76,7 +77,6 @@ int readRequest(int clientSocket)
     }
 
     sscanf(request, "%s %s", method, route);
-    printf("\nBytes Read: %d", bytesRead);
     printf("\n%s %s\n", method, route);
     handleThreadAlloctions(clientSocket, request, method, route);
 
@@ -111,6 +111,7 @@ void *handleClientSideRendering(void *clientThread)
     struct CLIENT *client = (struct CLIENT *)clientThread;
     std::cout << "\n--- Client rendering thread started ---" << std::endl;
     printClientInformation(client);
+    handleRouting(client);
     close(client->socket);
     return NULL;
 }
@@ -120,6 +121,7 @@ void *handleLongPollingRequests(void *clientThread)
     struct CLIENT *client = (struct CLIENT *)clientThread;
     std::cout << "\n--- Long polling thread started ---" << std::endl;
     printClientInformation(client);
+    handleRouting(client);
     return NULL;
 }
 
