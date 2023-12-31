@@ -3,54 +3,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-O3 -Wall -g")
 project(LURM C CXX)
 
-# C++ source files
-file(GLOB SOURCES 
-    "server/src/*.cpp"
-    "routes/src/*.cpp"
-    "controllers/src/*.cpp"
-    "utils/*.cpp"
-    "database/connection/src/*.cpp"
-    "database/queries/src/*.cpp"
-    "middleware/cache/src/*.cpp"
-    "middleware/authenticate/src/*.cpp"
-    "jsonparsing/src/*.cpp"
-    )
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/utils/lib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/models)
 
-# Include directories
-include_directories(
-    utils/
-    controllers/lib
-    server/lib
-    routes/lib
-    database/connection/lib
-    database/queries/lib
-    middleware/cache/lib
-    middleware/authenticate/lib
-    jsonparsing/lib
-)
+add_subdirectory(server)
+add_subdirectory(utils)
 
-# Create an executable for C++ sources
-add_executable(LURM ${SOURCES})
-
-target_include_directories(LURM PRIVATE 
-                                server/lib
-                                routes/lib
-                                utils/
-                                controllers/lib
-                                database/connection/lib
-                                database/queries/lib
-                                middleware/cache/lib
-                                middleware/authenticate/lib
-                                jsonparsing/lib
-)
-
-# Set C++ standard
-set_property(TARGET LURM PROPERTY CXX_STANDARD 11)  # adjust to your preferred C++ standard
-
-# Compiler flags
-target_compile_options(LURM PRIVATE -O3 -Wall)
+add_executable(LURM main.cpp)
 
 find_package(jsoncpp REQUIRED)
 
-# Link against MySQL libraries
-target_link_libraries(LURM -lmysqlcppconn jsoncpp_lib)
+target_link_libraries(LURM PUBLIC server utils -lmysqlcppconn jsoncpp_lib)

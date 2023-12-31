@@ -2,6 +2,7 @@
 <br/>
 <i>~ Link for live website will be available soon. ~</i>
 
+- GO TO TEMP FOLDER TO FIND WORKING CODE BASE
 
 <br/>
 
