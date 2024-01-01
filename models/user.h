@@ -2,19 +2,24 @@
 #define USER_H
 
 #include "headers.h"
+#include "database.h"
 
 class USER
 {
 private:
-    std::string username, avatar, fName, lName, institution, degree;
-    std::vector<std::string> courses;
+    std::string uid, username, avatar, fName, lName, institution;
+    std::vector<std::string> courses, degree;
+    //let a user have a vector of degrees
+
     uint16_t yearStart, yearEnd; //0 to 65,535 (2^16 - 1),
+    DATABASEMANAGER& dbMan = DATABASEMANAGER::getInstance();
 
 public:
-    USER(std::string username, std::string avatar, std::string fName, std::string lName,
-         std::string institution, std::string degree, std::vector<std::string> courses, uint16_t yearStart,
+    USER(std::string uid, std::string username, std::string avatar, std::string fName, std::string lName,
+         std::string institution, std::vector<std::string> degree, std::vector<std::string> courses, uint16_t yearStart,
          uint16_t yearEnd)
     {
+        this->uid = uid;
         this->username = username;
         this->avatar = avatar;
         this->fName = fName;
@@ -28,6 +33,7 @@ public:
 
     USER(USER *user)
     {
+        this->uid = user->uid;
         this->username = user->username;
         this->avatar = user->avatar;
         this->fName = user->fName;
@@ -37,6 +43,10 @@ public:
         this->courses = user->courses;
         this->yearStart = user->yearStart;
         this->yearEnd = user->yearEnd;
+    }
+
+    void setUID(std::string uid){
+        this->uid = uid;
     }
 
     void setUsername(std::string username){
@@ -59,7 +69,7 @@ public:
         this->institution = institution;
     }
 
-    void setDegree(std::string degree){
+    void setDegree(std::vector<std::string> degree){
         this->degree = degree;
     }
 
@@ -73,6 +83,10 @@ public:
 
     void setYearEnd(uint16_t yearEnd){
         this->yearEnd = yearEnd;
+    }
+
+    std::string getUID (){
+        return this->uid;
     }
 
     std::string getUsername(){
@@ -95,7 +109,7 @@ public:
         return this->institution;
     }
 
-    std::string getDegree(){
+    std::vector<std::string> getDegree(){
         return this->degree;
     }
 
@@ -109,7 +123,32 @@ public:
 
     uint16_t getYearEnd(){
         return this->yearEnd;
-    }    
+    }   
+
+    bool create(USER *user){
+        // dbMan
+        // sql::Statement *stmt;
+        // sql::PreparedStatement *prep_stmt;
+        // sql::ResultSet *res;
+        return false;
+    } 
+
+    USER read(){
+        return NULL;
+    }
+
+    bool update(std::string uid){
+        return false;
+    }
+    
+    bool deleteUser(){
+        return false;
+    }
+
+    std::vector <USER> *selectAll(){
+        return nullptr;
+    }
+
 };
 
 #endif
