@@ -6,7 +6,7 @@
 
 void handleRouting(CLIENT *client);
 
-void handleHome(CLIENT *client);
+void pageRequest(CLIENT *client);
 void handleAbout(CLIENT *client);
 void handleUserProfile(CLIENT *client);
 

@@ -4,7 +4,6 @@ int serverSocket; // socket for the server
 
 int confiureServer()
 {
-
     signal(SIGINT, handleSignal); // run handler function when a signal is recieved
 
     struct sockaddr_in serverAddress;
