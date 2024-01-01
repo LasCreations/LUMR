@@ -1,0 +1,31 @@
+{
+    "universities": [
+      {
+        "name": "University A",
+        "degrees": [
+          {
+            "name": "Computer Science",
+            "courses": ["Algorithm Design", "Database Systems", "Web Development"]
+          },
+          {
+            "name": "Electrical Engineering",
+            "courses": ["Circuit Analysis", "Digital Signal Processing", "Power Systems"]
+          }
+        ]
+      },
+      {
+        "name": "University B",
+        "degrees": [
+          {
+            "name": "Mathematics",
+            "courses": ["Calculus", "Linear Algebra", "Number Theory"]
+          },
+          {
+            "name": "Physics",
+            "courses": ["Classical Mechanics", "Quantum Physics", "Thermodynamics"]
+          }
+        ]
+      }
+    ]
+  }
+  
