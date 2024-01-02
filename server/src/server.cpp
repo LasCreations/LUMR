@@ -108,8 +108,8 @@ void handleThreadAlloctions(int clientSocket, char *request, char *method, char 
 void *handleClientSideRendering(void *clientThread)
 {
     struct CLIENT *client = (struct CLIENT *)clientThread;
-    std::cout << "\n--- Client rendering thread started ---" << std::endl;
-    printClientInformation(client);
+    // std::cout << "\n--- Client rendering thread started ---" << std::endl;
+    // printClientInformation(client);
     handleRouting(client);
     close(client->socket);
     return NULL;
@@ -118,8 +118,8 @@ void *handleClientSideRendering(void *clientThread)
 void *handleLongPollingRequests(void *clientThread)
 {
     struct CLIENT *client = (struct CLIENT *)clientThread;
-    std::cout << "\n--- Long polling thread started ---" << std::endl;
-    printClientInformation(client);
+    // std::cout << "\n--- Long polling thread started ---" << std::endl;
+    // printClientInformation(client);
     handleRouting(client);
     return NULL;
 }

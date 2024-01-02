@@ -45,7 +45,7 @@ bool DATABASEMANAGER::createConnection()
     {
         if ((this->driver = get_driver_instance()))
         {
-            std::cout << "MySQL Connector/C++ initialized successfully." << std::endl;
+            // std::cout << "MySQL Connector/C++ initialized successfully." << std::endl;
         }
         else
         {
@@ -53,7 +53,7 @@ bool DATABASEMANAGER::createConnection()
         }
         if ((this->con = this->driver->connect(this->DATABASE_URL, this->DATABASE_USER, this->DATABASE_PASSWORD)))
         {
-            std::cout << "Connected to the MySQL database successfully." << std::endl;
+            // std::cout << "Connected to the MySQL database successfully." << std::endl;
             this->con->setSchema(this->DATABASE_NAME);
         }
         else
