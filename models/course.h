@@ -1,37 +1,31 @@
 #ifndef COURSE_H
 #define COURSE_H
 
-#include "headers.h"
+#include "common.h"
+#include "database.h"
 
 class COURSE
 {
 private:
     std::string code, name;
-    bool completed, current;
 
 public:
     COURSE()
     {
         this->code = "";
         this->name = "";
-        this->completed = false;
-        this->current = false;
     }
 
-    COURSE(std::string code, std::string name, bool completed, bool current)
+    COURSE(std::string code, std::string name)
     {
         this->code = code;
         this->name = name;
-        this->completed = completed;
-        this->current = current;
     }
 
     COURSE(COURSE *course)
     {
         this->code = course->code;
         this->name = course->name;
-        this->completed = course->completed;
-        this->current = course->current;
     }
 
     void setCourseCode(std::string code)
@@ -44,32 +38,56 @@ public:
         this->name = name;
     }
 
-    void setCompletedStatus(bool completed)
-    {
-        this->completed = completed;
-    }
-
-    void setCurrentStatus(bool current){
-        this->current = current;
-    }
-
-    std::string  getCourseCode()
+    std::string  getCourseCode() const
     {
         return this->code;
     }
 
-    std::string  getCourseName()
+    std::string  getCourseName() const
     {
         return this->name;
     }
 
-    bool getCompletedStatus()
+    std::vector<COURSE> *getAll(std::string degreeCode)
     {
-        return this->completed;
-    }
+        std::vector<COURSE> *data = nullptr;
+        sql::Statement *stmt = nullptr;
+        sql::ResultSet *res = nullptr;
 
-    bool getCurrentStatus(){
-        return this->current;
+        DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
+
+        try
+        {
+            data = new std::vector<COURSE>;
+            std::string sql = "SELECT course.name, course.code FROM degree_courses "
+                                     "JOIN course ON degree_courses.course_code = course.code "
+                                     "WHERE degree_courses.degree_code = ?";
+
+            sql::PreparedStatement *pstmt = dbMan.getConnection()->prepareStatement(sql);
+            pstmt->setString(1, degreeCode);
+
+            res = pstmt->executeQuery();
+
+            while (res->next())
+            {
+                // std::cout << res->getString("name") << std::endl;
+                // std::cout << res->getString("code") << std::endl;
+                data->push_back(COURSE(res->getString("code"), res->getString("name")));
+            }
+
+            // Clean up prepared statement
+            delete pstmt;
+        }
+        catch (const sql::SQLException &e)
+        {
+            std::cerr << "SQLException: " << e.what() << std::endl;
+        }
+
+        // Clean up
+        delete stmt;
+        delete res;
+
+        return data;
     }
 };
 

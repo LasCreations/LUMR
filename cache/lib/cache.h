@@ -10,11 +10,12 @@ class CACHE{
     private:
         CACHE();
         std::unordered_map<std::string, USER> userMap;
+        std::unordered_map<std::string, INSTITUTION> institutionMap;
 
     public:
         static CACHE& getInstance();
         std::unordered_map<std::string, USER>& getUserMap();
-        // void setUserData(int key, const std::string& value);
+        std::unordered_map<std::string, INSTITUTION>& getInstitutionMap();
 };
 
 #endif
