@@ -27,6 +27,7 @@ with open('institutions.json') as json_file:
         existing_university = cursor.fetchone()
         if existing_university:
             print(f"University code {university['code']} already exists.")
+            continue    #skips to the next university
         else:
             uni_query = 'INSERT INTO institutions(name,code) VALUES(%s,%s)'
             cursor.execute(uni_query,(university['name'],university['code']))
@@ -36,7 +37,7 @@ with open('institutions.json') as json_file:
             cursor.execute('SELECT code FROM degrees WHERE code = %s', (degree['code'],))
             existing_degree = cursor.fetchone()
             if existing_degree:
-                print(f"Degree code {degree['code']} already exists.")
+                print(f"    Degree code {degree['code']} already exists.")
             else:
                 degree_query = 'INSERT INTO degrees(name,code) VALUES(%s,%s)'
                 cursor.execute(degree_query,(degree['name'],degree['code']))
@@ -48,12 +49,12 @@ with open('institutions.json') as json_file:
                 cursor.execute('SELECT code FROM course WHERE code = %s', (course['code'],))
                 existing_course = cursor.fetchone()
                 if existing_course:
-                    print(f"Course code {course['code']} already exists.")
+                    print(f"    Course code {course['code']} already exists.")
                 else:
                     course_query = 'INSERT INTO course(name,code) VALUES(%s,%s)'
                     cursor.execute(course_query,(course['name'],course['code']))
-                degree_courses = 'INSERT INTO degree_courses(course_code, degree_code) VALUES(%s,%s)'
-                cursor.execute(degree_courses,(course['code'],degree['code']))
+                    degree_courses = 'INSERT INTO degree_courses(course_code, degree_code) VALUES(%s,%s)'
+                    cursor.execute(degree_courses,(course['code'],degree['code']))
 
 
 

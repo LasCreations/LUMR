@@ -47,6 +47,54 @@
             ]
           }
         ]
+      },
+      {
+        "name": "University C",
+        "code": "UC",
+        "degrees": [
+          {
+            "name": "Mathematics",
+            "code": "BSCMAT",
+            "courses": [
+                {"code": "MA101", "name": "Calculus"},
+                {"code": "MA102", "name": "Linear Algebra"},
+                {"code": "MA103", "name": "Number Theory"}
+            ]
+          },
+          {
+            "name": "Physics",
+            "code": "BSCPHY",
+            "courses": [
+                {"code": "PH101", "name": "Classical Mechanics"},
+                {"code": "PH102", "name": "Quantum Physics"},
+                {"code": "PH103", "name": "Thermodynamics"}
+            ]
+          }
+        ]
+      },
+      {
+        "name": "University D",
+        "code": "UD",
+        "degrees": [
+          {
+            "name": "Mathematics",
+            "code": "BSCMAT",
+            "courses": [
+                {"code": "MA101", "name": "Calculus"},
+                {"code": "MA104", "name": "Statistics"},
+                {"code": "MA105", "name": "Discrete Mathematics"}
+            ]
+          },
+          {
+            "name": "Computer Science",
+            "code": "BSCCOMP",
+            "courses": [
+                {"code": "CS104", "name": "Data Structures"},
+                {"code": "CS102", "name": "Database Systems"},
+                {"code": "CS105", "name": "Theory of Computations"}
+            ]
+          }
+        ]
       }
     ]
   }
