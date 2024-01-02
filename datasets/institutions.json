@@ -2,27 +2,49 @@
     "universities": [
       {
         "name": "University A",
+        "code": "UA",
         "degrees": [
           {
             "name": "Computer Science",
-            "courses": ["Algorithm Design", "Database Systems", "Web Development"]
+            "code": "BSCCOMP",
+            "courses": [
+                {"code": "CS101", "name": "Algorithm Design"},
+                {"code": "CS102", "name": "Database Systems"},
+                {"code": "CS103", "name": "Web Development"}
+            ]
           },
           {
             "name": "Electrical Engineering",
-            "courses": ["Circuit Analysis", "Digital Signal Processing", "Power Systems"]
+            "code": "BENGEE",
+            "courses": [
+                {"code": "EE101", "name": "Classical Mechanics"},
+                {"code": "EE102", "name": "Quantum Physics"},
+                {"code": "EE103", "name": "Thermodynamics"}
+            ]
           }
         ]
       },
       {
         "name": "University B",
+        "code": "UB",
         "degrees": [
           {
             "name": "Mathematics",
-            "courses": ["Calculus", "Linear Algebra", "Number Theory"]
+            "code": "BSCMAT",
+            "courses": [
+                {"code": "MA101", "name": "Calculus"},
+                {"code": "MA102", "name": "Linear Algebra"},
+                {"code": "MA103", "name": "Number Theory"}
+            ]
           },
           {
             "name": "Physics",
-            "courses": ["Classical Mechanics", "Quantum Physics", "Thermodynamics"]
+            "code": "BSCPHY",
+            "courses": [
+                {"code": "PH101", "name": "Classical Mechanics"},
+                {"code": "PH102", "name": "Quantum Physics"},
+                {"code": "PH103", "name": "Thermodynamics"}
+            ]
           }
         ]
       }
