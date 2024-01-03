@@ -3,7 +3,7 @@
 
 #include "headers.h"
 
-#define SIZE 1024  // buffer size
+#define SIZE 4096  // buffer size
 
 //Creating a structure of client information to pass to threads
 struct CLIENT {

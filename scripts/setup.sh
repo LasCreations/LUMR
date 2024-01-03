@@ -10,5 +10,6 @@ sudo apt install libapache2-mod-php8.1
 sudo apt install make 
 sudo apt  install cmake 
 sudo apt-get install -y build-essential
+sudo apt-get install libb64-dev
 sudo apt install python3-pip
 pip install mysql-connector-python

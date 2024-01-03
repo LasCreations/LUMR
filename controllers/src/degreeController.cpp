@@ -13,7 +13,6 @@ void handleDegrees(CLIENT *client)
             return;
         }
     }
-
 }
 
 std::string parseDegreeRequest(std::string request)
