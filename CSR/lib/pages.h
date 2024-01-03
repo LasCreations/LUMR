@@ -3,13 +3,13 @@
 
 #include "common.h"
 
-bool handlePageRequest(char *route, int clientSocket);
+// void handlePageRequest(char *route, int clientSocket);
+void handlePageRequest(CLIENT *client);
 
 void getFileURL(char *route, char *fileURL);
 
 void getMimeType(char *file, char *mime);
 
 void getTimeString(char *buf);
-
 
 #endif

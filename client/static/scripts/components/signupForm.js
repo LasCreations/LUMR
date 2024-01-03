@@ -1,7 +1,14 @@
 import User from '../modules/user.js'
+import { getInstitutions, getDegrees } from '../fetchAPI/institutions.js';
+
 
 export function createSignUpForm() {
 
+    //Use const as global variables then break up code into functions
+    //IE add listeners
+    //Add ID
+    //Add Text Context etc etc
+    
     const form = document.createElement('form');
     form.id = 'signupForm';
 
@@ -31,20 +38,47 @@ export function createSignUpForm() {
     passwordInput.name = 'password';
     form.appendChild(passwordInput);
 
-    const roleSelect = document.createElement('select');
-    roleSelect.id = 'role';
-    roleSelect.name = 'role';
+    // College/University Label
+    const institutionsLabel = document.createElement('label');
+    institutionsLabel.for = 'institutionSelect';
+    institutionsLabel.textContent = 'College/University';
+    form.appendChild(institutionsLabel);
 
-    // Add options to the select element
-    const options = ['Admin', 'User', 'Guest'];
-    options.forEach(optionValue => {
-        const option = document.createElement('option');
-        option.value = optionValue.toLowerCase();
-        option.text = optionValue;
-        roleSelect.appendChild(option);
+    // College/University Select
+    const institutionSelect = document.createElement('select');
+    institutionSelect.id = 'institutionSelect';
+    institutionSelect.name = 'institutionSelect';
+
+    //Add an empty value
+    const option = document.createElement('option');
+    option.value = " ";
+    option.text = " ";
+    institutionSelect.appendChild(option);
+
+    getInstitutions(institutionSelect);
+    form.appendChild(institutionSelect);
+
+    // Degree Label
+    const degreeLabel = document.createElement('label');
+    degreeLabel.for = 'degreeSelect';
+    degreeLabel.textContent = 'Degree';
+    form.appendChild(degreeLabel);
+
+    // Degree Select
+    const degreeSelect = document.createElement('select');
+    degreeSelect.id = 'degreeSelect';
+    degreeSelect.name = 'degreeSelect';
+    form.appendChild(degreeSelect);
+
+    institutionSelect.addEventListener('change', function() {
+        
+        getDegrees(institutionSelect.value, degreeSelect)
+        // Get the selected option value
+        // const selectedRole = institutionSelect.value;
+    
+        // Do something with the selected role
+        // console.log('Selected role:', selectedRole);
     });
-    form.appendChild(roleSelect);
-
 
     // Submit button
     const submitButton = document.createElement('button');

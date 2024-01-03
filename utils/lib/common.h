@@ -13,4 +13,12 @@ struct CLIENT {
     char* route;
 };
 
+/*!
+ * @function    parseHttpRequest
+ * @abstract    Removes the json data from a request
+ * @param       char*   request
+ * @result      returns a string
+*/
+std::string parseHttpRequest(char *request);
+
 #endif

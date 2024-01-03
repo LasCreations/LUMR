@@ -2,14 +2,11 @@
 #define ROUTE_H
 
 #include "pages.h"
+#include "institutionsController.h"
+#include "degreeController.h"
 
 
 void handleRouting(CLIENT *client);
-
-void pageRequest(CLIENT *client);
-void handleAbout(CLIENT *client);
-void handleUserProfile(CLIENT *client);
-
 
 
 struct Route {

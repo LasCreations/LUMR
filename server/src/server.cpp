@@ -78,7 +78,7 @@ int readRequest(int clientSocket)
     sscanf(request, "%s %s", method, route);
     printf("\n%s %s\n", method, route);
     handleThreadAlloctions(clientSocket, request, method, route);
-
+    free(request); //free allocated memory
     return 0; // success
 }
 
