@@ -10,7 +10,6 @@ private:
     std::string SID, username, avatar, fName, lName;
     INSTITUTION institution;
     uint16_t yearStart, yearEnd; // 0 to 65,535 (2^16 - 1),
-    DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
 
 public:
     USER(std::string SID, std::string username, std::string avatar, std::string fName, std::string lName,
@@ -120,6 +119,7 @@ public:
 
     bool create(USER *user)
     {
+        // DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
         // dbMan
         // sql::Statement *stmt;
         // sql::PreparedStatement *prep_stmt;

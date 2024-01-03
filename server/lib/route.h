@@ -4,6 +4,7 @@
 #include "pages.h"
 #include "institutionsController.h"
 #include "degreeController.h"
+#include "imageController.h"
 
 
 void handleRouting(CLIENT *client);

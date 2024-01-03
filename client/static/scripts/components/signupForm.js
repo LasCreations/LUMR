@@ -3,7 +3,6 @@ import { getInstitutions, getDegrees } from '../fetchAPI/institutions.js';
 
 
 export function createSignUpForm() {
-
     //Use const as global variables then break up code into functions
     //IE add listeners
     //Add ID
@@ -11,6 +10,7 @@ export function createSignUpForm() {
     
     const form = document.createElement('form');
     form.id = 'signupForm';
+    form.enctype = 'multipart/form-data'
 
     //Username label
     const usernameLabel = document.createElement('label');
@@ -71,20 +71,22 @@ export function createSignUpForm() {
     form.appendChild(degreeSelect);
 
     institutionSelect.addEventListener('change', function() {
-        
         getDegrees(institutionSelect.value, degreeSelect)
-        // Get the selected option value
-        // const selectedRole = institutionSelect.value;
-    
-        // Do something with the selected role
-        // console.log('Selected role:', selectedRole);
     });
+
+
+    const imageInput = document.createElement('input');
+    imageInput.type = 'file';
+    imageInput.id = 'imageInput';
+    imageInput.accept = 'image/*'; //ask user to upload jpeg
+    form.appendChild(imageInput);
 
     // Submit button
     const submitButton = document.createElement('button');
-    submitButton.type = 'button'; // Use 'button' to prevent form submission for this example
+    submitButton.type = 'submit'; // Use 'button' to prevent form submission for this example
     submitButton.textContent = 'Signup';
-    submitButton.addEventListener('click', handleSignUp);
+    // submitButton.addEventListener('click', handleSignUp);
+    submitButton.addEventListener('click', uploadImage);
     form.appendChild(submitButton);
 
     // Append the form to the 'app' div
@@ -97,4 +99,45 @@ function handleSignUp() {
     const password = document.getElementById('password').value;
 
     console.log('Login clicked with username:', username, 'and password:', password);
+}
+
+function uploadImage(event){
+    event.preventDefault();
+    const fileInput = document.getElementById('imageInput');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert('Please select an image file.');
+        return;
+    }
+
+    // Use FileReader to read the file as a base64-encoded data URL
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const base64ImageData = event.target.result;
+
+        // Store the base64-encoded image data in localStorage
+        localStorage.setItem('storedImage', base64ImageData);
+
+        alert('Image stored successfully.');
+    };
+    reader.readAsDataURL(file);
+    retrieveImage();
+}
+
+function retrieveImage() {
+    // Retrieve the base64-encoded image data from localStorage
+    const storedImage = localStorage.getItem('storedImage');
+
+    if (storedImage) {
+        // Display or use the retrieved image
+        alert('Retrieved image:\n' + storedImage);
+
+        // For demonstration purposes, you can display the image on the page
+        const imageElement = document.createElement('img');
+        imageElement.src = storedImage;
+        document.body.appendChild(imageElement);
+    } else {
+        alert('No image stored.');
+    }
 }

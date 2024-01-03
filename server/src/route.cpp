@@ -3,7 +3,8 @@
 struct Route routes[] = {
     {"GET", "/", handlePageRequest},
     {"GET", "/institutions", handleInstitutions},
-    {"POST", "/degree", handleDegrees}};
+    {"POST", "/degree", handleDegrees},
+    {"POST", "/upload/image", handleImageUpload}};
 
 
 void handleRouting(CLIENT *client)
