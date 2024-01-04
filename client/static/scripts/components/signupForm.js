@@ -1,102 +1,230 @@
 import User from '../modules/user.js'
-import { getInstitutions, getDegrees } from '../fetchAPI/institutions.js';
+import { getInstitutions, getDegrees } from '../api/institutions.js';
 
+const degreeDivContainer = document.createElement('div');
+
+const form = document.createElement('form');
+
+const passwordLabel = document.createElement('label');
+const usernameLabel = document.createElement('label');
+const institutionsLabel = document.createElement('label');
+const degreeLabel = document.createElement('label');
+const yearStartLabel = document.createElement('label');
+const yearEndLabel = document.createElement('label');
+const firstnameLabel = document.createElement('label');
+const lastnameLabel = document.createElement('label');
+const confirmPasswordLabel = document.createElement('label');
+
+const usernameInput = document.createElement('input');
+const passwordInput = document.createElement('input');
+const confirmPasswordInput = document.createElement('input');
+const firstnameInput = document.createElement('input');
+const lastnameInput = document.createElement('input');
+
+const institutionSelect = document.createElement('select');
+const yearStartSelect = document.createElement('select');
+const yearEndSelect = document.createElement('select');
+
+const submitButton = document.createElement('button');
+
+let selectedDegrees = [];
+
+var currentYear = new Date().getFullYear(); // Store the current year
 
 export function createSignUpForm() {
-    //Use const as global variables then break up code into functions
-    //IE add listeners
-    //Add ID
-    //Add Text Context etc etc
+    setID();
+    setType();
+    setName();
+    setLabelFor();
+    setTextContext();
+    configureInstitutionOptionValues();
+    configureYearStartOptionValues();
+    configureYearEndOptionValues();
+    addActionListeners();
+    appendChildToForm();
 
-    const form = document.createElement('form');
+    document.getElementById('signUpForm-container').appendChild(form);
+    document.getElementById('signUpForm-container').appendChild(degreeLabel);
+    document.getElementById('signUpForm-container').appendChild(degreeDivContainer);
+    // document.getElementById('signUpForm-container').appendChild(submitButton);
+}
+
+function setID() {
     form.id = 'signupForm';
-    form.enctype = 'multipart/form-data'
-
-    //Username label
-    const usernameLabel = document.createElement('label');
-    usernameLabel.for = 'username';
-    usernameLabel.textContent = 'Username:';
-    form.appendChild(usernameLabel);
-
-    //Username input
-    const usernameInput = document.createElement('input');
-    usernameInput.type = 'text';
     usernameInput.id = 'username';
-    usernameInput.name = 'username';
-    form.appendChild(usernameInput);
-
-    //Password label
-    const passwordLabel = document.createElement('label');
-    passwordLabel.for = 'password';
-    passwordLabel.textContent = 'Password:';
-    form.appendChild(passwordLabel);
-
-    //Password input
-    const passwordInput = document.createElement('input');
-    passwordInput.type = 'password';
     passwordInput.id = 'password';
-    passwordInput.name = 'password';
-    form.appendChild(passwordInput);
-
-    // College/University Label
-    const institutionsLabel = document.createElement('label');
-    institutionsLabel.for = 'institutionSelect';
-    institutionsLabel.textContent = 'College/University';
-    form.appendChild(institutionsLabel);
-
-    // College/University Select
-    const institutionSelect = document.createElement('select');
+    confirmPasswordInput.id = 'confirmPassword';
+    firstnameInput.id = 'firstname';
+    lastnameInput.id = 'lastname';
     institutionSelect.id = 'institutionSelect';
-    institutionSelect.name = 'institutionSelect';
+    yearStartSelect.id = 'yearStartSelect';
+    yearEndSelect.id = 'yearEndSelect';
+    degreeDivContainer.id = 'degreeContainer';
+}
 
-    //Add an empty value
+function setTextContext() {
+    usernameLabel.textContent = 'Username:';
+    passwordLabel.textContent = 'Password:';
+    institutionsLabel.textContent = 'College/University';
+    degreeLabel.textContent = 'Select Degree/s';
+    yearStartLabel.textContent = 'Start Year';
+    yearEndLabel.textContent = 'End year (or expected)';
+    firstnameLabel.textContent = 'First Name';
+    lastnameLabel.textContent = 'Last Name';
+    confirmPasswordLabel.textContent = 'Confirm Password';
+    submitButton.textContent = 'Signup';
+}
+
+function setType() {
+    form.enctype = 'multipart/form-data';
+    usernameInput.type = 'text';
+    usernameInput.setAttribute('required', '');    //turns required on
+    firstnameInput.type = 'text';
+    lastnameInput.type = 'text';
+    passwordInput.type = 'password';
+    passwordInput.setAttribute('required', '');    //turns required on
+    confirmPasswordInput.type = 'password';
+    confirmPasswordInput.setAttribute('required', '');    //turns required on
+    submitButton.type = 'submit';
+}
+
+function setName() {
+    usernameInput.name = 'username';
+    passwordInput.name = 'password';
+    firstnameInput.name = 'firstname';
+    lastnameInput.name = 'lastname';
+    confirmPasswordInput.name = 'confirmPassword';
+    institutionSelect.name = 'institutionSelect';
+    yearEndSelect.name = 'yearEndSelect';
+    yearStartSelect.name = 'yearStartSelect';
+}
+
+function setLabelFor() {
+    yearStartLabel.for = 'yearStartSelect';
+    yearEndLabel.for = 'yearEndSelect';
+    firstnameLabel.for = 'firstname';
+    lastnameLabel.for = 'lastname';
+    confirmPasswordLabel.for = 'confirmPassword';
+    passwordLabel.for = 'password';
+    usernameLabel.for = 'username';
+    institutionsLabel.for = 'institutionSelect';
+}
+
+function configureInstitutionOptionValues() {
     const option = document.createElement('option');
     option.value = " ";
     option.text = " ";
     institutionSelect.appendChild(option);
-
     getInstitutions(institutionSelect);
-    form.appendChild(institutionSelect);
+}
 
-    // Degree Label
-    const degreeLabel = document.createElement('label');
-    degreeLabel.for = 'degreeSelect';
-    degreeLabel.textContent = 'Degree';
-    form.appendChild(degreeLabel);
+function configureYearStartOptionValues() {
+    // Populate the first select with 10 years prior to the current year
+    populateYearSelect('yearStartSelect', currentYear - 10, currentYear, yearStartSelect);
+}
 
-    // Degree Select
-    const degreeSelect = document.createElement('select');
-    degreeSelect.id = 'degreeSelect';
-    degreeSelect.name = 'degreeSelect';
-    form.appendChild(degreeSelect);
+function configureYearEndOptionValues() {
+    // Populate the second select with 10 years from the current year
+    populateYearSelect('yearEndSelect', currentYear, currentYear + 10, yearEndSelect);
+}
 
+function populateYearSelect(selectId, startYear, endYear, select) {
+    var selectElement = document.getElementById(selectId);
+    for (var year = startYear; year <= endYear; year++) {
+        var option = document.createElement('option');
+        option.value = year;
+        option.text = year;
+        select.appendChild(option);
+    }
+}
+
+function addActionListeners() {
     institutionSelect.addEventListener('change', function () {
-        getDegrees(institutionSelect.value, degreeSelect)
+        getDegrees(institutionSelect.value)
     });
 
-
-    const imageInput = document.createElement('input');
-    imageInput.type = 'file';
-    imageInput.id = 'imageInput';
-    imageInput.accept = 'image/*'; //ask user to upload jpeg
-    form.appendChild(imageInput);
-
-    // Submit button
-    const submitButton = document.createElement('button');
-    submitButton.type = 'submit'; // Use 'button' to prevent form submission for this example
-    submitButton.textContent = 'Signup';
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+        handleSignUp();
+    });
     // submitButton.addEventListener('click', handleSignUp);
-    submitButton.addEventListener('click', uploadImage);
-    form.appendChild(submitButton);
+}
 
-    // Append the form to the 'app' div
-    document.getElementById('signUpForm-container').appendChild(form);
+function appendChildToForm() {
+    form.appendChild(usernameLabel);
+    form.appendChild(usernameInput);
+    form.appendChild(firstnameLabel);
+    form.appendChild(firstnameInput);
+    form.appendChild(lastnameLabel);
+    form.appendChild(lastnameInput);
+    form.appendChild(passwordLabel);
+    form.appendChild(passwordInput);
+    form.appendChild(confirmPasswordLabel);
+    form.appendChild(confirmPasswordInput);
+    form.appendChild(institutionsLabel);
+    form.appendChild(institutionSelect);
+    form.appendChild(yearStartLabel);
+    form.appendChild(yearStartSelect);
+    form.appendChild(yearEndLabel);
+    form.appendChild(yearEndSelect);
+    form.appendChild(submitButton);
+}
+
+export function addDegreesToADiv(degreeJson) {
+    degreeDivContainer.innerHTML = ''; //clear div
+    selectedDegrees = []; //clear selected array
+    console.log(degreeJson);
+    degreeJson.forEach(function (currentObject) {
+
+        const degreeDiv = document.createElement('div');
+        degreeDiv.className = 'degreeDiv';
+        degreeDiv.textContent = currentObject.name;
+        degreeDivContainer.appendChild(degreeDiv);
+    });
+
+    var elements = document.querySelectorAll('.degreeDiv');
+    elements.forEach(function (element) {
+        element.addEventListener('click', function () {
+            // console.log(element.textContent);
+            element.classList.toggle('degree-selected');
+            const textContent = element.textContent;
+
+            // Check if the text is already in the array
+            const index = selectedDegrees.indexOf(textContent);
+
+            if (index === -1) {
+                // If not in the array, add it
+                selectedDegrees.push(textContent);
+            } else {
+                // If already in the array, remove it
+                selectedDegrees.splice(index, 1);
+            }
+        });
+    });
 }
 
 function handleSignUp() {
-
     const username = document.getElementById('username').value;
+    const firstname = document.getElementById('firstname').value;
+    const lastname = document.getElementById('lastname').value;
     const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('confirmPassword').value;
 
-    console.log('Login clicked with username:', username, 'and password:', password);
+    if(password == passwordConfirm){
+        // console.log('firstname:', firstname);
+        // console.log('lastname:', lastname);
+        // console.log('username:', username);
+        // console.log('password:', password);
+        // console.log('institution:', institutionSelect.value);
+        // console.log('year start:', yearStartSelect.value);
+        // console.log('year end:', yearEndSelect.value);
+        // console.log(selectedDegrees);
+
+        const user = new User(firstname, lastname, username, password, "default",institutionSelect.value,0,selectedDegrees,[], yearStartSelect.value,yearEndSelect.value);
+        console.log(user);
+    }else{
+        alert("password does not match");
+    }
+    
+    // const user = new User('John', 'Doe', 'johndoe', 'password123', 'avatar.jpg', 'University', ['BSc', 'MSc'], ['Math', 'Computer Science']);
 }

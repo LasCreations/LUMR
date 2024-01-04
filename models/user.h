@@ -7,15 +7,16 @@
 class USER
 {
 private:
-    std::string SID, username, avatar, fName, lName;
+    std::string SID, username, password, avatar, fName, lName;
     INSTITUTION institution;
-    uint16_t yearStart, yearEnd; // 0 to 65,535 (2^16 - 1),
+    uint16_t yearStart, yearEnd, rank;
 
 public:
-    USER(std::string SID, std::string username, std::string avatar, std::string fName, std::string lName,
-        INSTITUTION institution, uint16_t yearStart, uint16_t yearEnd)
+    USER(std::string SID, std::string username, std::string password, std::string avatar, std::string fName, std::string lName,
+        INSTITUTION institution, uint16_t yearStart, uint16_t yearEnd, uint16_t rank)
     {
         this->SID = SID;
+        this->password = password;
         this->username = username;
         this->avatar = avatar;
         this->fName = fName;
@@ -23,18 +24,21 @@ public:
         this->institution = institution;
         this->yearStart = yearStart;
         this->yearEnd = yearEnd;
+        this->rank = rank;
     }
 
     USER(USER *user)
     {
         this->SID = user->SID;
         this->username = user->username;
+        this->password = user->password;
         this->avatar = user->avatar;
         this->fName = user->fName;
         this->lName = user->lName;
         this->institution = user->institution;
         this->yearStart = user->yearStart;
         this->yearEnd = user->yearEnd;
+        this->rank = user->rank;
     }
 
     void setSID(std::string SID)
@@ -45,6 +49,11 @@ public:
     void setUsername(std::string username)
     {
         this->username = username;
+    }
+
+    void setPassword(std::string password)
+    {
+        this->password = password;
     }
 
     void setAvatar(std::string avatar)
@@ -77,6 +86,11 @@ public:
         this->yearEnd = yearEnd;
     }
 
+    void setRank(uint16_t rank)
+    {
+        this->rank = rank;
+    }
+
     std::string getSID()
     {
         return this->SID;
@@ -85,6 +99,11 @@ public:
     std::string getUsername()
     {
         return this->username;
+    }
+
+    std::string getPassword()
+    {
+        return this->password;
     }
 
     std::string getAvatar()
@@ -115,6 +134,11 @@ public:
     uint16_t getYearEnd()
     {
         return this->yearEnd;
+    }
+
+    uint16_t getRank()
+    {
+        return this->rank;
     }
 
     bool create(USER *user)

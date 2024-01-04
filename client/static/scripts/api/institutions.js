@@ -1,3 +1,5 @@
+import {addDegreesToADiv} from '../components/signupForm.js'
+
 export function getInstitutions(institutionSelect) {
     fetch('/institutions').then(res => {
         if (res.ok) {
@@ -19,7 +21,7 @@ export function getInstitutions(institutionSelect) {
     });
 }
 
-export function getDegrees(institution ,degreeSelect) {  
+export function getDegrees(institution) {  
     fetch("/degree", {
         method: "POST",
         headers: {
@@ -35,13 +37,7 @@ export function getDegrees(institution ,degreeSelect) {
             throw new Error('Network response was not ok');
         }
     }).then(data => {
-        degreeSelect.innerHTML = ''; //clear seclect
-        data.forEach(function (currentObject) {
-            const option = document.createElement('option');
-            option.value = currentObject.name;
-            option.text = currentObject.name;
-            degreeSelect.appendChild(option);
-        });
+        addDegreesToADiv(data);
     }).catch(error => {
         console.error("Error:", error.message);
     });

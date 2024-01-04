@@ -1,0 +1,23 @@
+
+#signupForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#degreeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.degreeDiv {
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.degree-selected{
+    background-color: aqua;
+}
