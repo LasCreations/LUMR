@@ -95,30 +95,28 @@ void handleThreadAlloctions(int clientSocket, char *request, char *method, char 
 
     if (strcmp(route, "/user/notification") == 0)
     {
-        pthread_create(&thread, NULL, handleLongPollingRequests, (void *)&client);
+        pthread_create(&thread, NULL, detachedThreads, (void *)&client);
         pthread_detach(thread); // LONG POLLING
     }
     else
     {
-        pthread_create(&thread, NULL, handleClientSideRendering, (void *)&client);
-        pthread_join(thread, NULL); // CLIENT SIDE RENDERING
+        pthread_create(&thread, NULL, joinedThread, (void *)&client);
+        pthread_join(thread, NULL); 
     }
 }
 
-void *handleClientSideRendering(void *clientThread)
+void *joinedThread(void *clientThread)
 {
     struct CLIENT *client = (struct CLIENT *)clientThread;
-    // std::cout << "\n--- Client rendering thread started ---" << std::endl;
     // printClientInformation(client);
     handleRouting(client);
     close(client->socket);
     return NULL;
 }
 
-void *handleLongPollingRequests(void *clientThread)
+void *detachedThreads(void *clientThread)
 {
     struct CLIENT *client = (struct CLIENT *)clientThread;
-    // std::cout << "\n--- Long polling thread started ---" << std::endl;
     // printClientInformation(client);
     handleRouting(client);
     return NULL;

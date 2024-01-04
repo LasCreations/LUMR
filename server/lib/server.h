@@ -46,23 +46,22 @@ int readRequest(int clientSocket);
 void handleThreadAlloctions(int clientSocket, char* request, char *method, char *route);
 
 /*!
- * @function    handleClientSideRendering
- * @abstract    use thread join to pass html/css/js documents
+ * @function    joinedThread
+ * @abstract    
  *              to client
  * @param       void*   client
  * @result      NULL
 */
-void *handleClientSideRendering(void *clientThread);
+void *joinedThread(void *clientThread);
 
 /*!
- * @function    handleLongPollingRequests
- * @abstract    use thread detach handle long polling
- *              request from client to check for updated
+ * @function    detachedThreads
+ * @abstract    
  *              resources
  * @param       void*   client
  * @result      NULL
 */
-void *handleLongPollingRequests(void *clientThread);
+void *detachedThreads(void *clientThread);
 
 /*!
  * @function    printClientInformation

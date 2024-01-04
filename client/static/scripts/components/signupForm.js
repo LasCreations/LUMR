@@ -1,7 +1,11 @@
 import User from '../modules/user.js'
-import { getInstitutions, getDegrees } from '../api/institutions.js';
+import { getInstitutions } from '../api/institutions.js';
+import { getDegrees } from '../api/degrees.js';
+import {getCourses} from '../api/courses.js';
+import {registerUser} from '../api/auth/signupUser.js'
 
 const degreeDivContainer = document.createElement('div');
+const courseDivContainer = document.createElement('div');
 
 const form = document.createElement('form');
 
@@ -46,7 +50,6 @@ export function createSignUpForm() {
     document.getElementById('signUpForm-container').appendChild(form);
     document.getElementById('signUpForm-container').appendChild(degreeLabel);
     document.getElementById('signUpForm-container').appendChild(degreeDivContainer);
-    // document.getElementById('signUpForm-container').appendChild(submitButton);
 }
 
 function setID() {
@@ -60,6 +63,7 @@ function setID() {
     yearStartSelect.id = 'yearStartSelect';
     yearEndSelect.id = 'yearEndSelect';
     degreeDivContainer.id = 'degreeContainer';
+    courseDivContainer.id = 'courseDivContainer';
 }
 
 function setTextContext() {
@@ -119,12 +123,12 @@ function configureInstitutionOptionValues() {
 }
 
 function configureYearStartOptionValues() {
-    // Populate the first select with 10 years prior to the current year
+    /* Populate the first select with 10 years prior to the current year */
     populateYearSelect('yearStartSelect', currentYear - 10, currentYear, yearStartSelect);
 }
 
 function configureYearEndOptionValues() {
-    // Populate the second select with 10 years from the current year
+    /* Populate the second select with 10 years from the current year */
     populateYearSelect('yearEndSelect', currentYear, currentYear + 10, yearEndSelect);
 }
 
@@ -140,6 +144,7 @@ function populateYearSelect(selectId, startYear, endYear, select) {
 
 function addActionListeners() {
     institutionSelect.addEventListener('change', function () {
+        selectedDegrees = []; //clear selected array
         getDegrees(institutionSelect.value)
     });
 
@@ -147,7 +152,6 @@ function addActionListeners() {
         event.preventDefault(); // Prevent the default form submission
         handleSignUp();
     });
-    // submitButton.addEventListener('click', handleSignUp);
 }
 
 function appendChildToForm() {
@@ -185,20 +189,31 @@ export function addDegreesToADiv(degreeJson) {
     var elements = document.querySelectorAll('.degreeDiv');
     elements.forEach(function (element) {
         element.addEventListener('click', function () {
-            // console.log(element.textContent);
+           
             element.classList.toggle('degree-selected');
             const textContent = element.textContent;
 
-            // Check if the text is already in the array
-            const index = selectedDegrees.indexOf(textContent);
+            
+            const index = selectedDegrees.indexOf(textContent); // Check if the text is already in the array
 
             if (index === -1) {
-                // If not in the array, add it
-                selectedDegrees.push(textContent);
+                selectedDegrees.push(textContent); // If not in the array, add it
             } else {
-                // If already in the array, remove it
-                selectedDegrees.splice(index, 1);
+                selectedDegrees.splice(index, 1); // If already in the array, remove it
             }
+            console.clear();
+            for (let i = 0; i < selectedDegrees.length; i++) {
+                // console.log('currently in array: ',selectedDegrees[i]);
+                getCourses(selectedDegrees[i], institutionSelect.value);
+            }
+            /*
+                After each click clear the courses container
+                scan through the current selected degree
+                send a request to the server with the current degrees and the university name 
+                then get the courses from the server in json
+                scan through the json and add them like how I added degrees 
+                then add the onclick listener to them and add them the same way i did degrees
+            */
         });
     });
 }
@@ -211,20 +226,11 @@ function handleSignUp() {
     const passwordConfirm = document.getElementById('confirmPassword').value;
 
     if(password == passwordConfirm){
-        // console.log('firstname:', firstname);
-        // console.log('lastname:', lastname);
-        // console.log('username:', username);
-        // console.log('password:', password);
-        // console.log('institution:', institutionSelect.value);
-        // console.log('year start:', yearStartSelect.value);
-        // console.log('year end:', yearEndSelect.value);
-        // console.log(selectedDegrees);
-
         const user = new User(firstname, lastname, username, password, "default",institutionSelect.value,0,selectedDegrees,[], yearStartSelect.value,yearEndSelect.value);
         console.log(user);
+        registerUser(user);
     }else{
         alert("password does not match");
     }
     
-    // const user = new User('John', 'Doe', 'johndoe', 'password123', 'avatar.jpg', 'University', ['BSc', 'MSc'], ['Math', 'Computer Science']);
 }

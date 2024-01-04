@@ -1,13 +1,12 @@
-//Sends user data to server
+import {addDegreesToADiv} from '../components/signupForm.js'
 
-
-export function registerUser(user){
-    fetch("/register/user", {
+export function getDegrees(institution) {  
+    fetch("/degree", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify({name: institution}),
     }).then(res => {
         if (res.ok) {
             console.log("Degree Data recieved");
@@ -22,4 +21,3 @@ export function registerUser(user){
         console.error("Error:", error.message);
     });
 }
-

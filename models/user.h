@@ -12,6 +12,8 @@ private:
     uint16_t yearStart, yearEnd, rank;
 
 public:
+
+    USER(){}
     USER(std::string SID, std::string username, std::string password, std::string avatar, std::string fName, std::string lName,
         INSTITUTION institution, uint16_t yearStart, uint16_t yearEnd, uint16_t rank)
     {

@@ -17,8 +17,7 @@ std::string createInstitutionJsonArray(std::unordered_map<std::string, INSTITUTI
         Json::Value jsonObject = createInstitutionJsonObject(inst.second.getInstitutionName());
         jsonArray.append(jsonObject);
     }
-    std::cout << "\n\n"
-              << jsonArray.toStyledString() << std::endl;
+    std::cout << "\n\n" << jsonArray.toStyledString() << std::endl;
     return jsonArray.toStyledString();
 }
 
@@ -30,3 +29,5 @@ Json::Value createInstitutionJsonObject(std::string name)
 
     return jsonObject;
 }
+
+

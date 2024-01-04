@@ -4,6 +4,8 @@
 #include "pages.h"
 #include "institutionsController.h"
 #include "degreeController.h"
+#include "userRegistrationController.h"
+#include "courseController.h"
 
 
 void handleRouting(CLIENT *client);

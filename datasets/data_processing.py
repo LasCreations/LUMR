@@ -20,18 +20,18 @@ cursor.execute('SET FOREIGN_KEY_CHECKS=0')
 
 with open('institutions.json') as json_file:
     data = json.load(json_file)
-    for university in data['universities']:
-        print(university['name'])
-        print(university['code'])
-        cursor.execute('SELECT code FROM institutions WHERE code = %s', (university['code'],))
-        existing_university = cursor.fetchone()
-        if existing_university:
-            print(f"University code {university['code']} already exists.")
-            continue    #skips to the next university
+    for institution in data['institutions']:
+        print(institution['name'])
+        print(institution['code'])
+        cursor.execute('SELECT code FROM institutions WHERE code = %s', (institution['code'],))
+        existing_institution = cursor.fetchone()
+        if existing_institution:
+            print(f"Institution code {institution['code']} already exists.")
+            continue    #skips to the next institution
         else:
-            uni_query = 'INSERT INTO institutions(name,code) VALUES(%s,%s)'
-            cursor.execute(uni_query,(university['name'],university['code']))
-        for degree in university['degrees']:
+            institution_query = 'INSERT INTO institutions(name,code) VALUES(%s,%s)'
+            cursor.execute(institution_query,(institution['name'],institution['code']))
+        for degree in institution['degrees']:
             print(f"  {degree['name']}")
             print(f"  {degree['code']}")
             cursor.execute('SELECT code FROM degrees WHERE code = %s', (degree['code'],))
@@ -42,7 +42,7 @@ with open('institutions.json') as json_file:
                 degree_query = 'INSERT INTO degrees(name,code) VALUES(%s,%s)'
                 cursor.execute(degree_query,(degree['name'],degree['code']))
             institutions_degree = 'INSERT INTO institutions_degree(degree_code, institution_code) VALUES(%s,%s)'
-            cursor.execute(institutions_degree,(degree['code'],university['code']))
+            cursor.execute(institutions_degree,(degree['code'],institution['code']))
             for course in degree['courses']:
                 print(f"    {course['code']} - {course['name']}")
 
