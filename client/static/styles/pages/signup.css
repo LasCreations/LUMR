@@ -14,10 +14,15 @@
 }
 
 
-.degreeDiv {
+.degreeDiv, .courseDiv {
+    cursor: pointer;
     border: 2px solid rgba(0, 0, 0, 0.3);
 }
 
 .degree-selected{
     background-color: aqua;
+}
+
+.course-selected{
+    background-color: rgb(75, 224, 75);
 }

@@ -1,8 +1,8 @@
 import User from '../modules/user.js'
 import { getInstitutions } from '../api/institutions.js';
 import { getDegrees } from '../api/degrees.js';
-import {getCourses} from '../api/courses.js';
-import {registerUser} from '../api/auth/signupUser.js'
+import { getCourses } from '../api/courses.js';
+import { registerUser } from '../api/auth/signupUser.js'
 
 const degreeDivContainer = document.createElement('div');
 const courseDivContainer = document.createElement('div');
@@ -32,6 +32,8 @@ const yearEndSelect = document.createElement('select');
 const submitButton = document.createElement('button');
 
 let selectedDegrees = [];
+let selectedCourses = [];
+let currentCourses = [];
 
 var currentYear = new Date().getFullYear(); // Store the current year
 
@@ -48,8 +50,6 @@ export function createSignUpForm() {
     appendChildToForm();
 
     document.getElementById('signUpForm-container').appendChild(form);
-    document.getElementById('signUpForm-container').appendChild(degreeLabel);
-    document.getElementById('signUpForm-container').appendChild(degreeDivContainer);
 }
 
 function setID() {
@@ -171,15 +171,17 @@ function appendChildToForm() {
     form.appendChild(yearStartSelect);
     form.appendChild(yearEndLabel);
     form.appendChild(yearEndSelect);
+    form.appendChild(degreeLabel);
+    form.appendChild(degreeDivContainer);
+    form.appendChild(courseDivContainer);
     form.appendChild(submitButton);
 }
 
 export function addDegreesToADiv(degreeJson) {
     degreeDivContainer.innerHTML = ''; //clear div
     selectedDegrees = []; //clear selected array
-    console.log(degreeJson);
+    // console.log(degreeJson);
     degreeJson.forEach(function (currentObject) {
-
         const degreeDiv = document.createElement('div');
         degreeDiv.className = 'degreeDiv';
         degreeDiv.textContent = currentObject.name;
@@ -189,11 +191,9 @@ export function addDegreesToADiv(degreeJson) {
     var elements = document.querySelectorAll('.degreeDiv');
     elements.forEach(function (element) {
         element.addEventListener('click', function () {
-           
             element.classList.toggle('degree-selected');
             const textContent = element.textContent;
 
-            
             const index = selectedDegrees.indexOf(textContent); // Check if the text is already in the array
 
             if (index === -1) {
@@ -203,17 +203,36 @@ export function addDegreesToADiv(degreeJson) {
             }
             console.clear();
             for (let i = 0; i < selectedDegrees.length; i++) {
-                // console.log('currently in array: ',selectedDegrees[i]);
-                getCourses(selectedDegrees[i], institutionSelect.value);
+                getCourses(selectedDegrees[i], institutionSelect.value); //get courses from current selected degrees
             }
-            /*
-                After each click clear the courses container
-                scan through the current selected degree
-                send a request to the server with the current degrees and the university name 
-                then get the courses from the server in json
-                scan through the json and add them like how I added degrees 
-                then add the onclick listener to them and add them the same way i did degrees
-            */
+        });
+    });
+}
+
+export function addCoursesToADiv(courseJson) {
+    selectedCourses = []; //clear selected array
+    courseJson.forEach(function (currentObject) {
+        const index = currentCourses.indexOf(currentObject.course); // Check if the text is already in the array
+        if(index === -1){  //not in array
+            const courseDiv = document.createElement('div');
+            courseDiv.className = 'courseDiv';
+            courseDiv.textContent = currentObject.course;
+            currentCourses.push(currentObject.course);
+            courseDivContainer.appendChild(courseDiv);
+        }
+    });
+
+    var elements = document.querySelectorAll('.courseDiv');
+    elements.forEach(function (element) {
+        element.addEventListener('click', function () {
+            element.classList.toggle('course-selected');
+            const textContent = element.textContent;
+            const index = selectedCourses.indexOf(textContent); // Check if the text is already in the array
+            if (index === -1) {
+                selectedCourses.push(textContent); // If not in the array, add it
+            } else {
+                selectedCourses.splice(index, 1); // If already in the array, remove it
+            }
         });
     });
 }
@@ -225,12 +244,11 @@ function handleSignUp() {
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('confirmPassword').value;
 
-    if(password == passwordConfirm){
-        const user = new User(firstname, lastname, username, password, "default",institutionSelect.value,0,selectedDegrees,[], yearStartSelect.value,yearEndSelect.value);
+    if (password == passwordConfirm) {
+        const user = new User(firstname, lastname, username, password, "default", institutionSelect.value, 0, selectedDegrees, selectedCourses, yearStartSelect.value, yearEndSelect.value);
         console.log(user);
         registerUser(user);
-    }else{
+    } else {
         alert("password does not match");
     }
-    
 }

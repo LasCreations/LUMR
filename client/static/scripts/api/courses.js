@@ -1,11 +1,11 @@
+import {addCoursesToADiv} from '../components/signupForm.js'
+
 export function getCourses(degree, institution){
     
     var data = {
         degree : degree,
         institution : institution
     }
-
-    // console.log(data);
 
     fetch("/courses", {
         method: "POST",
@@ -22,7 +22,7 @@ export function getCourses(degree, institution){
             throw new Error('Network response was not ok');
         }
     }).then(data => {
-        console.log(data);
+        addCoursesToADiv(data);
     }).catch(error => {
         console.error("Error:", error.message);
     });
