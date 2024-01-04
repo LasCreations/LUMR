@@ -58,7 +58,7 @@ int confiureServer()
 int readRequest(int clientSocket)
 {
     char *request = (char *)malloc(SIZE * sizeof(char));
-    char method[10], route[100];
+    char method[10], route[SIZE];
 
     if (request == NULL)
     {

@@ -10,14 +10,18 @@ export function registerUser(user){
         body: JSON.stringify(user),
     }).then(res => {
         if (res.ok) {
-            console.log("Degree Data recieved");
-            return res.json(); 
+            //encode to base 64
+            var base64EncodedString = btoa(JSON.stringify(user));
+            //use encodeURIComponent to make it url safe
+            var urlSafeBase64 = encodeURIComponent(base64EncodedString);
+            
+            window.location.href = '/pages/dashboard.html?data=' + urlSafeBase64;
         } else {
-            console.log("Degree Data not recieved");
+            console.log("Error registering");
             throw new Error('Network response was not ok');
         }
     }).then(data => {
-        addDegreesToADiv(data);
+       
     }).catch(error => {
         console.error("Error:", error.message);
     });

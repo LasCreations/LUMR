@@ -2,6 +2,9 @@
 
 void handleUserRegistration(CLIENT *client){
     parseUserRegistrationRequest(parseHttpRequest(client->request));
+    std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n";
+    send(client->socket, httpResponse.c_str(), httpResponse.length(), 0);
+
 }
 
 USER parseUserRegistrationRequest(std::string jsonData){
