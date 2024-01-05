@@ -21,7 +21,7 @@ std::unordered_map<std::string, INSTITUTION>& CACHE::getInstitutionMap(){
 }
 
 std::unordered_map<std::string, USER> &CACHE::getSessionIDMap(){
-    this->sessionIDMap;
+    return this->sessionIDMap;
 }
 
 void CACHE::insertUserToMap(USER user){

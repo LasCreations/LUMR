@@ -4,6 +4,7 @@
 #include "headers.h"
 
 #define SIZE 4096  // buffer size
+#define SIDSIZE 30
 
 //Creating a structure of client information to pass to threads
 struct CLIENT {

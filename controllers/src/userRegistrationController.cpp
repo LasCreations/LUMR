@@ -15,10 +15,11 @@ void handleUserRegistration(CLIENT *client)
     USERINSTITUTION userInstdata = parseUserInstitutionDetails(parseHttpRequest(client->request));
     if (USER().create(data))
     {
+        CACHE &cache = CACHE::getInstance();
         addRelations(userInstdata, data);
         // add to cache
-        CACHE::getInstance().insertUserToMap(data); 
-        CACHE::getInstance().insertUserSessionToMap(data);
+        cache.insertUserToMap(data); 
+        cache.insertUserSessionToMap(data);
         //Add token to the users browser
         std::string httpResponse = "HTTP/1.1 200 OK\r\nSet-Cookie: SID=" + data.getSID() + "; Path=/; Max-Age=3153600000\r\n\r\n";
         send(client->socket, httpResponse.c_str(), httpResponse.length(), 0);
@@ -48,7 +49,7 @@ USER parseUserDetails(std::string jsonData)
     uint16_t yearEnd = static_cast<uint16_t>(std::stoi(root["yearEnd"].asString()));
     std::string institutionName = root["institutionName"].asString();
 
-    USER temp = new USER(generateRandomCode(27), username, password, avatar, firstname, lastname, yearStart, yearEnd, rank);
+    USER temp = new USER(generateRandomCode(SIDSIZE), username, password, avatar, firstname, lastname, yearStart, yearEnd, rank);
     return temp;
 }
 
