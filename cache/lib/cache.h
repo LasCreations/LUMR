@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "user.h"
+#include "institution.h"
 
 //Using a singleton approach for caching system
 class CACHE{

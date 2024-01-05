@@ -3,7 +3,16 @@
 
 #include "cache.h"
 
+struct USERINSTITUTION{
+    std::vector<std::string> degrees;
+    std::vector<std::string> courses;
+    std::string institution;
+    std::string username;
+};
+
 void handleUserRegistration(CLIENT *client);
-USER parseUserRegistrationRequest(std::string jsonData);
+USER parseUserDetails(std::string jsonData);
+USERINSTITUTION parseUserInstitutionDetails(std::string jsonData);
+void addRelations(USERINSTITUTION userInstData, USER user);
 
 #endif

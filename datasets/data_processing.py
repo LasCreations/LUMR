@@ -1,12 +1,19 @@
 import json
 import mysql.connector
 
-# Replace these values with your MySQL server details
+# Specify the path to your JSON file
+config_path = "../config/config.json"
+
+# Read the JSON file
+with open(config_path, "r") as json_file:
+    data = json.load(json_file)
+
+# Create the config dictionary using values from the JSON data
 config = {
-    'user': 'lascelle',
-    'password': 'password',
-    'host': 'localhost',
-    'database': 'lurm_db',
+    'user': data["DATABASE_USER"],
+    'password': data["DATABASE_PASSWORD"],
+    'host': data["DATABASE_URL"],
+    'database': data["DATABASE_NAME"],
 }
 
 # Connect to MySQL database

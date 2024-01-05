@@ -1,19 +1,27 @@
 #include "userRegistrationController.h"
 
-void handleUserRegistration(CLIENT *client){
-    parseUserRegistrationRequest(parseHttpRequest(client->request));
-    std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n";
-    send(client->socket, httpResponse.c_str(), httpResponse.length(), 0);
+void handleUserRegistration(CLIENT *client)
+{
+    USER data = parseUserDetails(parseHttpRequest(client->request));
+    USERINSTITUTION userInstdata = parseUserInstitutionDetails(parseHttpRequest(client->request));
 
+    if (USER().create(data))
+    {
+        addRelations(userInstdata, data);
+        std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n";
+        send(client->socket, httpResponse.c_str(), httpResponse.length(), 0);
+    }
+    else
+    {
+        const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+        send(client->socket, response, sizeof(response) - 1, 0);
+    }
 }
 
-USER parseUserRegistrationRequest(std::string jsonData){
-
-    USER temp = new USER();
-
+USER parseUserDetails(std::string jsonData)
+{
     Json::CharReaderBuilder readerBuilder;
     Json::Value root;
-
     std::istringstream jsonStream(jsonData);
     Json::parseFromStream(readerBuilder, jsonStream, &root, nullptr);
 
@@ -22,29 +30,69 @@ USER parseUserRegistrationRequest(std::string jsonData){
     std::string username = root["username"].asString();
     std::string password = root["password"].asString();
     std::string avatar = root["avatar"].asString();
-    std::string institutionName = root["institutionName"].asString();
-    //convert string to int then to uint16_t
-    uint16_t rank =  static_cast<uint16_t>(std::stoi(root["rank"].asString()));
+    // convert string to int then to uint16_t
+    uint16_t rank = static_cast<uint16_t>(std::stoi(root["rank"].asString()));
     uint16_t yearStart = static_cast<uint16_t>(std::stoi(root["yearStart"].asString()));
     uint16_t yearEnd = static_cast<uint16_t>(std::stoi(root["yearEnd"].asString()));
+    std::string institutionName = root["institutionName"].asString();
 
-    std::cout << "Firstname: " << firstname << std::endl;
-    std::cout << "Lastname: " << lastname << std::endl;
-    std::cout << "Username: " << username << std::endl;
-    std::cout << "Password: " << password << std::endl;
-    std::cout << "Avatar: " << avatar << std::endl;
-    std::cout << "Rank: " << rank << std::endl;
-    std::cout << "InstitutionName: " << institutionName << std::endl;
-    std::cout << "Year Start: " << yearStart << std::endl;
-    std::cout << "Year End: " << yearEnd << std::endl;
+    USER temp = new USER(generateRandomCode(27), username, password, avatar, firstname, lastname, yearStart, yearEnd, rank);
+    return temp;
+}
+
+USERINSTITUTION parseUserInstitutionDetails(std::string jsonData)
+{
+    USERINSTITUTION userInstdata;
+    Json::CharReaderBuilder readerBuilder;
+    Json::Value root;
+    std::istringstream jsonStream(jsonData);
+    Json::parseFromStream(readerBuilder, jsonStream, &root, nullptr);
+
+    std::string username = root["username"].asString();
+    std::string institutionName = root["institutionName"].asString();
+
+    userInstdata.username = username;
+    userInstdata.institution = institutionName;
 
     const Json::Value degreesArray = root["degrees"];
-    for (const auto& degree : degreesArray)
-        std::cout << "Degree: " << degree.asString() << std::endl;
+    for (const auto &degree : degreesArray)
+        userInstdata.degrees.push_back(degree.asString());
 
     const Json::Value coursesArray = root["courses"];
-    for (const auto& course : coursesArray)
-        std::cout << "Courses: " << course.asString() << std::endl;
+    for (const auto &course : coursesArray)
+        userInstdata.courses.push_back(course.asString());
 
-    return temp;
+    return userInstdata;
+}
+
+void addRelations(USERINSTITUTION userInstData, USER user)
+{
+    CACHE &cache = CACHE::getInstance();
+    for (const auto &inst : cache.getInstitutionMap())
+    {
+        if (userInstData.institution == inst.second.getInstitutionName())
+        {
+            USER().addUserInstitution(inst.second.getInstitutionCode(), user.getUsername());
+            for (const auto &deg : (*inst.second.getInstitutionDegrees()))
+            {
+                for (const auto &Userdeg : userInstData.degrees)
+                {
+                    if (Userdeg == deg.getDegreeName())
+                    {
+                        USER().addUserDegree(deg.getDegreeCode(), user.getUsername());
+                        for (const auto &course : (*deg.getCourses()))
+                        {
+                            for (const auto &Usercourse : userInstData.courses)
+                            {
+                                if (Usercourse == course.getCourseName())
+                                {
+                                    USER().addUserCourse(course.getCourseCode(), user.getUsername());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

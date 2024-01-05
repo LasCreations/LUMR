@@ -1,21 +1,19 @@
 #ifndef USER_H
 #define USER_H
 
-#include "institution.h"
+
 #include "database.h"
 
 class USER
 {
 private:
     std::string SID, username, password, avatar, fName, lName;
-    INSTITUTION institution;
     uint16_t yearStart, yearEnd, rank;
 
 public:
-
-    USER(){}
-    USER(std::string SID, std::string username, std::string password, std::string avatar, std::string fName, std::string lName,
-        INSTITUTION institution, uint16_t yearStart, uint16_t yearEnd, uint16_t rank)
+    USER() {}
+    USER(std::string SID, std::string username, std::string password, std::string avatar, 
+            std::string fName, std::string lName, uint16_t yearStart, uint16_t yearEnd, uint16_t rank)
     {
         this->SID = SID;
         this->password = password;
@@ -23,7 +21,6 @@ public:
         this->avatar = avatar;
         this->fName = fName;
         this->lName = lName;
-        this->institution = institution;
         this->yearStart = yearStart;
         this->yearEnd = yearEnd;
         this->rank = rank;
@@ -37,7 +34,6 @@ public:
         this->avatar = user->avatar;
         this->fName = user->fName;
         this->lName = user->lName;
-        this->institution = user->institution;
         this->yearStart = user->yearStart;
         this->yearEnd = user->yearEnd;
         this->rank = user->rank;
@@ -71,11 +67,6 @@ public:
     void setLastName(std::string lName)
     {
         this->lName = lName;
-    }
-
-    void setInstitution(INSTITUTION institution)
-    {
-        this->institution = institution;
     }
 
     void setYearStart(uint16_t yearStart)
@@ -123,11 +114,6 @@ public:
         return this->lName;
     }
 
-    INSTITUTION getInstitution()
-    {
-        return this->institution;
-    }
-
     uint16_t getYearStart()
     {
         return this->yearStart;
@@ -143,14 +129,91 @@ public:
         return this->rank;
     }
 
-    bool create(USER *user)
+    bool create(USER user)
     {
-        // DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
-        // dbMan
-        // sql::Statement *stmt;
-        // sql::PreparedStatement *prep_stmt;
-        // sql::ResultSet *res;
+        sql::PreparedStatement *prep_stmt = nullptr;
+        DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
+        try
+        {   
+            prep_stmt = dbMan.getConnection()->prepareStatement("INSERT INTO users(SID, username, avatar, first_name, last_name, password, year_start, year_end, rank_value) VALUES(?,?,?,?,?,?,?,?,?)");
+            prep_stmt->setString(1, user.getSID());
+            prep_stmt->setString(2, user.getUsername());
+            prep_stmt->setString(3, user.getAvatar());
+            prep_stmt->setString(4, user.getFirstName());
+            prep_stmt->setString(5, user.getLastName());
+            prep_stmt->setString(6, user.getPassword());
+            prep_stmt->setInt(7, user.getYearStart());
+            prep_stmt->setInt(8, user.getYearEnd());
+            prep_stmt->setInt(9, user.getRank());
+            prep_stmt->executeUpdate();
+            delete prep_stmt;
+            return true;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Error adding user: " << e.what() << std::endl;
+            delete prep_stmt;
+        }
         return false;
+    }
+
+    void addUserInstitution(std::string institutionCode, std::string username)
+    {
+        std::cout << "Arrived in User Inst" << std::endl;
+        sql::PreparedStatement *prep_stmt = nullptr;
+        DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
+        try
+        {   
+            prep_stmt = dbMan.getConnection()->prepareStatement("INSERT INTO user_institution(username, institution_code) VALUES(?,?)");
+            prep_stmt->setString(1, username);
+            prep_stmt->setString(2, institutionCode);
+            prep_stmt->executeUpdate();
+            delete prep_stmt;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Error adding user: " << e.what() << std::endl;
+            delete prep_stmt;
+        }
+        std::cout << "Left User Inst" << std::endl;
+    }
+
+    void addUserDegree(std::string degreeCode, std::string username)
+    {
+        sql::PreparedStatement *prep_stmt = nullptr;
+        DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
+        try
+        {   
+            prep_stmt = dbMan.getConnection()->prepareStatement("INSERT INTO user_degrees(username, degree_code) VALUES(?,?)");
+            prep_stmt->setString(1, username);
+            prep_stmt->setString(2, degreeCode);
+            prep_stmt->executeUpdate();
+            delete prep_stmt;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Error adding user: " << e.what() << std::endl;
+            delete prep_stmt;
+        }
+    }
+
+    void addUserCourse(std::string courseCode, std::string username)
+    {
+        sql::PreparedStatement *prep_stmt = nullptr;
+        DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
+        try
+        {   
+            prep_stmt = dbMan.getConnection()->prepareStatement("INSERT INTO user_courses(username, course_code) VALUES(?,?)");
+            prep_stmt->setString(1, username);
+            prep_stmt->setString(2, courseCode);
+            prep_stmt->executeUpdate();
+            delete prep_stmt;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "Error adding user: " << e.what() << std::endl;
+            delete prep_stmt;
+        }
     }
 
     USER read()
