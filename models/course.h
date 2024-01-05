@@ -48,17 +48,16 @@ public:
         return this->name;
     }
 
-    std::vector<COURSE> *getAll(std::string degreeCode)
+    std::unordered_map<std::string, COURSE> getAll(std::string degreeCode)
     {
-        std::vector<COURSE> *data = nullptr;
+        
+        std::unordered_map<std::string, COURSE> data;
         sql::Statement *stmt = nullptr;
         sql::ResultSet *res = nullptr;
-
         DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
 
         try
         {
-            data = new std::vector<COURSE>;
             std::string sql = "SELECT course.name, course.code FROM degree_courses "
                                      "JOIN course ON degree_courses.course_code = course.code "
                                      "WHERE degree_courses.degree_code = ?";
@@ -70,9 +69,7 @@ public:
 
             while (res->next())
             {
-                // std::cout << res->getString("name") << std::endl;
-                // std::cout << res->getString("code") << std::endl;
-                data->push_back(COURSE(res->getString("code"), res->getString("name")));
+                data[res->getString("name")] = COURSE(res->getString("code"), res->getString("name"));
             }
 
             // Clean up prepared statement

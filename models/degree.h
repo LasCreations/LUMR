@@ -8,17 +8,13 @@ class DEGREE
 {
 private:
     std::string name, code;
-    std::vector<COURSE> *courses;
+    std::unordered_map<std::string, COURSE> courses;
 
 public:
     DEGREE()
-    {
-        this->name = "";
-        this->code = "";
-        this->courses = nullptr;
-    }
+    {}
 
-    DEGREE(std::string name, std::string code, std::vector<COURSE> *courses)
+    DEGREE(std::string name, std::string code, std::unordered_map<std::string, COURSE>courses)
     {
         this->name = name;
         this->code = code;
@@ -42,7 +38,7 @@ public:
         this->code = code;
     }
 
-    void setCourses(std::vector<COURSE> *courses)
+    void setCourses(std::unordered_map<std::string, COURSE> courses)
     {
         this->courses = courses;
     }
@@ -57,14 +53,14 @@ public:
         return this->code;
     }
 
-    std::vector<COURSE> *getCourses() const 
+    std::unordered_map<std::string, COURSE> getCourses() const 
     {
         return this->courses;
     }
 
-    std::vector<DEGREE> *getAll(std::string institutionCode)
+    std::unordered_map<std::string, DEGREE> getAll(std::string institutionCode)
     {
-        std::vector<DEGREE> *data = nullptr;
+        std::unordered_map<std::string, DEGREE> data;
         sql::Statement *stmt = nullptr;
         sql::ResultSet *res = nullptr;
 
@@ -72,12 +68,10 @@ public:
 
         try
         {
-            data = new std::vector<DEGREE>;
             std::string degree_sql = "SELECT degrees.name, degrees.code FROM institutions_degree "
                                      "JOIN degrees ON institutions_degree.degree_code = degrees.code "
                                      "WHERE institutions_degree.institution_code = ?";
 
-            // Set the parameter value
             sql::PreparedStatement *pstmt = dbMan.getConnection()->prepareStatement(degree_sql);
             pstmt->setString(1, institutionCode);
 
@@ -86,13 +80,7 @@ public:
 
             while (res->next())
             {
-                // DEGREE degree;
-
-                // std::cout << res->getString("name") << std::endl;
-                // std::cout << res->getString("code") << std::endl;
-
-                COURSE().getAll(res->getString("code"));
-                data->push_back(DEGREE(res->getString("name"), res->getString("code"), COURSE().getAll(res->getString("code"))));
+                data[res->getString("name")] = DEGREE(res->getString("name"), res->getString("code"), COURSE().getAll(res->getString("code")));
             }
 
             // Clean up prepared statement

@@ -34,13 +34,13 @@ std::string parseDegreeRequest(std::string request)
     return "";
 }
 
-std::string createDegreeJsonArray(std::vector<DEGREE> *degrees)
+std::string createDegreeJsonArray(std::unordered_map<std::string, DEGREE> degrees)
 {
     Json::Value jsonArray;
 
-    for (const auto &deg : (*degrees))
+    for (const auto &deg : degrees)
     {
-        Json::Value jsonObject = createDegreeJsonObject(deg.getDegreeName());
+        Json::Value jsonObject = createDegreeJsonObject(deg.second.getDegreeName());
         jsonArray.append(jsonObject);
     }
     std::cout << "\n\n" << jsonArray.toStyledString() << std::endl;

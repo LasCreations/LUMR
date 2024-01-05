@@ -3,7 +3,7 @@
 void handleUserRegistration(CLIENT *client)
 {
     USER data = parseUserDetails(parseHttpRequest(client->request));
-    //Search the map for users
+    // Search the map for users
     if (CACHE::getInstance().getUserMap().find(data.getUsername()) != CACHE::getInstance().getUserMap().end())
     {
         // user exists
@@ -77,36 +77,29 @@ USERINSTITUTION parseUserInstitutionDetails(std::string jsonData)
 void addRelations(USERINSTITUTION userInstData, USER user)
 {
     CACHE &cache = CACHE::getInstance();
-
-
-    for (const auto &inst : cache.getInstitutionMap())
+    USER temp;
+    
+    const auto &it = cache.getInstitutionMap().find(userInstData.institution);
+    if (it != cache.getInstitutionMap().end())
     {
-        if (userInstData.institution == inst.second.getInstitutionName())
+        temp.addUserInstitution(it->second.getInstitutionCode(), user.getUsername());
+        const auto &institutionDegrees = it->second.getInstitutionDegrees();
+        for (const auto &Userdeg : userInstData.degrees)
         {
-            USER().addUserInstitution(inst.second.getInstitutionCode(), user.getUsername());
-            for (const auto &deg : (*inst.second.getInstitutionDegrees()))
+            const auto &deg = institutionDegrees.find(Userdeg);
+            if (deg != institutionDegrees.end())
             {
-                for (const auto &Userdeg : userInstData.degrees)
+                temp.addUserDegree(deg->second.getDegreeCode(), user.getUsername());
+                const auto &coursesMap = deg->second.getCourses();
+                for (const auto &Usercourse : userInstData.courses)
                 {
-                    if (Userdeg == deg.getDegreeName())
+                    const auto &courses = coursesMap.find(Usercourse);
+                    if (courses != coursesMap.end())
                     {
-                        USER().addUserDegree(deg.getDegreeCode(), user.getUsername());
-                        for (const auto &course : (*deg.getCourses()))
-                        {
-                            for (const auto &Usercourse : userInstData.courses)
-                            {
-                                if (Usercourse == course.getCourseName())
-                                {
-                                    USER().addUserCourse(course.getCourseCode(), user.getUsername());
-                                }
-                            }
-                        }
+                        temp.addUserCourse(courses->second.getCourseCode(), user.getUsername());
                     }
                 }
             }
         }
     }
-
-
-
 }

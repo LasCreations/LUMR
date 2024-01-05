@@ -7,18 +7,14 @@
 class INSTITUTION
 {
 private:
-    std::vector<DEGREE> *degrees;
+    std::unordered_map<std::string, DEGREE> degrees;
     std::string name, code;
 
 public:
     INSTITUTION()
-    {
-        this->name = "";
-        this->code = "";
-        this->degrees = nullptr;
-    }
+    {}
 
-    INSTITUTION(std::string name, std::string code, std::vector<DEGREE> *degrees)
+    INSTITUTION(std::string name, std::string code, std::unordered_map<std::string, DEGREE> degrees)
     {
         this->code = code;
         this->name = name;
@@ -42,7 +38,7 @@ public:
         this->name = name;
     }
 
-    void setInstitutionDegrees(std::vector<DEGREE> *degrees)
+    void setInstitutionDegrees(std::unordered_map<std::string, DEGREE> degrees)
     {
         this->degrees = degrees;
     }
@@ -57,7 +53,7 @@ public:
         return this->code;
     }
 
-    std::vector<DEGREE> *getInstitutionDegrees() const
+    std::unordered_map<std::string, DEGREE> getInstitutionDegrees() const
     {
         return this->degrees;
     }
@@ -74,7 +70,7 @@ public:
             res = stmt->executeQuery("SELECT name, code FROM institutions");
             while (res->next())
             {
-                mapData[res->getString("code")] = INSTITUTION(res->getString("name"), res->getString("code"), DEGREE().getAll(res->getString("code")));
+                mapData[res->getString("name")] = INSTITUTION(res->getString("name"), res->getString("code"), DEGREE().getAll(res->getString("code")));
             }
         }
         catch (const sql::SQLException &e)
