@@ -84,47 +84,47 @@ public:
         this->rank = rank;
     }
 
-    std::string getSID()
+    std::string getSID() const
     {
         return this->SID;
     }
 
-    std::string getUsername()
+    std::string getUsername() const
     {
         return this->username;
     }
 
-    std::string getPassword()
+    std::string getPassword() const
     {
         return this->password;
     }
 
-    std::string getAvatar()
+    std::string getAvatar() const
     {
         return this->avatar;
     }
 
-    std::string getFirstName()
+    std::string getFirstName() const
     {
         return this->fName;
     }
 
-    std::string getLastName()
+    std::string getLastName() const
     {
         return this->lName;
     }
 
-    uint16_t getYearStart()
+    uint16_t getYearStart() const
     {
         return this->yearStart;
     }
 
-    uint16_t getYearEnd()
+    uint16_t getYearEnd() const
     {
         return this->yearEnd;
     }
 
-    uint16_t getRank()
+    uint16_t getRank() const
     {
         return this->rank;
     }
@@ -159,7 +159,6 @@ public:
 
     void addUserInstitution(std::string institutionCode, std::string username)
     {
-        std::cout << "Arrived in User Inst" << std::endl;
         sql::PreparedStatement *prep_stmt = nullptr;
         DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
         try
@@ -175,7 +174,6 @@ public:
             std::cerr << "Error adding user: " << e.what() << std::endl;
             delete prep_stmt;
         }
-        std::cout << "Left User Inst" << std::endl;
     }
 
     void addUserDegree(std::string degreeCode, std::string username)
@@ -231,9 +229,33 @@ public:
         return false;
     }
 
-    std::vector<USER> *selectAll()
+    std::unordered_map<std::string, USER> getAll()
     {
-        return nullptr;
+        sql::Statement *stmt  = nullptr;
+        sql::ResultSet *res  = nullptr;
+        std::unordered_map<std::string, USER> mapData;
+        DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
+
+        try
+        {
+            stmt = dbMan.getConnection()->createStatement();
+            res = stmt->executeQuery("SELECT * FROM users");
+            while (res->next())
+            {							
+                mapData[res->getString("username")] = USER(res->getString("SID"), res->getString("username"),
+                                                            res->getString("password"), res->getString("avatar"),
+                                                            res->getString("first_name"), res->getString("last_name"),
+                                                            res->getInt("year_start"),res->getInt("year_end"), res->getInt("rank_value"));
+            }
+        }
+        catch (const sql::SQLException &e)
+        {
+            std::cerr << "SQLException: " << e.what() << std::endl;
+        }
+        delete stmt;
+        delete res;
+
+        return mapData;
     }
 };
 

@@ -74,9 +74,6 @@ public:
             res = stmt->executeQuery("SELECT name, code FROM institutions");
             while (res->next())
             {
-                // std::cout << res->getString("name") << std::endl;
-                // std::cout << res->getString("code") << std::endl;
-                
                 mapData[res->getString("code")] = INSTITUTION(res->getString("name"), res->getString("code"), DEGREE().getAll(res->getString("code")));
             }
         }

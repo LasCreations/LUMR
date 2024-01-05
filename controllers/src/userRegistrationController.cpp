@@ -3,11 +3,20 @@
 void handleUserRegistration(CLIENT *client)
 {
     USER data = parseUserDetails(parseHttpRequest(client->request));
-    USERINSTITUTION userInstdata = parseUserInstitutionDetails(parseHttpRequest(client->request));
+    //Search the map for users
+    if (CACHE::getInstance().getUserMap().find(data.getUsername()) != CACHE::getInstance().getUserMap().end())
+    {
+        // user exists
+        const char response[] = "HTTP/1.1 400 BAD REQUEST\r\n\r\n";
+        send(client->socket, response, sizeof(response) - 1, 0);
+        return; // exit function
+    }
 
+    USERINSTITUTION userInstdata = parseUserInstitutionDetails(parseHttpRequest(client->request));
     if (USER().create(data))
     {
         addRelations(userInstdata, data);
+        CACHE::getInstance().insertUserToMap(data); // add to cache
         std::string httpResponse = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n";
         send(client->socket, httpResponse.c_str(), httpResponse.length(), 0);
     }
@@ -68,6 +77,8 @@ USERINSTITUTION parseUserInstitutionDetails(std::string jsonData)
 void addRelations(USERINSTITUTION userInstData, USER user)
 {
     CACHE &cache = CACHE::getInstance();
+
+
     for (const auto &inst : cache.getInstitutionMap())
     {
         if (userInstData.institution == inst.second.getInstitutionName())
@@ -95,4 +106,7 @@ void addRelations(USERINSTITUTION userInstData, USER user)
             }
         }
     }
+
+
+
 }

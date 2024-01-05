@@ -13,6 +13,13 @@ struct CLIENT {
     char* route;
 };
 
+struct USERINSTITUTION{
+    std::vector<std::string> degrees;
+    std::vector<std::string> courses;
+    std::string institution;
+    std::string username;
+};
+
 /*!
  * @function    parseHttpRequest
  * @abstract    Removes the json data from a request
