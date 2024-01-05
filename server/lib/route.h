@@ -2,14 +2,9 @@
 #define ROUTE_H
 
 #include "pages.h"
-#include "institutionsController.h"
-#include "degreeController.h"
-#include "userRegistrationController.h"
-#include "courseController.h"
-
+#include "controller.h" //Stores all controller headers
 
 void handleRouting(CLIENT *client);
-
 
 struct Route {
     const char *method;

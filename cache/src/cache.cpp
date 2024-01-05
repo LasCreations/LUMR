@@ -1,8 +1,10 @@
 #include "cache.h"
 
 CACHE::CACHE(){
+    USER temp;
     this->institutionMap = INSTITUTION().getAll();
-    this->userMap = USER().getAll();
+    this->userMap = temp.getAll();
+    this->sessionIDMap = temp.getAllSession();
 }
 
 CACHE& CACHE::getInstance(){
@@ -18,9 +20,14 @@ std::unordered_map<std::string, INSTITUTION>& CACHE::getInstitutionMap(){
     return this->institutionMap;
 }
 
+std::unordered_map<std::string, USER> &CACHE::getSessionIDMap(){
+    this->sessionIDMap;
+}
+
 void CACHE::insertUserToMap(USER user){
     this->userMap[user.getUsername()] = user;
 }
-// void CACHE::setUserData(int key, const std::string& value) {
-//     this->userMap[key] = value;
-// }
+
+void CACHE::insertUserSessionToMap(USER user){
+    this->sessionIDMap[user.getSID()] = user;
+}

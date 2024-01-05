@@ -64,10 +64,10 @@ void *joinedThread(void *clientThread);
 void *detachedThreads(void *clientThread);
 
 /*!
- * @function    printClientInformation
- * @abstract    prints the information in the struct
+ * @function    printRequest
+ * @abstract    prints the request
  * @param       CLIENT *client
  * @result      
 */
-void printClientInformation(CLIENT *client);
+void printRequest(CLIENT *client);
 #endif

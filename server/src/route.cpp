@@ -5,6 +5,7 @@ struct Route routes[] = {
     {"GET", "/institutions", handleInstitutions},
     {"POST", "/degree", handleDegrees},
     {"POST", "/courses", handleCourses},
+    {"GET", "/user/authenticate", handleUserAuthentication},
     {"POST", "/register/user", handleUserRegistration}
 };
 

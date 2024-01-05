@@ -129,6 +129,14 @@ public:
         return this->rank;
     }
 
+    bool authenticate(std::string username, std::string password){
+        return false;
+    }
+
+    bool authenticate(std::string SID){
+        return false;
+    }
+
     bool create(USER user)
     {
         sql::PreparedStatement *prep_stmt = nullptr;
@@ -243,6 +251,35 @@ public:
             while (res->next())
             {							
                 mapData[res->getString("username")] = USER(res->getString("SID"), res->getString("username"),
+                                                            res->getString("password"), res->getString("avatar"),
+                                                            res->getString("first_name"), res->getString("last_name"),
+                                                            res->getInt("year_start"),res->getInt("year_end"), res->getInt("rank_value"));
+            }
+        }
+        catch (const sql::SQLException &e)
+        {
+            std::cerr << "SQLException: " << e.what() << std::endl;
+        }
+        delete stmt;
+        delete res;
+
+        return mapData;
+    }
+
+    std::unordered_map<std::string, USER> getAllSession()
+    {
+        sql::Statement *stmt  = nullptr;
+        sql::ResultSet *res  = nullptr;
+        std::unordered_map<std::string, USER> mapData;
+        DATABASEMANAGER &dbMan = DATABASEMANAGER::getInstance();
+
+        try
+        {
+            stmt = dbMan.getConnection()->createStatement();
+            res = stmt->executeQuery("SELECT * FROM users");
+            while (res->next())
+            {							
+                mapData[res->getString("SID")] = USER(res->getString("SID"), res->getString("username"),
                                                             res->getString("password"), res->getString("avatar"),
                                                             res->getString("first_name"), res->getString("last_name"),
                                                             res->getInt("year_start"),res->getInt("year_end"), res->getInt("rank_value"));

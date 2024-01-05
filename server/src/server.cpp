@@ -78,7 +78,6 @@ int readRequest(int clientSocket)
     sscanf(request, "%s %s", method, route);
     printf("\n%s %s\n", method, route);
     handleThreadAlloctions(clientSocket, request, method, route);
-    // free(request); //free allocated memory
     return 0; // success
 }
 
@@ -96,7 +95,7 @@ void handleThreadAlloctions(int clientSocket, char *request, char *method, char 
     if (strcmp(route, "/user/notification") == 0)
     {
         pthread_create(&thread, NULL, detachedThreads, (void *)&client);
-        pthread_detach(thread); // LONG POLLING
+        pthread_detach(thread); //LONG POLLING
     }
     else
     {
@@ -108,7 +107,7 @@ void handleThreadAlloctions(int clientSocket, char *request, char *method, char 
 void *joinedThread(void *clientThread)
 {
     struct CLIENT *client = (struct CLIENT *)clientThread;
-    // printClientInformation(client);
+    // printRequest(client);
     handleRouting(client);
     close(client->socket);
     return NULL;
@@ -122,12 +121,10 @@ void *detachedThreads(void *clientThread)
     return NULL;
 }
 
-void printClientInformation(CLIENT *client){
-    std::cout << "\nClient Socket: " << client->socket << std::endl;
-    std::cout << "\n-------------Request Header------------\n" << std::endl;
+void printRequest(CLIENT *client){
+    std::cout << "\n" << std::endl;
     std::cout << client->request << std::endl;
-    std::cout << "\n---------------------------------------" << std::endl;
-    printf("\n");
+    std::cout << "\n" << std::endl;
 }
 
 void handleSignal(int signal)
