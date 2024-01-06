@@ -49,7 +49,7 @@ int confiureServer()
     while (1)
     {
         int clientSocket = accept(serverSocket, NULL, NULL);
-        std::cout << "--- Accepted new connection --- \nClient socket: " << clientSocket << std::endl;
+        std::cout << "New connection opened to client socket: " << clientSocket << std::endl;
         readRequest(clientSocket);
     }
     return 1;
@@ -110,6 +110,7 @@ void *joinedThread(void *clientThread)
     // printRequest(client);
     handleRouting(client);
     close(client->socket);
+    std::cout << "\n\nConnection to client socket: " << client->socket << " is now closed.\n\n"<< std::endl;
     return NULL;
 }
 
@@ -118,6 +119,8 @@ void *detachedThreads(void *clientThread)
     struct CLIENT *client = (struct CLIENT *)clientThread;
     // printClientInformation(client);
     handleRouting(client);
+    // close(client->socket);
+    // std::cout << "\n\nConnection to client socket: " << client->socket << " is now closed.\n\n"<< std::endl;
     return NULL;
 }
 
