@@ -34,7 +34,6 @@ with open('institutions.json') as json_file:
         existing_institution = cursor.fetchone()
         if existing_institution:
             print(f"Institution code {institution['code']} already exists.")
-            continue    #skips to the next institution
         else:
             institution_query = 'INSERT INTO institutions(name,code) VALUES(%s,%s)'
             cursor.execute(institution_query,(institution['name'],institution['code']))

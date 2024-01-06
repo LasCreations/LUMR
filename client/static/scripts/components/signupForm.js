@@ -4,79 +4,116 @@ import { getDegrees } from '../api/degrees.js';
 import { getCourses } from '../api/courses.js';
 import { registerUser } from '../api/auth/signupUser.js'
 
+
+//Div Containers
 const degreeDivContainer = document.createElement('div');
 const courseDivContainer = document.createElement('div');
+const inputDivContainer = document.createElement('div');
+const yearDivContainer = document.createElement('div');
 
+//Form
 const form = document.createElement('form');
 
-const passwordLabel = document.createElement('label');
-const usernameLabel = document.createElement('label');
-const institutionsLabel = document.createElement('label');
-const degreeLabel = document.createElement('label');
-const yearStartLabel = document.createElement('label');
-const yearEndLabel = document.createElement('label');
-const firstnameLabel = document.createElement('label');
-const lastnameLabel = document.createElement('label');
-const confirmPasswordLabel = document.createElement('label');
+//Headers
+const degreeHeading = document.createElement('h1');
+const courseHeading = document.createElement('h1');
 
+//Label
+const termLabel = document.createElement('label');
+const loginLabel = document.createElement('label');
+
+//Links
+const termLink = document.createElement('a');
+const loginLink = document.createElement('a');
+
+//Inputs
 const usernameInput = document.createElement('input');
 const passwordInput = document.createElement('input');
 const confirmPasswordInput = document.createElement('input');
 const firstnameInput = document.createElement('input');
 const lastnameInput = document.createElement('input');
 
+//Inputs
 const institutionSelect = document.createElement('select');
 const yearStartSelect = document.createElement('select');
 const yearEndSelect = document.createElement('select');
 
+//Buttons
 const submitButton = document.createElement('button');
 
+const signUpFormContainer = document.getElementById('signUpForm-container');
+
+//Storage Arrays
 let selectedDegrees = [];
 let selectedCourses = [];
 let currentCourses = [];
 
-var currentYear = new Date().getFullYear(); // Store the current year
+// Store the current year
+var currentYear = new Date().getFullYear(); 
 
 export function createSignUpForm() {
     setID();
     setType();
     setName();
-    setLabelFor();
+    setPlaceHolders();
     setTextContext();
+    hideContent();
     configureInstitutionOptionValues();
     configureYearStartOptionValues();
     configureYearEndOptionValues();
     addActionListeners();
     appendChildToForm();
 
-    document.getElementById('signUpForm-container').appendChild(form);
+    signUpFormContainer.appendChild(form);
 }
 
 function setID() {
     form.id = 'signupForm';
+
     usernameInput.id = 'username';
     passwordInput.id = 'password';
     confirmPasswordInput.id = 'confirmPassword';
     firstnameInput.id = 'firstname';
     lastnameInput.id = 'lastname';
+
     institutionSelect.id = 'institutionSelect';
     yearStartSelect.id = 'yearStartSelect';
     yearEndSelect.id = 'yearEndSelect';
+
+    institutionSelect.className = 'classic';
+    yearStartSelect.className = 'classic';
+    yearEndSelect.className = 'classic';
+
+    submitButton.id = 'submit-btn'
+
     degreeDivContainer.id = 'degreeContainer';
-    courseDivContainer.id = 'courseDivContainer';
+    courseDivContainer.id = 'courseContainer';
+    inputDivContainer.id = 'inputDivContainer';
+    yearDivContainer.id = 'yearDivContainer';
 }
 
 function setTextContext() {
-    usernameLabel.textContent = 'Username:';
-    passwordLabel.textContent = 'Password:';
-    institutionsLabel.textContent = 'College/University';
-    degreeLabel.textContent = 'Select Degree/s';
-    yearStartLabel.textContent = 'Start Year';
-    yearEndLabel.textContent = 'End year (or expected)';
-    firstnameLabel.textContent = 'First Name';
-    lastnameLabel.textContent = 'Last Name';
-    confirmPasswordLabel.textContent = 'Confirm Password';
+    termLabel.innerHTML = 'I agree all statements in ';
+    loginLabel.innerHTML = 'Already have an account? ';
+
+    termLink.href = '#!';
+    termLink.innerHTML = 'Terms of service';
+
+    loginLink.href = '/';
+    loginLink.innerHTML = 'Login now';
+
+    degreeHeading.textContent = 'Select Degree/s';
+    courseHeading.textContent = 'Select Course/s';
     submitButton.textContent = 'Signup';
+
+}
+
+function setPlaceHolders(){
+    usernameInput.placeholder = 'Username';
+    firstnameInput.placeholder = 'First Name';
+    lastnameInput.placeholder = 'Last Name';
+    passwordInput.placeholder = 'Password';
+    confirmPasswordInput.placeholder = 'Confirm Password';
 }
 
 function setType() {
@@ -103,31 +140,33 @@ function setName() {
     yearStartSelect.name = 'yearStartSelect';
 }
 
-function setLabelFor() {
-    yearStartLabel.for = 'yearStartSelect';
-    yearEndLabel.for = 'yearEndSelect';
-    firstnameLabel.for = 'firstname';
-    lastnameLabel.for = 'lastname';
-    confirmPasswordLabel.for = 'confirmPassword';
-    passwordLabel.for = 'password';
-    usernameLabel.for = 'username';
-    institutionsLabel.for = 'institutionSelect';
+function hideContent(){
+    degreeHeading.style.display = 'none';
+    courseHeading.style.display = 'none';
 }
 
 function configureInstitutionOptionValues() {
     const option = document.createElement('option');
-    option.value = " ";
-    option.text = " ";
+    option.value = "University/College";
+    option.text = "University/College";
     institutionSelect.appendChild(option);
     getInstitutions(institutionSelect);
 }
 
 function configureYearStartOptionValues() {
+    const option = document.createElement('option');
+    option.value = "Start Year";
+    option.text = "Start Year";
+    yearStartSelect.appendChild(option);
     /* Populate the first select with 10 years prior to the current year */
     populateYearSelect('yearStartSelect', currentYear - 10, currentYear, yearStartSelect);
 }
 
 function configureYearEndOptionValues() {
+    const option = document.createElement('option');
+    option.value = "Year End (Expected)";
+    option.text = "Year End (Expected)";
+    yearEndSelect.appendChild(option);
     /* Populate the second select with 10 years from the current year */
     populateYearSelect('yearEndSelect', currentYear, currentYear + 10, yearEndSelect);
 }
@@ -155,29 +194,39 @@ function addActionListeners() {
 }
 
 function appendChildToForm() {
-    form.appendChild(usernameLabel);
-    form.appendChild(usernameInput);
-    form.appendChild(firstnameLabel);
-    form.appendChild(firstnameInput);
-    form.appendChild(lastnameLabel);
-    form.appendChild(lastnameInput);
-    form.appendChild(passwordLabel);
-    form.appendChild(passwordInput);
-    form.appendChild(confirmPasswordLabel);
-    form.appendChild(confirmPasswordInput);
-    form.appendChild(institutionsLabel);
+
+
+    inputDivContainer.appendChild(usernameInput);
+    inputDivContainer.appendChild(firstnameInput);
+    inputDivContainer.appendChild(lastnameInput);
+    inputDivContainer.appendChild(passwordInput);
+    inputDivContainer.appendChild(confirmPasswordInput);
+    form.appendChild(inputDivContainer);
+    
     form.appendChild(institutionSelect);
-    form.appendChild(yearStartLabel);
-    form.appendChild(yearStartSelect);
-    form.appendChild(yearEndLabel);
-    form.appendChild(yearEndSelect);
-    form.appendChild(degreeLabel);
+
+    yearDivContainer.appendChild(yearStartSelect);
+    yearDivContainer.appendChild(yearEndSelect);
+    form.appendChild(yearDivContainer);
+
+    form.appendChild(degreeHeading);
     form.appendChild(degreeDivContainer);
+    form.appendChild(courseHeading);
     form.appendChild(courseDivContainer);
+
+    termLabel.appendChild(termLink);
+
+    form.appendChild(termLabel);
+
+
     form.appendChild(submitButton);
+
+    loginLabel.appendChild(loginLink);
+    form.appendChild(loginLabel);
 }
 
 export function addDegreesToADiv(degreeJson) {
+    degreeHeading.style.display = 'block';
     degreeDivContainer.innerHTML = ''; //clear div
     selectedDegrees = []; //clear selected array
     // console.log(degreeJson);
@@ -210,6 +259,7 @@ export function addDegreesToADiv(degreeJson) {
 }
 
 export function addCoursesToADiv(courseJson) {
+    courseHeading.style.display = 'block';
     selectedCourses = []; //clear selected array
     courseJson.forEach(function (currentObject) {
         const index = currentCourses.indexOf(currentObject.course); // Check if the text is already in the array

@@ -5,8 +5,5 @@
 
 void handleUserAuthentication(CLIENT *client);
 std::string extractCookieValue(const std::string request);
-// USER parseUserDetails(std::string jsonData);
-// USERINSTITUTION parseUserInstitutionDetails(std::string jsonData);
-// void addRelations(USERINSTITUTION userInstData, USER user);
 
 #endif

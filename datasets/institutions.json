@@ -21,6 +21,22 @@
                 {"code": "EE102", "name": "Quantum Physics"},
                 {"code": "EE103", "name": "Thermodynamics"}
             ]
+          },{
+            "name": "Law",
+            "code": "BENGLAW",
+            "courses": [
+                {"code": "LAWINTRO", "name": "INTRO TO CRIMINAL LAW"},
+                {"code": "COMLAW", "name": "COMMON LAW"},
+                {"code": "CONLAW", "name": "CONTRACT LAW"}
+            ]
+          },{
+            "name": "ARCHITECTURE",
+            "code": "ARCH",
+            "courses": [
+                {"code": "ACAD", "name": "AUTOCAD"},
+                {"code": "TD203", "name": "TECHNICAL DRAWING"},
+                {"code": "FL230", "name": "FLOOR PLANS"}
+            ]
           }
         ]
       },
