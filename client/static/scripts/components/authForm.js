@@ -4,7 +4,6 @@ import { getDegrees } from '../api/degrees.js';
 import { getCourses } from '../api/courses.js';
 import { registerUser } from '../api/auth/signupUser.js'
 
-
 //Div Containers
 const degreeDivContainer = document.createElement('div');
 const courseDivContainer = document.createElement('div');
@@ -229,22 +228,21 @@ function hideSignUp() {
 
     loginLabel.classList.toggle("hidden");
 
-    if (degreeHeading.style.display === 'none' || courseHeading.style.display === 'none') {
-        degreeHeading.style.display = 'block';
-        courseHeading.style.display = 'block';
-    } else {
+    if (degreeHeading.style.display === 'block' || courseHeading.style.display === 'block') {
         degreeHeading.style.display = 'none';
         courseHeading.style.display = 'none';
-    }
+    } 
 
     var courseDivs = document.querySelectorAll('.courseDiv');
     var degreeDivs = document.querySelectorAll('.degreeDiv');
 
     courseDivs.forEach(function (courseDiv) {
         courseDiv.classList.toggle("hidden");
+        courseHeading.classList.toggle("hidden");
     });
 
     degreeDivs.forEach(function (degreeDiv) {
+        degreeHeading.classList.toggle("hidden");
         degreeDiv.classList.toggle("hidden");
     });
 
@@ -260,9 +258,6 @@ function hideSignUp() {
     } else {
         submitButton.textContent = "Signup";
     }
-
-
-
 }
 
 function appendChildToForm() {
@@ -279,7 +274,7 @@ function appendChildToForm() {
     yearDivContainer.appendChild(yearEndSelect);
     form.appendChild(yearDivContainer);
 
-    form.appendChild(degreeHeading);
+    form.appendChild(degreeHeading);  
     form.appendChild(degreeDivContainer);
     form.appendChild(courseHeading);
     form.appendChild(courseDivContainer);

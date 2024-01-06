@@ -1,13 +1,22 @@
-
 import { createSignUpForm } from '../../components/authForm.js'
 
 export function authenticate(){
     fetch('/user/authenticate').then(res => {
         if (res.ok) {
-            //get json object and encode it
-            window.location.href = "/secure/dashboard.html";
+            if (window.location.href.includes('/secure/dashboard.html')) {
+                var data = JSON.parse(atob(decodeURIComponent(window.location.search.replace('?data=', ''))));
+                console.log(data);  // Outputs: data from signup
+            }else{
+                //encode data and then redirect
+                window.location.href = "/secure/dashboard.html";
+            }
         } else {
-            createSignUpForm(); // Call your function when the DOM is fully loaded
+            if (!window.location.href.includes('/secure/dashboard.html')) {
+                createSignUpForm();
+            }else{
+                window.location.href = "/";
+                createSignUpForm();
+            }
         }
     }).then(data => {
         

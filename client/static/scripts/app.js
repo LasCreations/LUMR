@@ -28,13 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("This is some other browser");
     }
 
-    if (window.location.href.includes('/secure/dashboard.html')) {
-        var data = JSON.parse(atob(decodeURIComponent(window.location.search.replace('?data=', ''))));
-        console.log(data);  // Outputs: data from signup
-    }else{
-        authenticate();
-    }
-
+    authenticate();
 
     const starField = document.querySelector(".stars");
 
