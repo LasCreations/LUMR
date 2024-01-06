@@ -13,15 +13,14 @@
     min-height: 38px;
     border: none;
     color: #fff;
-    background-color: rgb(132, 132, 134);
+    /* background-color: transparent; */
+    background-color: rgba(201, 196, 196, 0.5);
     transition: background-color .17s ease, color .17s ease;
 }
 
 #submit-btn:hover {
     color: #5c5656;
     background-color: rgb(200, 200, 204);
-   
-
 }
 
 button:disabled,
