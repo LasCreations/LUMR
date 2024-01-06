@@ -21,10 +21,12 @@ const courseHeading = document.createElement('h1');
 //Label
 const termLabel = document.createElement('label');
 const loginLabel = document.createElement('label');
+const signupLabel = document.createElement('label');
 
 //Links
 const termLink = document.createElement('a');
 const loginLink = document.createElement('a');
+const signupLink = document.createElement('a');
 
 //Inputs
 const usernameInput = document.createElement('input');
@@ -41,7 +43,7 @@ const yearEndSelect = document.createElement('select');
 //Buttons
 const submitButton = document.createElement('button');
 
-const signUpFormContainer = document.getElementById('signUpForm-container');
+const signUpFormContainer = document.getElementById('form-container');
 
 //Storage Arrays
 let selectedDegrees = [];
@@ -49,7 +51,7 @@ let selectedCourses = [];
 let currentCourses = [];
 
 // Store the current year
-var currentYear = new Date().getFullYear(); 
+var currentYear = new Date().getFullYear();
 
 export function createSignUpForm() {
     setID();
@@ -95,20 +97,26 @@ function setID() {
 function setTextContext() {
     termLabel.innerHTML = 'I agree all statements in ';
     loginLabel.innerHTML = 'Already have an account? ';
-
+    signupLabel.innerHTML = 'Not a member? ';
+    
+    
     termLink.href = '#!';
-    termLink.innerHTML = 'Terms of service';
+    loginLink.href = '#!';
+    signupLink.href = '#!';
 
-    loginLink.href = '/';
+    termLink.innerHTML = 'Terms of service';
     loginLink.innerHTML = 'Login now';
+    signupLink.innerHTML = 'Signup now';
+    
+    
+
 
     degreeHeading.textContent = 'Select Degree/s';
     courseHeading.textContent = 'Select Course/s';
     submitButton.textContent = 'Signup';
-
 }
 
-function setPlaceHolders(){
+function setPlaceHolders() {
     usernameInput.placeholder = 'Username';
     firstnameInput.placeholder = 'First Name';
     lastnameInput.placeholder = 'Last Name';
@@ -140,7 +148,7 @@ function setName() {
     yearStartSelect.name = 'yearStartSelect';
 }
 
-function hideContent(){
+function hideContent() {
     degreeHeading.style.display = 'none';
     courseHeading.style.display = 'none';
 }
@@ -191,18 +199,65 @@ function addActionListeners() {
         event.preventDefault(); // Prevent the default form submission
         handleSignUp();
     });
+
+    loginLink.addEventListener("click", function (event) {
+        // Prevent the default behavior (e.g., navigating to a new page)
+        event.preventDefault();
+        console.log("login clicked");
+        hideSignUp();
+    });
+
+    signupLink.addEventListener("click", function (event) {
+        // Prevent the default behavior (e.g., navigating to a new page)
+        event.preventDefault();
+        console.log("login clicked");
+        hideSignUp();
+    });
+}
+
+function hideSignUp() {
+
+    confirmPasswordInput.classList.toggle("hidden");
+    firstnameInput.classList.toggle("hidden");
+    lastnameInput.classList.toggle("hidden");
+    institutionSelect.classList.toggle("hidden");
+    yearStartSelect.classList.toggle("hidden");
+    yearEndSelect.classList.toggle("hidden");
+    termLink.classList.toggle("hidden");
+    termLabel.classList.toggle("hidden");
+
+    degreeDivContainer.classList.toggle("hidden");
+    courseDivContainer.classList.toggle("hidden");
+    yearDivContainer.classList.toggle("hidden");
+    
+    loginLabel.classList.toggle("hidden");
+//    signupLabel.classList.toggle("hidden");
+
+   if(signupLabel.style.display === 'none'){
+        signupLabel.style.display = 'block';
+   }else{
+    signupLabel.style.display = 'none';
+   }
+   
+
+    if(submitButton.textContent === "Signup" ){
+        submitButton.textContent = "Login"; 
+    }else{
+        submitButton.textContent = "Signup";
+    }
+
+
+
 }
 
 function appendChildToForm() {
-
-
     inputDivContainer.appendChild(usernameInput);
     inputDivContainer.appendChild(firstnameInput);
     inputDivContainer.appendChild(lastnameInput);
     inputDivContainer.appendChild(passwordInput);
     inputDivContainer.appendChild(confirmPasswordInput);
     form.appendChild(inputDivContainer);
-    
+
     form.appendChild(institutionSelect);
 
     yearDivContainer.appendChild(yearStartSelect);
@@ -222,7 +277,12 @@ function appendChildToForm() {
     form.appendChild(submitButton);
 
     loginLabel.appendChild(loginLink);
+
+    signupLabel.appendChild(signupLink);
+    signupLabel.style.display = "none";
+
     form.appendChild(loginLabel);
+    form.appendChild(signupLabel);
 }
 
 export function addDegreesToADiv(degreeJson) {
@@ -241,6 +301,7 @@ export function addDegreesToADiv(degreeJson) {
     elements.forEach(function (element) {
         element.addEventListener('click', function () {
             element.classList.toggle('degree-selected');
+            element.classList.toggle('change-color');
             const textContent = element.textContent;
 
             const index = selectedDegrees.indexOf(textContent); // Check if the text is already in the array
@@ -263,7 +324,7 @@ export function addCoursesToADiv(courseJson) {
     selectedCourses = []; //clear selected array
     courseJson.forEach(function (currentObject) {
         const index = currentCourses.indexOf(currentObject.course); // Check if the text is already in the array
-        if(index === -1){  //not in array
+        if (index === -1) {  //not in array
             const courseDiv = document.createElement('div');
             courseDiv.className = 'courseDiv';
             courseDiv.textContent = currentObject.course;
@@ -276,6 +337,7 @@ export function addCoursesToADiv(courseJson) {
     elements.forEach(function (element) {
         element.addEventListener('click', function () {
             element.classList.toggle('course-selected');
+            element.classList.toggle('change-color');
             const textContent = element.textContent;
             const index = selectedCourses.indexOf(textContent); // Check if the text is already in the array
             if (index === -1) {

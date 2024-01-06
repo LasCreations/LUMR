@@ -1,4 +1,4 @@
-import {addCoursesToADiv} from '../components/signupForm.js'
+import {addCoursesToADiv} from '../components/authForm.js'
 
 export function getCourses(degree, institution){
     

@@ -6,6 +6,8 @@
     justify-content: center;
 }
 
+
+
 #signupForm {
     display: flex;
     flex-direction: column;
@@ -44,16 +46,8 @@
     justify-content: center;
     align-items: center;
     margin: 10px;
+    color: #bebcbc;
 }
-
-#checkboxContainer{
-    /* float: left; */
-    /* display: inline; */
-    /* justify-content: center; */
-    /* max-width: 300px; */
-    align-items: center;
-    
-} 
 
 .degreeDiv,
 .courseDiv {
@@ -63,9 +57,6 @@
     border: 2px solid rgba(228, 224, 224, 0.3);
 }
 
-
-
-
 .degree-selected {
     background-color: aqua;
 }
@@ -73,18 +64,6 @@
 .course-selected {
     background-color: rgb(75, 224, 75);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 input {
     height: 100%;
@@ -100,24 +79,10 @@ input {
     margin: 20px;
     color: #bebcbc;
 }
+
 input::placeholder{
     color: #bebcbc;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 select {
     /* styling */
@@ -138,7 +103,6 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
 }
-
 
 select.classic {
     background-image:
@@ -173,4 +137,12 @@ select.classic:focus {
     background-repeat: no-repeat;
     border-color: grey;
     outline: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.change-color {
+    color: #333333;
 }

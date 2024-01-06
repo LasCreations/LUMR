@@ -15,7 +15,7 @@ export function registerUser(user){
             //use encodeURIComponent to make it url safe
             var urlSafeBase64 = encodeURIComponent(base64EncodedString);
             
-            window.location.href = '/pages/dashboard.html?data=' + urlSafeBase64;
+            window.location.href = '/secure/dashboard.html?data=' + urlSafeBase64;
         } else {
             console.log("Error registering");
             throw new Error('Network response was not ok');

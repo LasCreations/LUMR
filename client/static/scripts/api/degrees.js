@@ -1,4 +1,4 @@
-import {addDegreesToADiv} from '../components/signupForm.js'
+import {addDegreesToADiv} from '../components/authForm.js'
 
 export function getDegrees(institution) {  
     fetch("/degree", {
