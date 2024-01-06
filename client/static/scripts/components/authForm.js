@@ -98,8 +98,8 @@ function setTextContext() {
     termLabel.innerHTML = 'I agree all statements in ';
     loginLabel.innerHTML = 'Already have an account? ';
     signupLabel.innerHTML = 'Not a member? ';
-    
-    
+
+
     termLink.href = '#!';
     loginLink.href = '#!';
     signupLink.href = '#!';
@@ -107,9 +107,6 @@ function setTextContext() {
     termLink.innerHTML = 'Terms of service';
     loginLink.innerHTML = 'Login now';
     signupLink.innerHTML = 'Signup now';
-    
-    
-
 
     degreeHeading.textContent = 'Select Degree/s';
     courseHeading.textContent = 'Select Course/s';
@@ -229,20 +226,38 @@ function hideSignUp() {
     degreeDivContainer.classList.toggle("hidden");
     courseDivContainer.classList.toggle("hidden");
     yearDivContainer.classList.toggle("hidden");
-    
+
     loginLabel.classList.toggle("hidden");
-//    signupLabel.classList.toggle("hidden");
 
-   if(signupLabel.style.display === 'none'){
+    if (degreeHeading.style.display === 'none' || courseHeading.style.display === 'none') {
+        degreeHeading.style.display = 'block';
+        courseHeading.style.display = 'block';
+    } else {
+        degreeHeading.style.display = 'none';
+        courseHeading.style.display = 'none';
+    }
+
+    var courseDivs = document.querySelectorAll('.courseDiv');
+    var degreeDivs = document.querySelectorAll('.degreeDiv');
+
+    courseDivs.forEach(function (courseDiv) {
+        courseDiv.classList.toggle("hidden");
+    });
+
+    degreeDivs.forEach(function (degreeDiv) {
+        degreeDiv.classList.toggle("hidden");
+    });
+
+    if (signupLabel.style.display === 'none') {
         signupLabel.style.display = 'block';
-   }else{
-    signupLabel.style.display = 'none';
-   }
-   
+    } else {
+        signupLabel.style.display = 'none';
+    }
 
-    if(submitButton.textContent === "Signup" ){
-        submitButton.textContent = "Login"; 
-    }else{
+
+    if (submitButton.textContent === "Signup") {
+        submitButton.textContent = "Login";
+    } else {
         submitButton.textContent = "Signup";
     }
 
