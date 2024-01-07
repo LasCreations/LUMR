@@ -18,8 +18,10 @@ void handleUserRegistration(CLIENT *client)
         CACHE &cache = CACHE::getInstance();
         addRelations(userInstdata, data);
         // add to cache
-        cache.insertUserToMap(data); 
+        cache.insertUserToMap(data);
         cache.insertUserSessionToMap(data);
+        cache.insertUserInstitutionToMap(userInstdata);
+        
         //Add token to the users browser
         std::string httpResponse = "HTTP/1.1 200 OK\r\nSet-Cookie: SID=" + data.getSID() + "; Path=/; Max-Age=3153600000\r\n\r\n";
         send(client->socket, httpResponse.c_str(), httpResponse.length(), 0);

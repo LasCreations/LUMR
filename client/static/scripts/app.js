@@ -1,5 +1,5 @@
 
-import { authenticate } from './api/auth/userIdentification.js'
+import { dashboardAuthenticate, siteEntryAuthenticate } from './api/auth/userIdentification.js'
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -28,10 +28,27 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("This is some other browser");
     }
 
-    authenticate();
+
+
+
+
+
+
+    if(window.location.href.includes('/secure/dashboard.html')){
+        dashboardAuthenticate();
+    }else{
+        siteEntryAuthenticate();
+    }
+
+
+
+
+
+
+
+
 
     const starField = document.querySelector(".stars");
-
     // Function to generate random number within a range
     function randomRange(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;

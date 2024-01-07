@@ -55,12 +55,3 @@ std::string createCoursesJsonArray(std::unordered_map<std::string, COURSE> cours
     std::cout << "\n\n" << jsonArray.toStyledString() << std::endl;
     return jsonArray.toStyledString();
 }
-
-Json::Value createCourseJsonObject(std::string name)
-{
-    Json::Value jsonObject;
-
-    jsonObject["course"] = name;
-
-    return jsonObject;
-}

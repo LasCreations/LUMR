@@ -20,8 +20,11 @@ class CACHE{
         std::unordered_map<std::string, USER>& getUserMap();
         std::unordered_map<std::string, INSTITUTION>& getInstitutionMap();
         std::unordered_map<std::string, USER> &getSessionIDMap();
+        std::unordered_map<std::string, USERINSTITUTION> &getUserInstitutionMap();
         void insertUserToMap(USER user);
         void insertUserSessionToMap(USER user);
+        void insertUserInstitutionToMap(USERINSTITUTION userInst);
+        // void updateUserSID()
         
 };
 

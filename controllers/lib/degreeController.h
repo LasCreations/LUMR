@@ -6,6 +6,6 @@
 void handleDegrees(CLIENT *client);
 std::string parseDegreeRequest(std::string request);
 std::string createDegreeJsonArray(std::unordered_map<std::string, DEGREE> degrees);
-Json::Value createDegreeJsonObject(std::string name);
+
 
 #endif

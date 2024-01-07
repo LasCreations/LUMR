@@ -46,3 +46,21 @@ std::string getCurrentTime(){
     
     return std::ctime(&currentTime);
 }
+
+Json::Value createDegreeJsonObject(std::string name)
+{
+    Json::Value jsonObject;
+
+    jsonObject["name"] = name;
+
+    return jsonObject;
+}
+
+Json::Value createCourseJsonObject(std::string name)
+{
+    Json::Value jsonObject;
+
+    jsonObject["name"] = name;
+
+    return jsonObject;
+}

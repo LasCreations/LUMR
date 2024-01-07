@@ -3,6 +3,8 @@ import { getInstitutions } from '../api/institutions.js';
 import { getDegrees } from '../api/degrees.js';
 import { getCourses } from '../api/courses.js';
 import { registerUser } from '../api/auth/signupUser.js'
+import { loginUser } from '../api/auth/loginUser.js';
+
 
 //Div Containers
 const degreeDivContainer = document.createElement('div');
@@ -129,7 +131,7 @@ function setType() {
     passwordInput.type = 'password';
     passwordInput.setAttribute('required', '');    //turns required on
     confirmPasswordInput.type = 'password';
-    confirmPasswordInput.setAttribute('required', '');    //turns required on
+    // confirmPasswordInput.setAttribute('required', '');    //turns required on
     submitButton.type = 'submit';
 }
 
@@ -333,12 +335,12 @@ export function addCoursesToADiv(courseJson) {
     courseHeading.style.display = 'block';
     selectedCourses = []; //clear selected array
     courseJson.forEach(function (currentObject) {
-        const index = currentCourses.indexOf(currentObject.course); // Check if the text is already in the array
+        const index = currentCourses.indexOf(currentObject.name); // Check if the text is already in the array
         if (index === -1) {  //not in array
             const courseDiv = document.createElement('div');
             courseDiv.className = 'courseDiv';
-            courseDiv.textContent = currentObject.course;
-            currentCourses.push(currentObject.course);
+            courseDiv.textContent = currentObject.name;
+            currentCourses.push(currentObject.name);
             courseDivContainer.appendChild(courseDiv);
         }
     });
@@ -366,11 +368,16 @@ function handleSignUp() {
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('confirmPassword').value;
 
-    if (password == passwordConfirm) {
-        const user = new User(firstname, lastname, username, password, "default", institutionSelect.value, 0, selectedDegrees, selectedCourses, yearStartSelect.value, yearEndSelect.value);
-        console.log(user);
-        registerUser(user);
-    } else {
-        alert("password does not match");
+    if(submitButton.textContent == 'Login'){
+        loginUser(username, password);
+    }else if(submitButton.textContent == 'Signup'){
+        if (password == passwordConfirm) {
+            const user = new User(firstname, lastname, username, password, "default", institutionSelect.value, 0, selectedDegrees, selectedCourses, yearStartSelect.value, yearEndSelect.value);
+            console.log(user);
+            registerUser(user);
+        } else {
+            alert("password does not match");
+        }
     }
+    
 }

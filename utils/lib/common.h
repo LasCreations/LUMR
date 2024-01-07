@@ -46,4 +46,10 @@ std::string generateRandomCode(int length);
  * @result      returns a string
 */
 std::string getCurrentTime();
+
+
+Json::Value createDegreeJsonObject(std::string name);
+
+
+Json::Value createCourseJsonObject(std::string name);
 #endif

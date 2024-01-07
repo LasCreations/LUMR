@@ -46,12 +46,3 @@ std::string createDegreeJsonArray(std::unordered_map<std::string, DEGREE> degree
     std::cout << "\n\n" << jsonArray.toStyledString() << std::endl;
     return jsonArray.toStyledString();
 }
-
-Json::Value createDegreeJsonObject(std::string name)
-{
-    Json::Value jsonObject;
-
-    jsonObject["name"] = name;
-
-    return jsonObject;
-}

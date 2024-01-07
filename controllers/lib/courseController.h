@@ -10,6 +10,6 @@ struct COURSEREQUEST{
 void handleCourses(CLIENT *client);
 COURSEREQUEST parseCourseRequest(std::string request);
 std::string createCoursesJsonArray(std::unordered_map<std::string, COURSE> courses);
-Json::Value createCourseJsonObject(std::string name);
+
 
 #endif
