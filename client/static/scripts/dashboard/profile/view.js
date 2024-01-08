@@ -102,17 +102,6 @@ function appendToParentDiv(){
     profileTopLevelContainer.appendChild(avatarContainer);
     profileTopLevelContainer.appendChild(profileNameContainer);
 
-
-    // userProfileViewContainer.appendChild(profileTopLevelContainer);
-
-
-    // userProfileViewContainer.appendChild(usernameContainer);
-    // userProfileViewContainer.appendChild(rankContainer);
-    // userProfileViewContainer.appendChild(institutionContainer);
-    // userProfileViewContainer.appendChild(degreeContainer);
-    // userProfileViewContainer.appendChild(coursesContainer);
-
-    // userProfileViewContainer.appendChild(rankContainer);
     profileTopHolder.append(profileTopLevelContainer);
     profileTopHolder.append(rankContainer);
 

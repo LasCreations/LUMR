@@ -5,161 +5,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/styles/pages/dashboard.css" rel="stylesheet">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <!--ADD FAVICO-->
+    <!-- Boxiocns CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 </head>
 
 <body>
 
-
     <div class="stars"></div>
-    <div id="container">
-        <!-- navbar -->
-        <nav class="navbar">
-            <div class="logo_item">
-                <i class="bx bx-menu" id="sidebarOpen"></i>
-                <img src="/images/landing.jpg" alt=""></i>LURM
-            </div>
-            <div class="search_bar">
-                <input type="text" placeholder="Search" />
-            </div>
-            <div class="navbar_content">
-                <i class="bi bi-grid"></i>
-                <i class='bx bx-sun' id="darkLight"></i>
-                <i class='bx bx-bell'></i>
-                <img src="images/profile.jpg" alt="" class="profile" />
-            </div>
-        </nav>
-        <!-- sidebar -->
-        <nav class="sidebar">
-            <div class="menu_content">
-                <ul class="menu_items">
-                    <div class="menu_title menu_dahsboard"></div>
-                    <!-- duplicate or remove this li tag if you want to add or remove navlink with submenu -->
-                    <!-- start -->
-                    <li class="item">
-                        <div href="#" class="nav_link submenu_item">
-                            <span class="navlink_icon">
-                                <i class="bx bx-home-alt"></i>
-                            </span>
-                            <span class="navlink">Home</span>
-                            <i class="bx bx-chevron-right arrow-left"></i>
-                        </div>
-                        <ul class="menu_items submenu">
-                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                        </ul>
-                    </li>
-                    <!-- end -->
-                    <!-- duplicate this li tag if you want to add or remove  navlink with submenu -->
-                    <!-- start -->
-                    <li class="item">
-                        <div href="#" class="nav_link submenu_item">
-                            <span class="navlink_icon">
-                                <i class="bx bx-grid-alt"></i>
-                            </span>
-                            <span class="navlink">Overview</span>
-                            <i class="bx bx-chevron-right arrow-left"></i>
-                        </div>
-                        <ul class="menu_items submenu">
-                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                            <a href="#" class="nav_link sublink">Nav Sub Link</a>
-                        </ul>
-                    </li>
-                    <!-- end -->
+    <div class="sidebar close">
+        <div class="logo-details">
+            <i class='bx bxl-c-plus-plus'></i>
+            <span class="logo_name">LURM</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Category</a></li>
                 </ul>
-                <ul class="menu_items">
-                    <div class="menu_title menu_editor"></div>
-                    <!-- duplicate these li tag if you want to add or remove navlink only -->
-                    <!-- Start -->
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bxs-magic-wand"></i>
-                            </span>
-                            <span class="navlink">Magic build</span>
-                        </a>
-                    </li>
-                    <!-- End -->
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bx-loader-circle"></i>
-                            </span>
-                            <span class="navlink">Filters</span>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bx-filter"></i>
-                            </span>
-                            <span class="navlink">Filter</span>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bx-cloud-upload"></i>
-                            </span>
-                            <span class="navlink">Upload new</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="menu_items">
-                    <div class="menu_title menu_setting"></div>
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bx-flag"></i>
-                            </span>
-                            <span class="navlink">Notice board</span>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bx-medal"></i>
-                            </span>
-                            <span class="navlink">Award</span>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bx-cog"></i>
-                            </span>
-                            <span class="navlink">Setting</span>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#" class="nav_link">
-                            <span class="navlink_icon">
-                                <i class="bx bx-layer"></i>
-                            </span>
-                            <span class="navlink">Features</span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- Sidebar Open / Close -->
-                <div class="bottom_content">
-                    <div class="bottom expand_sidebar">
-                        <span> Expand</span>
-                        <i class='bx bx-log-in'></i>
-                    </div>
-                    <div class="bottom collapse_sidebar">
-                        <span> Collapse</span>
-                        <i class='bx bx-log-out'></i>
-                    </div>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-collection'></i>
+                        <span class="link_name">Category</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
                 </div>
-            </div>
-        </nav>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Category</a></li>
+                    <li><a href="#">HTML & CSS</a></li>
+                    <li><a href="#">JavaScript</a></li>
+                    <li><a href="#">PHP & MySQL</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-book-alt'></i>
+                        <span class="link_name">Posts</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Posts</a></li>
+                    <li><a href="#">Web Design</a></li>
+                    <li><a href="#">Login Form</a></li>
+                    <li><a href="#">Card Design</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="link_name">Analytics</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Analytics</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-line-chart'></i>
+                    <span class="link_name">Chart</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Chart</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-plug'></i>
+                        <span class="link_name">Plugins</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Plugins</a></li>
+                    <li><a href="#">UI Face</a></li>
+                    <li><a href="#">Pigments</a></li>
+                    <li><a href="#">Box Icons</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-compass'></i>
+                    <span class="link_name">Explore</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Explore</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-history'></i>
+                    <span class="link_name">History</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">History</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="link_name">Setting</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Setting</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="profile-details">
+                    <div class="profile-content">
+                        <!--<img src="image/profile.jpg" alt="profileImg">-->
+                    </div>
+                    <div class="name-job">
+                        <div class="profile_name">Prem Shahi</div>
+                        <div class="job">Web Desginer</div>
+                    </div>
+                    <i class='bx bx-log-out'></i>
+                </div>
+            </li>
+        </ul>
     </div>
+    <section class="home-section">
+        <div class="home-content">
+            <i class='bx bx-menu'></i>
+            <!-- <span class="text">Drop Down Sidebar</span> --> 
+        </div>
+        <div id="container"></div>
+    </section>
+
+    <!-- <div class="one"></div> -->
+    
 
     <script src="/static/scripts/app.js" type="module"></script>
 </body>
