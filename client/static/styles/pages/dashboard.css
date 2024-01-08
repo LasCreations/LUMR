@@ -1,0 +1,11 @@
+@import url('../main.css');
+@import url('../sections/profile.css');
+
+#container {
+    min-height: 150vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around; /* Adjust as needed */
+    flex-wrap: wrap;
+    flex: 1;
+}

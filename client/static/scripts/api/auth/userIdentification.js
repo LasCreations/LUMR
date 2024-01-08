@@ -1,5 +1,5 @@
 import { createSignUpForm } from '../../components/authForm.js'
-import {decoder} from './decodeUrl.js'
+import {decoder} from '../../dashboard/dashboard-manager.js'
 
 export function dashboardAuthenticate() {
     fetch('/user/authenticate').then(res => {

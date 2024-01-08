@@ -1,0 +1,30 @@
+@keyframes gradientAnimation {
+    0% {
+        border-image: radial-gradient(circle, #55bbc2, #695ee2);
+        border-image-slice: 1; /* Ensure the entire border is covered by the gradient */
+    }
+
+    25% {
+        border-image: radial-gradient(circle, #8a6abd, #e94fb6);
+        border-image-slice: 1;
+    }
+
+    75% {
+        border-image: radial-gradient(circle, #b687c0, #372cd1);
+        border-image-slice: 1;
+    }
+
+    100% {
+        border-image: radial-gradient(circle, #55bbc2, #695ee2);
+        border-image-slice: 1;
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0;
+    }
+}

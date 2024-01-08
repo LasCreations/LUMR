@@ -1,0 +1,74 @@
+#avatar {
+    height: 80px;
+    width: 80px;
+}
+
+#avatarContainer {
+    height: 75px;
+    width: 75px;
+    background-color: #626262;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#userProfileViewContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 60%;
+    top:90px;
+    /* background-color: var(--secondary-bg); */
+    background-color: rgba(37, 36, 36, 0.5);
+    border: 2px solid #626262;
+    padding: 40px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+#profileTopLevelContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#profileTopHolder, #bottomTopHolder {
+    padding: 30px;
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #626262;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+
+
+
+.nameHeading{
+
+    font-size: 40px;
+}
+
+.degreeDiv,
+.courseDiv {
+    text-align: center;
+    padding: 5px;
+    color: #626262;
+    border: 2px solid;
+    animation: gradientAnimation 5s linear infinite;
+}
+
+#degreeContainer, #coursesContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+    color: #bebcbc;
+}
